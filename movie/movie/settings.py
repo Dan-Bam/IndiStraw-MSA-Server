@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # In Folder Installed App
-    'movie'
+    'movie',
+    'api'
 ]
 
 MIDDLEWARE = [
