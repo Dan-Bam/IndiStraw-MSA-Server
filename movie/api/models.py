@@ -1,4 +1,5 @@
 from django.db import models
 
 class Movie(models.Model):
-    pass
+    title = models.CharField(max_length=255)
+    description = models.TextField()

@@ -2,4 +2,6 @@ from rest_framework import serializers
 from .models import *
 
 class MovieSerializer(serializers.ModelSerializer):
-    pass
+    class Meta:
+        model = Movie
+        fields = '__all__'
