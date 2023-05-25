@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import *
+from .models import *
 
 class MovieAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -16,7 +17,9 @@ class MovieAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
-        pass
+        queryset = Movie.objects.all()
+        serializer = MovieSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request):
         pass
