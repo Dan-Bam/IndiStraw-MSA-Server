@@ -16,8 +16,8 @@ class MovieAPIView(APIView, PaginationHandlerMixin):
     serializer_class = MovieSerializer
 
     def post(self, request):
-        if IsAuthenticated:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        # if IsAuthenticated:
+        #     return Response(status=status.HTTP_401_UNAUTHORIZED)
         
         serializer = MovieSerializer(data=request.data)
         
@@ -27,8 +27,8 @@ class MovieAPIView(APIView, PaginationHandlerMixin):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request, format=None, *args, **kwargs):
-        if IsAuthenticated:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        # if IsAuthenticated:
+        #     return Response(status=status.HTTP_401_UNAUTHORIZED)
         
         queryset = Movie.objects.all()
         page = self.paginate_queryset(queryset)
@@ -54,16 +54,16 @@ class MovieDefailView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request, pk):
-        if IsAuthenticated:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        # if IsAuthenticated:
+        #     return Response(status=status.HTTP_401_UNAUTHORIZED)
         
         queryset = Movie.objects.get(pk=pk)
         queryset.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def patch(self, request, pk):
-        if IsAuthenticated:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        # if IsAuthenticated:
+        #     return Response(status=status.HTTP_401_UNAUTHORIZED)
         
         queryset = Movie.objects.get(pk=pk)
         serializer = MovieSerializer(queryset, data=request, partial=True)
