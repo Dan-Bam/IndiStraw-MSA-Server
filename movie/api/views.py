@@ -9,6 +9,9 @@ from django.shortcuts import render, get_object_or_404
 class MovieAPIView(APIView):
 
     def post(self, request):
+        if IsAuthenticated:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        
         serializer = MovieSerializer(data=request.data)
         
         if serializer.is_valid():
@@ -17,26 +20,39 @@ class MovieAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
+        if IsAuthenticated:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        
         queryset = Movie.objects.all()
         serializer = MovieSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class MovieDefailView(APIView):
+    
     def get_object(self, pk):
         movie = get_object_or_404(Movie, id = pk)
         return movie
 
     def get(self, request, pk):
+        if IsAuthenticated:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        
         movie = self.get_object(pk)
         serializer = MovieSerializer(movie)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request, pk):
+        if IsAuthenticated:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        
         queryset = Movie.objects.get(pk=pk)
         queryset.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def patch(self, request, pk):
+        if IsAuthenticated:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        
         queryset = Movie.objects.get(pk=pk)
         serializer = MovieSerializer(queryset, data=request, partial=True)
 
