@@ -41,8 +41,8 @@ class MovieAPIView(APIView, PaginationHandlerMixin):
     
 class MovieDefailView(APIView):
     
-    def get_object(self, pk):
-        movie = get_object_or_404(Movie, id = pk)
+    def get_object(self, movie_id):
+        movie = get_object_or_404(Movie, id = movie_id)
         return movie
 
     def get(self, request, pk):
