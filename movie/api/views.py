@@ -20,8 +20,8 @@ class MovieViewSet(ModelViewSet):
     
 class MovieDefailView(APIView):
     
-    def get_object(self, movie_id):
-        movie = get_object_or_404(Movie, id = movie_id)
+    def get_object(self, pk):
+        movie = get_object_or_404(Movie, pk = pk)
         return movie
 
     def get(self, request, pk):
