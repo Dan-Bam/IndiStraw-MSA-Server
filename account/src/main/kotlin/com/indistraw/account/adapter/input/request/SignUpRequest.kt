@@ -1,8 +1,10 @@
 package com.indistraw.account.adapter.input.request
 
 import org.hibernate.validator.constraints.Length
+import javax.validation.constraints.Max
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
+import javax.validation.constraints.Size
 
 data class SignUpRequest(
     @field:NotNull
@@ -15,9 +17,11 @@ data class SignUpRequest(
     val password: String,
 
     @field:NotNull
+    @field:Max(10)
     val name: String,
 
     @field:NotNull
+    @field:Size(min = 10, max = 11)
     val phoneNumber: String,
 
     @field:NotNull
