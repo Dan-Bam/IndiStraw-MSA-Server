@@ -17,7 +17,7 @@ data class SignUpRequest(
     val password: String,
 
     @field:NotNull
-    @field:Max(10)
+    @field:Size(min = 2, max = 10)
     val name: String,
 
     @field:NotNull
