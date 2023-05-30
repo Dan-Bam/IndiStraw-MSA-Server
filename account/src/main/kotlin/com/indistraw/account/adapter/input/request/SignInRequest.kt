@@ -11,6 +11,6 @@ data class SignInRequest(
 
     @field:NotNull
     @field:Length(min = 8, max = 20)
-    @field:Pattern(regexp = "[0-9a-zA-Z]{0,20}")
+    @field:Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*?~])[0-9a-zA-Z!@#$%^&*?~]+$")
     val password: String,
 )
