@@ -58,6 +58,7 @@ dependencies {
 	/* DB */
 	implementation("mysql:mysql-connector-java:8.0.32")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("org.mariadb.jdbc:mariadb-java-client:3.1.2")
 
 	// validation
 	implementation("org.springframework.boot:spring-boot-starter-validation")
