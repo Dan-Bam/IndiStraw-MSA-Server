@@ -41,6 +41,30 @@ dependencies {
 	testImplementation("io.kotest:kotest-assertions-core-jvm:4.4.3")
 	implementation("io.kotest:kotest-extensions-spring:4.4.3")
 	testImplementation("io.mockk:mockk:1.12.0")
+
+	/* security */
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	testImplementation("org.springframework.security:spring-security-test")
+
+	/* jwt */
+	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
+	/** jpa **/
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-jdbc")
+
+	/* DB */
+	implementation("mysql:mysql-connector-java:8.0.32")
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+	// validation
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+
+	/* logging */
+	implementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
+	testImplementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
 }
 
 tasks.withType<KotlinCompile> {
