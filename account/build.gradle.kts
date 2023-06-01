@@ -66,6 +66,9 @@ dependencies {
 	/* logging */
 	implementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
 	testImplementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
+
+	/* coolsms */
+	implementation("net.nurigo:javaSDK:2.2")
 }
 
 tasks.withType<KotlinCompile> {
