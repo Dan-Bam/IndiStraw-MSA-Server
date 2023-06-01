@@ -20,7 +20,7 @@ noArg {
 	annotation("javax.persistence.Embeddable")
 }
 
-group = "com.indistraw.account"
+group = "com.project.indistraw"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
