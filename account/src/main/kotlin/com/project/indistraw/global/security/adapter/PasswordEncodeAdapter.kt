@@ -1,4 +1,4 @@
-package com.project.indistraw.global.security
+package com.project.indistraw.global.security.adapter
 
 import com.project.indistraw.account.application.port.output.PasswordEncodePort
 import org.springframework.security.crypto.password.PasswordEncoder

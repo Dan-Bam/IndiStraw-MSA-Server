@@ -1,7 +1,7 @@
 package com.project.indistraw.global.security.config
 
 import com.project.indistraw.global.security.handler.CustomAuthenticationEntryPoint
-import com.project.indistraw.global.security.token.JwtParseAdapter
+import com.project.indistraw.global.security.token.TokenParseAdapter
 import com.project.indistraw.account.domain.Authority
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val jwtParserAdapter: JwtParseAdapter
+    private val jwtParserAdapter: TokenParseAdapter
 ) {
 
     @Bean
@@ -29,6 +29,7 @@ class SecurityConfig(
             // /auth
             .mvcMatchers(HttpMethod.POST, "/api/v1/auth/signup").permitAll()
             .mvcMatchers(HttpMethod.POST, "/api/v1/auth/signin").permitAll()
+            .mvcMatchers(HttpMethod.PATCH, "/api/v1/auth/reissue").permitAll()
             .mvcMatchers(HttpMethod.HEAD, "/api/v1/auth/check/id/{id}").permitAll()
             .mvcMatchers(HttpMethod.HEAD, "/api/v1/auth/check/phone-number/{phone-number}").permitAll()
             .mvcMatchers(HttpMethod.POST, "/api/v1/auth/send/phone-number/{phoneNumber}").permitAll()

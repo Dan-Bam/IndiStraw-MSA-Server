@@ -7,6 +7,7 @@ import com.project.indistraw.account.application.port.input.dto.SignInDto
 import com.project.indistraw.account.application.port.input.dto.SignUpDto
 import com.project.indistraw.account.application.port.output.dto.TokenDto
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
 
 @Component
 class AuthDataConverter {
@@ -30,8 +31,8 @@ class AuthDataConverter {
         TokenResponse(
             accessToken = dto.accessToken,
             refreshToken = dto.refreshToken,
-            accessTokenExpiredAt = dto.accessTokenExpiredAt,
-            refreshTokenExpiredAt = dto.refreshTokenExpiredAt
+            accessTokenExpiredAt = LocalDateTime.now().plusSeconds(dto.accessTokenExpiredAt.toLong()),
+            refreshTokenExpiredAt = LocalDateTime.now().plusSeconds(dto.refreshTokenExpiredAt.toLong())
         )
 
 }
