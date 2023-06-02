@@ -1,4 +1,4 @@
-from rest_framework.serializers import Serializer, FileField
+from rest_framework.serializers import Serializer, FileField, ListField
 
 class UploadSerializer(Serializer):
     file_uploaded = FileField()
