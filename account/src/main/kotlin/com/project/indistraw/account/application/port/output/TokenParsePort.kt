@@ -3,7 +3,7 @@ package com.project.indistraw.account.application.port.output
 import org.springframework.security.core.Authentication
 import javax.servlet.http.HttpServletRequest
 
-interface JwtParsePort {
+interface TokenParsePort {
 
     fun parseAccessToken(request: HttpServletRequest): String?
     fun parseRefreshTokenToken(refreshToken: String): String?

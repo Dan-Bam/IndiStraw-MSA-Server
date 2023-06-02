@@ -4,7 +4,7 @@ import com.project.indistraw.global.security.token.common.exception.InvalidToken
 import com.project.indistraw.global.security.token.common.properties.JwtProperties
 import com.project.indistraw.global.security.principal.AccountDetailsService
 import com.project.indistraw.global.security.principal.AdminDetailsService
-import com.project.indistraw.account.application.port.output.JwtParsePort
+import com.project.indistraw.account.application.port.output.TokenParsePort
 import com.project.indistraw.account.domain.Authority
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
@@ -16,11 +16,11 @@ import java.security.Key
 import javax.servlet.http.HttpServletRequest
 
 @Component
-class JwtParseAdapter(
+class TokenParseAdapter(
     private val accountDetailsService: AccountDetailsService,
     private val adminDetailsService: AdminDetailsService,
     private val jwtProperties: JwtProperties
-): JwtParsePort {
+): TokenParsePort {
 
     override fun parseAccessToken(request: HttpServletRequest): String? =
         request.getHeader(JwtProperties.TOKEN_HEADER)
