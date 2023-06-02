@@ -1,6 +1,6 @@
 package com.project.indistraw.global.security.filter
 
-import com.project.indistraw.global.security.token.JwtParseAdapter
+import com.project.indistraw.account.application.port.output.TokenParsePort
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 class JwtRequestFilter(
-    private val jwtParseAdapter: JwtParseAdapter
+    private val tokenParsePort: TokenParsePort
 ): OncePerRequestFilter() {
 
     override fun doFilterInternal(
@@ -17,10 +17,10 @@ class JwtRequestFilter(
         filterChain: FilterChain
     ) {
 
-        val accessToken = jwtParseAdapter.parseAccessToken(request)
+        val accessToken = tokenParsePort.parseAccessToken(request)
 
         if (!accessToken.isNullOrBlank()) {
-            val authentication = jwtParseAdapter.authentication(accessToken)
+            val authentication = tokenParsePort.authentication(accessToken)
             SecurityContextHolder.clearContext()
             SecurityContextHolder.getContext().authentication = authentication
         }
