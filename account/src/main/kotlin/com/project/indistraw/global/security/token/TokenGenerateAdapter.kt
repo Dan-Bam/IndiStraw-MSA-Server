@@ -1,28 +1,27 @@
 package com.project.indistraw.global.security.token
 
-import com.project.indistraw.global.security.token.common.properties.JwtExpTimeProperties
-import com.project.indistraw.global.security.token.common.properties.JwtProperties
-import com.project.indistraw.account.application.port.output.JwtGeneratePort
+import com.project.indistraw.account.application.port.output.TokenGeneratePort
 import com.project.indistraw.account.application.port.output.dto.TokenDto
 import com.project.indistraw.account.domain.Authority
+import com.project.indistraw.global.security.token.common.properties.JwtExpTimeProperties
+import com.project.indistraw.global.security.token.common.properties.JwtProperties
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.stereotype.Component
-import java.time.LocalDateTime
 import java.util.*
 
 @Component
-class JwtGenerateAdapter(
+class TokenGenerateAdapter(
     private val jwtProperties: JwtProperties,
     private val jwtExpTimeProperties: JwtExpTimeProperties
-): JwtGeneratePort {
+): TokenGeneratePort {
 
     override fun generateToken(accountIdx: UUID, authority: Authority): TokenDto =
         TokenDto(
             accessToken = generateAccessToken(accountIdx, authority),
             refreshToken = generateRefreshToken(accountIdx),
-            accessTokenExpiredAt = LocalDateTime.now().plusSeconds(jwtExpTimeProperties.accessExp.toLong()),
-            refreshTokenExpiredAt = LocalDateTime.now().plusSeconds(jwtExpTimeProperties.refreshExp.toLong()),
+            accessTokenExpiredAt = jwtExpTimeProperties.accessExp,
+            refreshTokenExpiredAt = jwtExpTimeProperties.refreshExp,
         )
 
     private fun generateAccessToken(accountIdx: UUID, authority: Authority): String =
