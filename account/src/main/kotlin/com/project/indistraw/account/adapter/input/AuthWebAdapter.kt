@@ -16,6 +16,7 @@ class AuthWebAdapter(
     private val authDataConverter: AuthDataConverter,
     private val signUpUseCase: SignUpUseCase,
     private val signInUseCase: SignInUseCase,
+    private val reissueTokenUseCase: ReissueTokenUseCase,
     private val checkAccountIdUseCase: CheckAccountIdUseCase,
     private val checkPhoneNumberUseCase: CheckPhoneNumberUseCase,
     private val sendAuthCodeUseCase: SendAuthCodeUseCase
@@ -29,6 +30,12 @@ class AuthWebAdapter(
     @PostMapping("/signin")
     fun signIn(@RequestBody @Valid request: SignInRequest): ResponseEntity<TokenResponse> =
         signInUseCase.execute(authDataConverter toDto request)
+            .let { authDataConverter toResponse it }
+            .let { ResponseEntity.ok(it) }
+
+    @PatchMapping("/reissue")
+    fun reissueToken(@RequestHeader refreshToken: String): ResponseEntity<TokenResponse> =
+        reissueTokenUseCase.execute(refreshToken)
             .let { authDataConverter toResponse it }
             .let { ResponseEntity.ok(it) }
 
