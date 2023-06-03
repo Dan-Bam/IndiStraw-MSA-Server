@@ -19,7 +19,8 @@ class AuthWebAdapter(
     private val reissueTokenUseCase: ReissueTokenUseCase,
     private val checkAccountIdUseCase: CheckAccountIdUseCase,
     private val checkPhoneNumberUseCase: CheckPhoneNumberUseCase,
-    private val sendAuthCodeUseCase: SendAuthCodeUseCase
+    private val sendAuthCodeUseCase: SendAuthCodeUseCase,
+    private val verifyAuthCodeUseCase: VerifyAuthCodeUseCase
 ) {
 
     @PostMapping("/signup")
@@ -52,6 +53,11 @@ class AuthWebAdapter(
     @PostMapping("/send/phone-number/{phoneNumber}")
     fun sendAuthCode(@PathVariable phoneNumber: String): ResponseEntity<Void> =
         sendAuthCodeUseCase.execute(phoneNumber)
+            .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
+
+    @GetMapping("/auth-code/{authCode}/phone-number/{phoneNumber}")
+    fun verifyAuthCode(@PathVariable authCode: Int, @PathVariable phoneNumber: String): ResponseEntity<Void> =
+        verifyAuthCodeUseCase.execute(authCode, phoneNumber)
             .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 
 }
