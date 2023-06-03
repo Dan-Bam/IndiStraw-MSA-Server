@@ -1,0 +1,20 @@
+package com.project.indistraw.account.adapter.output.persistence.entity
+
+import org.springframework.data.annotation.Id
+import org.springframework.data.redis.core.RedisHash
+import org.springframework.data.redis.core.TimeToLive
+import java.util.*
+import java.util.concurrent.TimeUnit
+
+@RedisHash("authentication")
+data class AuthenticationEntity(
+    @Id
+    val phoneNumber: String,
+
+    val attemptCount: Long,
+
+    val isVerified: Boolean,
+
+    @TimeToLive(unit = TimeUnit.SECONDS)
+    val expiredAt: Long
+)
