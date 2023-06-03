@@ -12,7 +12,11 @@ enum class ErrorCode(
     ACCOUNT_NOT_FOUND("계정을 찾을 수 없습니다.", 404),
 
     // AUTH CODE
+    AUTH_CODE_NOT_FOUND("인증 코드를 찾을 수 없습니다.", 404),
     AUTH_CODE_NOT_MATCH("인증 코드가 일치 하지 않습니다.", 400),
+
+    // AUTHENTICATION
+    AUTHENTICATION_NOT_FOUND("인증되지 않은 사용자 입니다.", 404),
 
     // TOKEN
     INVALID_TOKEN("유효하지 않은 토큰입니다.", 401),
