@@ -10,16 +10,18 @@ class AuthCodeConverter {
     infix fun toEntity(domain: AuthCode): AuthCodeEntity =
         domain.let {
             AuthCodeEntity(
+                phoneNumber = it.phoneNumber,
                 authCode = it.authCode,
-                phoneNumber = it.phoneNumber
+                expiredAt = it.expiredAt
             )
         }
 
-    infix fun toDomain(entity: AuthCode?): AuthCode? =
+    infix fun toDomain(entity: AuthCodeEntity?): AuthCode? =
         entity?.let {
             AuthCode(
+                phoneNumber = it.phoneNumber,
                 authCode = it.authCode,
-                phoneNumber = it.phoneNumber
+                expiredAt = it.expiredAt
             )
         }
 
