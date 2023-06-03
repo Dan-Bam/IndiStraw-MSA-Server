@@ -31,8 +31,8 @@ class AuthDataConverter {
         TokenResponse(
             accessToken = dto.accessToken,
             refreshToken = dto.refreshToken,
-            accessTokenExpiredAt = LocalDateTime.now().plusSeconds(dto.accessTokenExpiredAt.toLong()),
-            refreshTokenExpiredAt = LocalDateTime.now().plusSeconds(dto.refreshTokenExpiredAt.toLong())
+            accessTokenExpiredAt = LocalDateTime.now().plusSeconds(dto.accessTokenExpiredAt),
+            refreshTokenExpiredAt = LocalDateTime.now().plusSeconds(dto.refreshTokenExpiredAt)
         )
 
 }

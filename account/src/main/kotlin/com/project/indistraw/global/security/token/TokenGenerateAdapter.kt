@@ -20,8 +20,8 @@ class TokenGenerateAdapter(
         TokenDto(
             accessToken = generateAccessToken(accountIdx, authority),
             refreshToken = generateRefreshToken(accountIdx),
-            accessTokenExpiredAt = jwtExpTimeProperties.accessExp,
-            refreshTokenExpiredAt = jwtExpTimeProperties.refreshExp,
+            accessTokenExpiredAt = jwtExpTimeProperties.accessExp.toLong(),
+            refreshTokenExpiredAt = jwtExpTimeProperties.refreshExp.toLong(),
         )
 
     private fun generateAccessToken(accountIdx: UUID, authority: Authority): String =
