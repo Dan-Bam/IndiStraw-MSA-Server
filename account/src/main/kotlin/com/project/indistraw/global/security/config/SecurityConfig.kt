@@ -38,7 +38,8 @@ class SecurityConfig(
 
             // /account
             .mvcMatchers(HttpMethod.GET, "/api/v1/account/phone-number/{phoneNumber}").permitAll()
-            .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/change/password").permitAll()
+            .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/update/password").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
+            .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/update/profile").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
             .mvcMatchers(HttpMethod.GET, "/api/v1/account/profile").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
 
             // /health
