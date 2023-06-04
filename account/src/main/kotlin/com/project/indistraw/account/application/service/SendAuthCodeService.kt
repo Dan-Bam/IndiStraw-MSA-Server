@@ -20,8 +20,9 @@ class SendAuthCodeService(
         val code = createCode()
         sendMessagePort.sendMessage(phoneNumber, code)
         val authCode = AuthCode(
+            phoneNumber = phoneNumber,
             authCode = code,
-            phoneNumber = phoneNumber
+            expiredAt = 300
         )
         commandAuthCodePort.saveAuthCode(authCode)
         publisher.publishEvent(CreateAuthenticationEvent(phoneNumber))

@@ -5,5 +5,5 @@ import java.util.UUID
 data class RefreshToken(
     val refreshToken: String,
     val accountIdx: UUID,
-    val expiredAt: Int
+    val expiredAt: Long
 )

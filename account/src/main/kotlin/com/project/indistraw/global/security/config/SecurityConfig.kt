@@ -29,11 +29,12 @@ class SecurityConfig(
             // /auth
             .mvcMatchers(HttpMethod.POST, "/api/v1/auth/signup").permitAll()
             .mvcMatchers(HttpMethod.POST, "/api/v1/auth/signin").permitAll()
+            .mvcMatchers(HttpMethod.PATCH, "/api/v1/auth").permitAll()
             .mvcMatchers(HttpMethod.PATCH, "/api/v1/auth/reissue").permitAll()
             .mvcMatchers(HttpMethod.HEAD, "/api/v1/auth/check/id/{id}").permitAll()
             .mvcMatchers(HttpMethod.HEAD, "/api/v1/auth/check/phone-number/{phone-number}").permitAll()
             .mvcMatchers(HttpMethod.POST, "/api/v1/auth/send/phone-number/{phoneNumber}").permitAll()
-            .mvcMatchers(HttpMethod.PATCH, "/api/v1/auth").permitAll()
+            .mvcMatchers(HttpMethod.GET, "/api/v1/auth/auth-code/{authCode}/phone-number/{phoneNumber}").permitAll()
 
             // /account
             .mvcMatchers(HttpMethod.GET, "/api/v1/account/profile").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
