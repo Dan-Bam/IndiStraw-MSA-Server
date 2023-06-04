@@ -37,6 +37,8 @@ class SecurityConfig(
             .mvcMatchers(HttpMethod.GET, "/api/v1/auth/auth-code/{authCode}/phone-number/{phoneNumber}").permitAll()
 
             // /account
+            .mvcMatchers(HttpMethod.GET, "/api/v1/account/phone-number/{phoneNumber}").permitAll()
+            .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/change/password").permitAll()
             .mvcMatchers(HttpMethod.GET, "/api/v1/account/profile").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
 
             // /health
