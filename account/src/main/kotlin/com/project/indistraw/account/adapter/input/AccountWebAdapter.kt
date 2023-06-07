@@ -3,6 +3,8 @@ package com.project.indistraw.account.adapter.input
 import com.project.indistraw.account.adapter.input.converter.AccountDataConverter
 import com.project.indistraw.account.adapter.input.request.UpdateAccountProfileRequest
 import com.project.indistraw.account.adapter.input.request.UpdatePasswordRequest
+import com.project.indistraw.account.adapter.input.response.AccountProfileDetailResponse
+import com.project.indistraw.account.application.port.input.AccountProfileDetailUseCase
 import com.project.indistraw.account.application.port.input.FindAccountIdUseCase
 import com.project.indistraw.account.application.port.input.UpdateAccountProfileUseCase
 import com.project.indistraw.account.application.port.input.UpdatePasswordUseCase
@@ -16,7 +18,8 @@ class AccountWebAdapter(
     private val accountDataConverter: AccountDataConverter,
     private val findAccountIdUseCase: FindAccountIdUseCase,
     private val updatePasswordUseCase: UpdatePasswordUseCase,
-    private val updateAccountProfileUseCase: UpdateAccountProfileUseCase
+    private val updateAccountProfileUseCase: UpdateAccountProfileUseCase,
+    private val accountProfileDetailUseCase: AccountProfileDetailUseCase,
 ) {
 
     @GetMapping("/phone-number/{phoneNumber}")
@@ -33,5 +36,11 @@ class AccountWebAdapter(
     fun sendAuthCode(@RequestBody request: UpdateAccountProfileRequest): ResponseEntity<Void> =
         updateAccountProfileUseCase.execute(accountDataConverter toDto request)
             .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
+
+    @GetMapping("/profile")
+    fun findProfileDetail(): ResponseEntity<AccountProfileDetailResponse> =
+        accountProfileDetailUseCase.execute()
+            .let { accountDataConverter toResponse it }
+            .let { ResponseEntity.ok(it) }
 
 }
