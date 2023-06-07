@@ -4,10 +4,7 @@ import com.project.indistraw.account.adapter.input.converter.AccountDataConverte
 import com.project.indistraw.account.adapter.input.request.UpdateAccountProfileRequest
 import com.project.indistraw.account.adapter.input.request.UpdatePasswordRequest
 import com.project.indistraw.account.adapter.input.response.AccountProfileDetailResponse
-import com.project.indistraw.account.application.port.input.AccountProfileDetailUseCase
-import com.project.indistraw.account.application.port.input.FindAccountIdUseCase
-import com.project.indistraw.account.application.port.input.UpdateAccountProfileUseCase
-import com.project.indistraw.account.application.port.input.UpdatePasswordUseCase
+import com.project.indistraw.account.application.port.input.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -20,6 +17,7 @@ class AccountWebAdapter(
     private val updatePasswordUseCase: UpdatePasswordUseCase,
     private val updateAccountProfileUseCase: UpdateAccountProfileUseCase,
     private val accountProfileDetailUseCase: AccountProfileDetailUseCase,
+    private val accountWithdrawUseCase: AccountWithdrawUseCase
 ) {
 
     @GetMapping("/phone-number/{phoneNumber}")
@@ -42,5 +40,10 @@ class AccountWebAdapter(
         accountProfileDetailUseCase.execute()
             .let { accountDataConverter toResponse it }
             .let { ResponseEntity.ok(it) }
+
+    @DeleteMapping("withdraw")
+    fun accountWithdraw(): ResponseEntity<Void> =
+        accountWithdrawUseCase.execute()
+            .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 
 }
