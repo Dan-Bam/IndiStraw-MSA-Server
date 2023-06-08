@@ -3,6 +3,7 @@ package com.project.indistraw.service
 import com.project.indistraw.account.application.port.output.CommandAuthCodePort
 import com.project.indistraw.account.application.port.output.SendMessagePort
 import com.project.indistraw.account.application.service.SendAuthCodeService
+import com.project.indistraw.account.domain.Authentication
 import com.project.indistraw.global.event.CreateAuthenticationEvent
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every
@@ -19,10 +20,10 @@ class SendAuthCodeServiceTest: BehaviorSpec({
     Given("핸드폰 번호가 주어질때") {
         val phoneNumber = "01012345678"
         val code = 1234
-        val createAuthenticationEvent = CreateAuthenticationEvent(phoneNumber)
+        val authentication = Authentication(phoneNumber)
 
         every { sendMessagePort.sendMessage(any(), any()) } returns Unit
-        every { publisher.publishEvent(createAuthenticationEvent) } returns Unit
+        every { publisher.publishEvent(CreateAuthenticationEvent(authentication)) } returns Unit
         every { commandAuthCodePort.saveAuthCode(any()) } returns code
 
         When("authCode 발송 요청을 하면") {

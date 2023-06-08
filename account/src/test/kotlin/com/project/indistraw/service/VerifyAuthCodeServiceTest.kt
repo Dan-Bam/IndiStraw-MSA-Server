@@ -27,20 +27,20 @@ class VerifyAuthCodeServiceTest: BehaviorSpec({
         val authCode = 1234
         val phoneNumber = "01012345678"
         val authCodeDomain = AnyValueObjectGenerator.anyValueObject<AuthCode>("authCode" to authCode)
-        val authentication = AnyValueObjectGenerator.anyValueObject<Authentication>("phoneNumber" to phoneNumber)
-        val createAuthenticationEvent = CreateAuthenticationEvent(phoneNumber)
+        val authentication = Authentication(phoneNumber)
+        val createAuthenticationEvent = CreateAuthenticationEvent(authentication)
 
         every { queryAuthCodePort.findByPhoneNumberOrNull(phoneNumber) } returns authCodeDomain
         every { queryAuthenticationPort.findByPhoneNumberOrNull(phoneNumber) } returns authentication
-        every { publisher.publishEvent(CreateAuthenticationEvent(phoneNumber, 1, false, 0)) } returns Unit
-        every { publisher.publishEvent(createAuthenticationEvent.increaseCount()) } returns Unit
-        every { publisher.publishEvent(createAuthenticationEvent.certified()) } returns Unit
+        every { publisher.publishEvent(createAuthenticationEvent) } returns Unit
+        every { publisher.publishEvent(CreateAuthenticationEvent(authentication.increaseCount())) } returns Unit
+        every { publisher.publishEvent(CreateAuthenticationEvent(authentication.certified())) } returns Unit
 
         When("authCode 검증 요청을 하면") {
             verifyAuthCodeService.execute(authCode, phoneNumber)
 
             Then("authentication이 certified 되어야 한다.") {
-                verify { publisher.publishEvent(createAuthenticationEvent.certified()) }
+                verify { publisher.publishEvent(CreateAuthenticationEvent(authentication.certified())) }
             }
         }
 
