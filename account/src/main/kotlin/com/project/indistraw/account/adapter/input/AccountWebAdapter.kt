@@ -41,7 +41,7 @@ class AccountWebAdapter(
             .let { accountDataConverter toResponse it }
             .let { ResponseEntity.ok(it) }
 
-    @DeleteMapping("withdraw")
+    @DeleteMapping("/withdraw")
     fun accountWithdraw(): ResponseEntity<Void> =
         accountWithdrawUseCase.execute()
             .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
