@@ -17,4 +17,9 @@ class CommandAuthenticationPersistenceAdapter(
         authenticationRepository.save(authenticationEntity)
     }
 
+    override fun deleteAuthentication(authentication: Authentication) {
+        val authenticationEntity = authenticationConverter toEntity authentication
+        authenticationRepository.delete(authenticationEntity)
+    }
+
 }

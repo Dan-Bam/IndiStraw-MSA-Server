@@ -5,5 +5,6 @@ import com.project.indistraw.account.domain.Authentication
 interface CommandAuthenticationPort {
 
     fun saveAuthentication(authentication: Authentication)
+    fun deleteAuthentication(authentication: Authentication)
 
 }
