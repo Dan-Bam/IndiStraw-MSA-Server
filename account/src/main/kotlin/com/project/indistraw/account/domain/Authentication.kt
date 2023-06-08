@@ -16,25 +16,23 @@ data class Authentication(
 
     companion object {
         const val MAX_ATTEMPT_COUNT = 5L
-        const val EXPIRED_AT = 1800L
-        private const val VERIFIED_EXPIRED_AT = 2700L
+        const val EXPIRED_AT = 7200L
     }
 
-    fun increaseCount(): Authentication {
-        return Authentication(
+    fun increaseCount(): Authentication =
+        this.copy(
             phoneNumber = phoneNumber,
             attemptCount = attemptCount.inc(),
             isVerified = isVerified,
-            expiredAt = EXPIRED_AT
+            expiredAt = expiredAt
         )
-    }
 
     fun certified(): Authentication =
         this.copy(
             phoneNumber = phoneNumber,
             attemptCount = MAX_ATTEMPT_COUNT,
             isVerified = true,
-            expiredAt = VERIFIED_EXPIRED_AT
+            expiredAt = expiredAt
         )
 
 }
