@@ -16,7 +16,7 @@ class SaveRefreshTokenEventHandler(
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     fun saveRefreshToken(saveRefreshTokenEvent: SaveRefreshTokenEvent) {
-        log.info("saveRefreshToken is activate")
+        log.info("saveRefreshTokenEvent is activate")
 
         val refreshToken = RefreshToken(
             refreshToken = saveRefreshTokenEvent.refreshToken,

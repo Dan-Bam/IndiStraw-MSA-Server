@@ -17,6 +17,7 @@ enum class ErrorCode(
 
     // AUTHENTICATION
     AUTHENTICATION_NOT_FOUND("인증되지 않은 사용자 입니다.", 404),
+    TOO_MANY_AUTHENTICATION_REQUEST("1시간 내에 최대 요청 5번을 초과한 사용자 입니다.", 429),
 
     // TOKEN
     INVALID_TOKEN("유효하지 않은 토큰입니다.", 401),

@@ -4,6 +4,7 @@ import com.project.indistraw.account.application.common.annotation.ServiceWithTr
 import com.project.indistraw.account.application.exception.AuthCodeNotFoundException
 import com.project.indistraw.account.application.exception.AuthCodeNotMatchException
 import com.project.indistraw.account.application.exception.AuthenticationNotFoundException
+import com.project.indistraw.account.application.exception.TooManyAuthenticationRequestException
 import com.project.indistraw.account.application.port.input.VerifyAuthCodeUseCase
 import com.project.indistraw.account.application.port.output.QueryAuthCodePort
 import com.project.indistraw.account.application.port.output.QueryAuthenticationPort
@@ -14,7 +15,7 @@ import org.springframework.context.ApplicationEventPublisher
 class VerifyAuthCodeService(
     private val queryAuthCodePort: QueryAuthCodePort,
     private val queryAuthenticationPort: QueryAuthenticationPort,
-    private val publisher: ApplicationEventPublisher
+    private val publisher: ApplicationEventPublisher,
 ): VerifyAuthCodeUseCase {
 
     override fun execute(authCode: Int, phoneNumber: String) {
@@ -23,19 +24,14 @@ class VerifyAuthCodeService(
         val authentication = queryAuthenticationPort.findByPhoneNumberOrNull(phoneNumber)
             ?: throw AuthenticationNotFoundException()
 
-        val createAuthenticationEvent = CreateAuthenticationEvent(
-            phoneNumber = authentication.phoneNumber,
-            attemptCount = authentication.attemptCount,
-            isVerified = authentication.isVerified,
-            expiredAt = authentication.expiredAt
-        )
+        if (authentication.attemptCount > 5) throw TooManyAuthenticationRequestException()
 
         if (authCodeDomain.authCode != authCode) {
-            publisher.publishEvent(createAuthenticationEvent.increaseCount())
+            publisher.publishEvent(CreateAuthenticationEvent(authentication.increaseCount()))
             throw AuthCodeNotMatchException()
         }
 
-        publisher.publishEvent(createAuthenticationEvent.certified())
+        publisher.publishEvent(CreateAuthenticationEvent(authentication.certified()))
     }
 
 }

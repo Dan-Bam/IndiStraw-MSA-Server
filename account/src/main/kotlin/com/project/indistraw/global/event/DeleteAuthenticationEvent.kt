@@ -2,6 +2,6 @@ package com.project.indistraw.global.event
 
 import com.project.indistraw.account.domain.Authentication
 
-data class CreateAuthenticationEvent(
+data class DeleteAuthenticationEvent(
     val authentication: Authentication
 )
