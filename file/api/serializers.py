@@ -1,6 +1,7 @@
-from rest_framework.serializers import Serializer, FileField, ListField
+from rest_framework.serializers import ModelSerializer
+from .models import File
 
-class UploadSerializer(Serializer):
-    file_uploaded = FileField()
+class UploadSerializer(ModelSerializer):
     class Meta:
-        fields = ['file_uploaded']
+        model = File
+        fields = ['file']
