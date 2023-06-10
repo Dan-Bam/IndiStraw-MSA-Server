@@ -27,6 +27,20 @@ DATABASES = {
     }
 }
 
+### aws 관련 세팅
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME')
+
+### s3 storages
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME, AWS_S3_REGION_NAME)
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl' : 'max-age=86400'
+}
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'path/to/store/my/files/')
 #######################################
 
 ALLOWED_HOSTS = []
@@ -42,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'storages',
     'file',
     'api'
 ]
@@ -86,7 +101,7 @@ WSGI_APPLICATION = 'file.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_vdbalidation.UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
