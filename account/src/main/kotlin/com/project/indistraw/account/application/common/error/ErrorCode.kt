@@ -14,10 +14,11 @@ enum class ErrorCode(
     // AUTH CODE
     AUTH_CODE_NOT_FOUND("인증 코드를 찾을 수 없습니다.", 404),
     AUTH_CODE_NOT_MATCH("인증 코드가 일치 하지 않습니다.", 400),
+    TOO_MANY_AUTH_CODE_REQUEST("인증 코드 확인 요청을 5번 초과 한 사용자 입니다.", 429),
 
     // AUTHENTICATION
     AUTHENTICATION_NOT_FOUND("인증되지 않은 사용자 입니다.", 404),
-    TOO_MANY_AUTHENTICATION_REQUEST("1시간 내에 최대 요청 5번을 초과한 사용자 입니다.", 429),
+    TOO_MANY_AUTHENTICATION_REQUEST("인증 메세지 요청을 5번 초과 한 사용자 입니다.", 429),
 
     // TOKEN
     INVALID_TOKEN("유효하지 않은 토큰입니다.", 401),

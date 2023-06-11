@@ -1,10 +1,7 @@
 package com.project.indistraw.account.application.service
 
 import com.project.indistraw.account.application.common.annotation.ServiceWithTransaction
-import com.project.indistraw.account.application.exception.AuthCodeNotFoundException
-import com.project.indistraw.account.application.exception.AuthCodeNotMatchException
-import com.project.indistraw.account.application.exception.AuthenticationNotFoundException
-import com.project.indistraw.account.application.exception.TooManyAuthenticationRequestException
+import com.project.indistraw.account.application.exception.*
 import com.project.indistraw.account.application.port.input.VerifyAuthCodeUseCase
 import com.project.indistraw.account.application.port.output.QueryAuthCodePort
 import com.project.indistraw.account.application.port.output.QueryAuthenticationPort
@@ -24,10 +21,10 @@ class VerifyAuthCodeService(
         val authentication = queryAuthenticationPort.findByPhoneNumberOrNull(phoneNumber)
             ?: throw AuthenticationNotFoundException()
 
-        if (authentication.attemptCount > 5) throw TooManyAuthenticationRequestException()
+        if (authentication.authCodeCount > 5) throw TooManyAuthCodeRequestException()
 
         if (authCodeDomain.authCode != authCode) {
-            publisher.publishEvent(CreateAuthenticationEvent(authentication.increaseCount()))
+            publisher.publishEvent(CreateAuthenticationEvent(authentication.increaseAuthCodeCount()))
             throw AuthCodeNotMatchException()
         }
 
