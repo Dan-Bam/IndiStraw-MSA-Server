@@ -11,7 +11,8 @@ class AuthenticationConverter {
         domain.let {
             AuthenticationEntity(
                 phoneNumber = it.phoneNumber,
-                attemptCount = it.attemptCount,
+                authCodeCount = it.authCodeCount,
+                authenticationCount = it.authenticationCount,
                 isVerified = it.isVerified,
                 expiredAt = it.expiredAt
             )
@@ -21,7 +22,8 @@ class AuthenticationConverter {
         entity?.let {
             Authentication(
                 phoneNumber = it.phoneNumber,
-                attemptCount = it.attemptCount,
+                authCodeCount = it.authCodeCount,
+                authenticationCount = it.authenticationCount,
                 isVerified = it.isVerified,
                 expiredAt = it.expiredAt
             )

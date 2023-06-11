@@ -3,6 +3,7 @@ package com.project.indistraw.service
 import com.project.indistraw.account.application.exception.AuthCodeNotFoundException
 import com.project.indistraw.account.application.exception.AuthCodeNotMatchException
 import com.project.indistraw.account.application.exception.AuthenticationNotFoundException
+import com.project.indistraw.account.application.exception.TooManyAuthCodeRequestException
 import com.project.indistraw.account.application.port.output.QueryAuthCodePort
 import com.project.indistraw.account.application.port.output.QueryAuthenticationPort
 import com.project.indistraw.account.application.service.VerifyAuthCodeService
@@ -33,7 +34,7 @@ class VerifyAuthCodeServiceTest: BehaviorSpec({
         every { queryAuthCodePort.findByPhoneNumberOrNull(phoneNumber) } returns authCodeDomain
         every { queryAuthenticationPort.findByPhoneNumberOrNull(phoneNumber) } returns authentication
         every { publisher.publishEvent(createAuthenticationEvent) } returns Unit
-        every { publisher.publishEvent(CreateAuthenticationEvent(authentication.increaseCount())) } returns Unit
+        every { publisher.publishEvent(CreateAuthenticationEvent(authentication.increaseAuthCodeCount())) } returns Unit
         every { publisher.publishEvent(CreateAuthenticationEvent(authentication.certified())) } returns Unit
 
         When("authCode 검증 요청을 하면") {
@@ -70,6 +71,17 @@ class VerifyAuthCodeServiceTest: BehaviorSpec({
 
             Then("AuthenticationNotFoundException이 터져야 한다.") {
                 shouldThrow<AuthenticationNotFoundException> {
+                    verifyAuthCodeService.execute(authCode, phoneNumber)
+                }
+            }
+        }
+
+        When("5번 초과 authCode 확인 요청을 하면") {
+            val overAuthentication = AnyValueObjectGenerator.anyValueObject<Authentication>("authCodeCount" to 6)
+            every { queryAuthenticationPort.findByPhoneNumberOrNull(phoneNumber) } returns overAuthentication
+
+            Then("TooManyAuthCodeRequestException이 터져야 한다.") {
+                shouldThrow<TooManyAuthCodeRequestException> {
                     verifyAuthCodeService.execute(authCode, phoneNumber)
                 }
             }

@@ -11,7 +11,9 @@ data class AuthenticationEntity(
     @Id
     val phoneNumber: String,
 
-    val attemptCount: Long,
+    val authCodeCount: Long,
+
+    val authenticationCount: Long,
 
     val isVerified: Boolean,
 
