@@ -43,7 +43,7 @@ class SendAuthCodeService(
         )
         commandAuthCodePort.saveAuthCode(authCode)
 
-        // authentication 없는 사용자는 authentication을 생성한다.
+        // authentication이 없는 사용자는 authentication을 생성한다.
         if (!isExistsAuthentication) {
             val authentication = Authentication(phoneNumber)
             publisher.publishEvent(CreateAuthenticationEvent(authentication))
