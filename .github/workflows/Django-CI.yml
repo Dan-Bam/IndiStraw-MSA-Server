@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    branches: [ "Django" ]
+    branches: [ "Django-file", "Django-Movie"]
 
 jobs:
   build:
