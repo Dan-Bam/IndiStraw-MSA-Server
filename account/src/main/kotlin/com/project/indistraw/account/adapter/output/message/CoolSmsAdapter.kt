@@ -1,19 +1,20 @@
 package com.project.indistraw.account.adapter.output.message
 
+import com.project.indistraw.account.adapter.output.message.exception.MessageSendFailedException
 import com.project.indistraw.account.adapter.output.message.properties.CoolSmsProperties
 import com.project.indistraw.account.application.port.output.SendMessagePort
+import mu.KotlinLogging
 import net.nurigo.java_sdk.api.Message
 import net.nurigo.java_sdk.exceptions.CoolsmsException
-import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 
+private val log = KotlinLogging.logger {  }
 
 @Component
 class CoolSmsAdapter(
     private val coolSmsProperties: CoolSmsProperties
 ): SendMessagePort {
 
-    @Async
     override fun sendMessage(phoneNumber: String, authCode: Int) {
         val coolsms = Message(coolSmsProperties.access, coolSmsProperties.secret)
 
@@ -27,7 +28,8 @@ class CoolSmsAdapter(
         try {
             coolsms.send(params)
         } catch (e: CoolsmsException) {
-            throw IllegalArgumentException("메세지 발송에 실패하였습니다.")
+            log.error("coolsms message send failed")
+            throw MessageSendFailedException()
         }
     }
 
