@@ -2,7 +2,7 @@ name: Spring CI
 
 on:
   push:
-    branches: [ "main", "Django", "Spring"]
+    branches: [ "main", "Django", "Spring" ]
   pull_request:
     branches: [ "Spring-Account" ]
     
