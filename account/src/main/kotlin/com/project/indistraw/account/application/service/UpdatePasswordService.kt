@@ -3,6 +3,7 @@ package com.project.indistraw.account.application.service
 import com.project.indistraw.account.application.common.annotation.ServiceWithTransaction
 import com.project.indistraw.account.application.common.util.AuthenticationValidator
 import com.project.indistraw.account.application.exception.AccountNotFoundException
+import com.project.indistraw.account.application.exception.DuplicatedNewPasswordException
 import com.project.indistraw.account.application.port.input.UpdatePasswordUseCase
 import com.project.indistraw.account.application.port.input.dto.UpdatePasswordDto
 import com.project.indistraw.account.application.port.output.CommandAccountPort
@@ -23,6 +24,10 @@ class UpdatePasswordService(
     override fun execute(dto: UpdatePasswordDto) {
         val account = queryAccountPort.findByPhoneNumberOrNull(dto.phoneNumber)
             ?: throw AccountNotFoundException()
+
+        if (passwordEncodePort.isPasswordMatch(dto.newPassword, account.encodedPassword)) {
+            throw DuplicatedNewPasswordException()
+        }
 
         val authentication = authenticationValidator.verifyAuthenticationByPhoneNumber(account.phoneNumber)
         publisher.publishEvent(DeleteAuthenticationEvent(authentication))

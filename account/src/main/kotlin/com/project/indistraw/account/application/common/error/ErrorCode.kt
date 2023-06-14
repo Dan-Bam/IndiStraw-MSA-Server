@@ -10,6 +10,7 @@ enum class ErrorCode(
     DUPLICATE_ACCOUNT_ID("중복된 id 입니다.", 409),
     PASSWORD_NOT_MATCH("비밀번호가 일치하지 않습니다.", 400),
     ACCOUNT_NOT_FOUND("계정을 찾을 수 없습니다.", 404),
+    DUPLICATE_NEW_PASSWORD("기존 비밀번호와 같은 새 비밀번호 입니다.", 409),
 
     // AUTH CODE
     AUTH_CODE_NOT_FOUND("인증 코드를 찾을 수 없습니다.", 404),
