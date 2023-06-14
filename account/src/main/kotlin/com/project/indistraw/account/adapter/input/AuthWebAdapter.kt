@@ -45,9 +45,9 @@ class AuthWebAdapter(
         checkAccountIdUseCase.execute(id)
             .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 
-    @RequestMapping(value = ["/check/phone-number/{phoneNumber}"], method = [RequestMethod.HEAD])
-    fun checkPhoneNumber(@PathVariable phoneNumber: String): ResponseEntity<Void> =
-        checkPhoneNumberUseCase.execute(phoneNumber)
+    @RequestMapping(value = ["/check/phone-number/{phoneNumber}/type/{type}"], method = [RequestMethod.HEAD])
+    fun checkPhoneNumber(@PathVariable phoneNumber: String, @PathVariable type: String): ResponseEntity<Void> =
+        checkPhoneNumberUseCase.execute(phoneNumber, type)
             .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 
     @PostMapping("/send/phone-number/{phoneNumber}")

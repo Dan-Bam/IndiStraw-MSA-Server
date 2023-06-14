@@ -32,7 +32,7 @@ class SecurityConfig(
             .mvcMatchers(HttpMethod.PATCH, "/api/v1/auth").permitAll()
             .mvcMatchers(HttpMethod.PATCH, "/api/v1/auth/reissue").permitAll()
             .mvcMatchers(HttpMethod.HEAD, "/api/v1/auth/check/id/{id}").permitAll()
-            .mvcMatchers(HttpMethod.HEAD, "/api/v1/auth/check/phone-number/{phone-number}").permitAll()
+            .mvcMatchers(HttpMethod.HEAD, "/api/v1/auth/check/phone-number/{phone-number}/type/{type}").permitAll()
             .mvcMatchers(HttpMethod.POST, "/api/v1/auth/send/phone-number/{phoneNumber}").permitAll()
             .mvcMatchers(HttpMethod.GET, "/api/v1/auth/auth-code/{authCode}/phone-number/{phoneNumber}").permitAll()
 
