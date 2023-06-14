@@ -4,6 +4,7 @@ import com.project.indistraw.account.adapter.input.converter.AuthDataConverter
 import com.project.indistraw.account.adapter.input.request.SignInRequest
 import com.project.indistraw.account.adapter.input.request.SignUpRequest
 import com.project.indistraw.account.adapter.input.response.TokenResponse
+import com.project.indistraw.account.application.common.enums.CheckPhoneNumberType
 import com.project.indistraw.account.application.port.input.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -46,7 +47,7 @@ class AuthWebAdapter(
             .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 
     @RequestMapping(value = ["/check/phone-number/{phoneNumber}/type/{type}"], method = [RequestMethod.HEAD])
-    fun checkPhoneNumber(@PathVariable phoneNumber: String, @PathVariable type: String): ResponseEntity<Void> =
+    fun checkPhoneNumber(@PathVariable phoneNumber: String, @PathVariable type: CheckPhoneNumberType): ResponseEntity<Void> =
         checkPhoneNumberUseCase.execute(phoneNumber, type)
             .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 
