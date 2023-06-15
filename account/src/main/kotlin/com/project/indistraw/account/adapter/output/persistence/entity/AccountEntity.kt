@@ -26,6 +26,9 @@ class AccountEntity(
     @Column(nullable = false, length = 15)
     val phoneNumber: String,
 
+    @Embedded
+    val address: Address,
+
     @Column(nullable = true, columnDefinition = "TEXT")
     var profileUrl: String?,
 
