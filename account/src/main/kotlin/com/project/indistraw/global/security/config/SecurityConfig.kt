@@ -46,6 +46,9 @@ class SecurityConfig(
             // /health
             .mvcMatchers(HttpMethod.GET, "/").permitAll()
 
+            // /roadSearch.html
+            .mvcMatchers(HttpMethod.GET, "/roadSearch.html").permitAll()
+
             .anyRequest().denyAll()
             .and()
 
