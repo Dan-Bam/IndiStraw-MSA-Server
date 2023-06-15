@@ -12,14 +12,14 @@ class CheckPhoneNumberService(
     private val queryAccountPort: QueryAccountPort
 ): CheckPhoneNumberUseCase {
 
-    override fun execute(phoneNumber: String, type: String) {
-        when(CheckPhoneNumberType.valueOf(type)) {
+    override fun execute(phoneNumber: String, type: CheckPhoneNumberType) {
+        when(type) {
             CheckPhoneNumberType.SIGNUP -> {
                 if (queryAccountPort.existsByPhoneNumber(phoneNumber)) {
                     throw DuplicatedPhoneNumberException()
                 }
             }
-            CheckPhoneNumberType.PASSWORD -> {
+            CheckPhoneNumberType.FIND_ACCOUNT -> {
                 if (!queryAccountPort.existsByPhoneNumber(phoneNumber)) {
                     throw AccountNotFoundException()
                 }

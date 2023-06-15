@@ -2,6 +2,7 @@ package com.project.indistraw.service
 
 import com.project.indistraw.account.application.common.util.AuthenticationValidator
 import com.project.indistraw.account.application.exception.AccountNotFoundException
+import com.project.indistraw.account.application.exception.DuplicatedNewPasswordException
 import com.project.indistraw.account.application.port.input.dto.UpdatePasswordDto
 import com.project.indistraw.account.application.port.output.CommandAccountPort
 import com.project.indistraw.account.application.port.output.PasswordEncodePort
@@ -35,6 +36,7 @@ class UpdatePasswordServiceTest: BehaviorSpec({
         val authentication = AnyValueObjectGenerator.anyValueObject<Authentication>("phoneNumber" to phoneNumber)
 
         every { queryAccountPort.findByPhoneNumberOrNull(updatePasswordDto.phoneNumber) } returns account
+        every { passwordEncodePort.isPasswordMatch(newPassword, account.encodedPassword) } returns false
         every { passwordEncodePort.passwordEncode(updatePasswordDto.newPassword) } returns encodedNewPassword
         every { commandAccountPort.saveAccount(account.copy(encodedPassword = encodedNewPassword)) } returns account.accountIdx
         every { authenticationValidator.verifyAuthenticationByPhoneNumber(phoneNumber) } returns authentication
@@ -53,6 +55,17 @@ class UpdatePasswordServiceTest: BehaviorSpec({
 
             Then("AccountNotFound가 터져야 한다.") {
                 shouldThrow<AccountNotFoundException> {
+                    updatePasswordService.execute(updatePasswordDto)
+                }
+            }
+        }
+
+        When("기존 비밀번호와 같게 새 비밀번호를 요청하면") {
+            every { queryAccountPort.findByPhoneNumberOrNull(updatePasswordDto.phoneNumber) } returns account
+            every { passwordEncodePort.isPasswordMatch(newPassword, account.encodedPassword) } returns true
+
+            Then("DuplicatedNewPasswordException이 터져야 한다.") {
+                shouldThrow<DuplicatedNewPasswordException> {
                     updatePasswordService.execute(updatePasswordDto)
                 }
             }

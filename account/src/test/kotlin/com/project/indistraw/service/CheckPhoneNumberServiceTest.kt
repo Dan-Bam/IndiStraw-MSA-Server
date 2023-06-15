@@ -1,5 +1,7 @@
 package com.project.indistraw.service
 
+import com.project.indistraw.account.application.common.enums.CheckPhoneNumberType
+import com.project.indistraw.account.application.exception.AccountNotFoundException
 import com.project.indistraw.account.application.exception.DuplicatedPhoneNumberException
 import com.project.indistraw.account.application.port.output.QueryAccountPort
 import com.project.indistraw.account.application.service.CheckPhoneNumberService
@@ -14,23 +16,27 @@ class CheckPhoneNumberServiceTest: BehaviorSpec({
 
     Given("전화번호가 주어질때") {
         val phoneNumber = "01012345678"
+        val signUpType = CheckPhoneNumberType.SIGNUP
+        val findAccountType = CheckPhoneNumberType.FIND_ACCOUNT
 
         every { queryAccountPort.existsByPhoneNumber(phoneNumber) } returns false
 
-        When("전화번호 중복 검사 요청을 하면") {
-            checkPhoneNumberService.execute(phoneNumber)
-
-            Then("전화번호가 중복인지 판별이 되어야 한다.") {
-
-            }
-        }
-
-        When("중복된 전화번호로 요청을 하면") {
+        When("type이 SIGNUP일때 중복된 전화번호로 요청을 하면") {
             every { queryAccountPort.existsByPhoneNumber(phoneNumber) } returns true
 
             Then("DuplicatePhoneNumberException이 터져야 한다.") {
                 shouldThrow<DuplicatedPhoneNumberException> {
-                    checkPhoneNumberService.execute(phoneNumber)
+                    checkPhoneNumberService.execute(phoneNumber, signUpType)
+                }
+            }
+        }
+
+        When("type이 FIND_ACCOUNT일때 없는 전화번호로 요청을 하면") {
+            every { queryAccountPort.existsByPhoneNumber(phoneNumber) } returns false
+
+            Then("AccountNotFoundException이 터져야 한다.") {
+                shouldThrow<AccountNotFoundException> {
+                    checkPhoneNumberService.execute(phoneNumber, findAccountType)
                 }
             }
         }
