@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main", "Django", "Spring" ]
   pull_request:
-    branches: [ "Spring-Account" ]
+    branches: [ "Spring-Account", "Spring" ]
     
 permissions:
   contents: read
