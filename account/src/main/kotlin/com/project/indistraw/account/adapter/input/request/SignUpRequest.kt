@@ -24,5 +24,8 @@ data class SignUpRequest(
     val phoneNumber: String,
 
     @field:NotNull
+    val address: AddressRequest,
+
+    @field:NotNull
     val profileUrl: String?
 )
