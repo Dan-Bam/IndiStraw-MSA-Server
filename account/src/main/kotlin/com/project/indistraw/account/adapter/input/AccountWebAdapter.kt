@@ -17,6 +17,7 @@ class AccountWebAdapter(
     private val updatePasswordUseCase: UpdatePasswordUseCase,
     private val updateAccountProfileUseCase: UpdateAccountProfileUseCase,
     private val accountProfileDetailUseCase: AccountProfileDetailUseCase,
+    private val logoutAccountUseCase: LogoutAccountUseCase,
     private val accountWithdrawUseCase: AccountWithdrawUseCase
 ) {
 
@@ -40,6 +41,11 @@ class AccountWebAdapter(
         accountProfileDetailUseCase.execute()
             .let { accountDataConverter toResponse it }
             .let { ResponseEntity.ok(it) }
+
+    @DeleteMapping("/logout")
+    fun logoutAccount(@RequestHeader refreshToken: String): ResponseEntity<Void> =
+        logoutAccountUseCase.execute(refreshToken)
+            .let { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
 
     @DeleteMapping("/withdraw")
     fun accountWithdraw(): ResponseEntity<Void> =
