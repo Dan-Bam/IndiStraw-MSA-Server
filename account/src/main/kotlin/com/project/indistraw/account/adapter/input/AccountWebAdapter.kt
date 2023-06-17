@@ -45,11 +45,11 @@ class AccountWebAdapter(
     @DeleteMapping("/logout")
     fun logoutAccount(@RequestHeader refreshToken: String): ResponseEntity<Void> =
         logoutAccountUseCase.execute(refreshToken)
-            .let { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
+            .let { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 
     @DeleteMapping("/withdraw")
     fun accountWithdraw(): ResponseEntity<Void> =
         accountWithdrawUseCase.execute()
-            .run { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
+            .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
 
 }
