@@ -1,0 +1,16 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: indistraw-account-route
+          uri: http://localhost:8080
+          predicates:
+            - Path=/api/v1/account/**
+          filters:
+            - JwtAuthenticationGatewayFilter
+
+jwt:
+  accessSecret: ${JWT_ACCESS_SECRET}

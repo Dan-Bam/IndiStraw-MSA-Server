@@ -2,7 +2,7 @@ name: Django CI
 
 on:
   push:
-    branches: [ "main", "Django", "Spring" ]
+    branches: [ "main", "Django" ]
   pull_request:
     branches: [ "Django-file", "Django-Movie", "Django" ]
 

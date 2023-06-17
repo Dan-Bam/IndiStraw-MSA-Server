@@ -21,9 +21,25 @@ repositories {
 extra["springCloudVersion"] = "2022.0.3"
 
 dependencies {
+    /* spring app */
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    /* spring cloud */
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springframework.cloud:spring-cloud-gateway-webflux:4.0.3")
+
+    /* jwt */
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
+    /* logging */
+    implementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
+    testImplementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
 }
 
 dependencyManagement {
