@@ -18,6 +18,7 @@ class AuthWebAdapter(
     private val signUpUseCase: SignUpUseCase,
     private val signInUseCase: SignInUseCase,
     private val reissueTokenUseCase: ReissueTokenUseCase,
+    private val logoutAccountUseCase: LogoutAccountUseCase,
     private val checkAccountIdUseCase: CheckAccountIdUseCase,
     private val checkPhoneNumberUseCase: CheckPhoneNumberUseCase,
     private val sendAuthCodeUseCase: SendAuthCodeUseCase,
@@ -40,6 +41,11 @@ class AuthWebAdapter(
         reissueTokenUseCase.execute(refreshToken)
             .let { authDataConverter toResponse it }
             .let { ResponseEntity.ok(it) }
+
+    @DeleteMapping("/logout")
+    fun logoutAccount(@RequestHeader refreshToken: String): ResponseEntity<Void> =
+        logoutAccountUseCase.execute(refreshToken)
+            .let { ResponseEntity.status(HttpStatus.NO_CONTENT).build() }
 
     @RequestMapping(value = ["/check/id/{id}"], method = [RequestMethod.HEAD])
     fun checkAccountId(@PathVariable id: String): ResponseEntity<Void> =

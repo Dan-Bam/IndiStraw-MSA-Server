@@ -31,6 +31,7 @@ class SecurityConfig(
             .mvcMatchers(HttpMethod.POST, "/api/v1/auth/signin").permitAll()
             .mvcMatchers(HttpMethod.PATCH, "/api/v1/auth").permitAll()
             .mvcMatchers(HttpMethod.PATCH, "/api/v1/auth/reissue").permitAll()
+            .mvcMatchers(HttpMethod.DELETE, "/api/v1/auth/logout").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
             .mvcMatchers(HttpMethod.HEAD, "/api/v1/auth/check/id/{id}").permitAll()
             .mvcMatchers(HttpMethod.HEAD, "/api/v1/auth/check/phone-number/{phone-number}/type/{type}").permitAll()
             .mvcMatchers(HttpMethod.POST, "/api/v1/auth/send/phone-number/{phoneNumber}").permitAll()
@@ -41,7 +42,6 @@ class SecurityConfig(
             .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/update/password").permitAll()
             .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/update/profile").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
             .mvcMatchers(HttpMethod.GET, "/api/v1/account/profile").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
-            .mvcMatchers(HttpMethod.DELETE, "/api/v1/account/logout").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
             .mvcMatchers(HttpMethod.DELETE, "/api/v1/account/withdraw").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
 
             // /health
