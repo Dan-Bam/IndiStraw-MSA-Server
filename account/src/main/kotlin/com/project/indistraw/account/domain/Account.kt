@@ -8,7 +8,7 @@ data class Account(
     val encodedPassword: String,
     var name: String,
     val phoneNumber: String,
-    val address: Address,
+    val address: Address?,
     val profileUrl: String?,
     val authority: Authority
 )

@@ -7,6 +7,7 @@ import com.project.indistraw.account.application.port.input.dto.UpdateAccountPro
 import com.project.indistraw.account.application.port.output.AccountSecurityPort
 import com.project.indistraw.account.application.port.output.CommandAccountPort
 import com.project.indistraw.account.application.port.output.QueryAccountPort
+import com.project.indistraw.account.domain.Address
 
 @ServiceWithTransaction
 class UpdateAccountProfileService(
@@ -23,6 +24,13 @@ class UpdateAccountProfileService(
             account.copy(
                 name = dto.name,
                 phoneNumber = dto.phoneNumber,
+                address = dto.address?.let {
+                    Address(
+                        zipcode = dto.address.zipcode,
+                        streetAddress = dto.address.streetAddress,
+                        detailAddress = dto.address.streetAddress
+                    )
+                },
                 profileUrl = dto.profileUrl
             )
         )

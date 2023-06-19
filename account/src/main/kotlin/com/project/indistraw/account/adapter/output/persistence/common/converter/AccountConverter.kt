@@ -1,7 +1,6 @@
 package com.project.indistraw.account.adapter.output.persistence.common.converter
 
 import com.project.indistraw.account.adapter.output.persistence.entity.AccountEntity
-import com.project.indistraw.account.adapter.output.persistence.entity.Address
 import com.project.indistraw.account.domain.Account
 import com.project.indistraw.account.domain.Authority
 import org.springframework.stereotype.Component
@@ -17,7 +16,7 @@ class AccountConverter {
                 encodedPassword = it.encodedPassword,
                 name = it.name,
                 phoneNumber = it.phoneNumber,
-                address = Address(zipcode = it.address.zipcode, it.address.streetAddress, it.address.detailAddress),
+                address = null,
                 profileUrl = it.profileUrl,
                 authority = Authority.ROLE_ACCOUNT
             )
@@ -30,12 +29,8 @@ class AccountConverter {
                 id = it.id,
                 encodedPassword = it.encodedPassword,
                 name = it.name,
+                address = null,
                 phoneNumber = it.phoneNumber,
-                address = com.project.indistraw.account.domain.Address(
-                    zipcode = it.address.zipcode,
-                    it.address.streetAddress,
-                    it.address.detailAddress
-                ),
                 profileUrl = it.profileUrl,
                 authority = it.authority
             )
