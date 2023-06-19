@@ -30,7 +30,7 @@ class AccountEntity(
     val address: Address?,
 
     @Column(nullable = true, columnDefinition = "TEXT")
-    var profileUrl: String?,
+    val profileUrl: String?,
 
     @Enumerated(EnumType.STRING)
     val authority: Authority

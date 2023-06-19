@@ -25,12 +25,12 @@ class AccountWebAdapter(
         findAccountIdUseCase.execute(phoneNumber)
             .let { ResponseEntity.ok(mapOf("id" to it)) }
 
-    @PatchMapping("/update/password")
+    @PatchMapping("/password")
     fun sendAuthCode(@RequestBody request: UpdatePasswordRequest): ResponseEntity<Void> =
         updatePasswordUseCase.execute(accountDataConverter toDto request)
             .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
 
-    @PatchMapping("/update/profile")
+    @PatchMapping("/profile")
     fun sendAuthCode(@RequestBody request: UpdateAccountProfileRequest): ResponseEntity<Void> =
         updateAccountProfileUseCase.execute(accountDataConverter toDto request)
             .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
@@ -41,7 +41,7 @@ class AccountWebAdapter(
             .let { accountDataConverter toResponse it }
             .let { ResponseEntity.ok(it) }
 
-    @DeleteMapping("/withdraw")
+    @DeleteMapping
     fun accountWithdraw(): ResponseEntity<Void> =
         accountWithdrawUseCase.execute()
             .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }

@@ -12,7 +12,7 @@ data class UpdateAccountProfileRequest(
     @field:Size(min = 10, max = 11)
     val phoneNumber: String,
 
-    val address: AddressRequest,
+    val address: AddressRequest?,
 
     val profileUrl: String?
 )
