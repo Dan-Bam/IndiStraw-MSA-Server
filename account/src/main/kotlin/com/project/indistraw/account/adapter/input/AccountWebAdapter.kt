@@ -5,6 +5,7 @@ import com.project.indistraw.account.adapter.input.request.UpdateAccountProfileR
 import com.project.indistraw.account.adapter.input.request.UpdatePasswordRequest
 import com.project.indistraw.account.adapter.input.response.AccountProfileDetailResponse
 import com.project.indistraw.account.application.port.input.*
+import com.project.indistraw.account.application.port.output.UpdatePhoneNumberUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -15,6 +16,7 @@ class AccountWebAdapter(
     private val accountDataConverter: AccountDataConverter,
     private val findAccountIdUseCase: FindAccountIdUseCase,
     private val updatePasswordUseCase: UpdatePasswordUseCase,
+    private val updatePhoneNumberUseCase: UpdatePhoneNumberUseCase,
     private val updateAccountProfileUseCase: UpdateAccountProfileUseCase,
     private val accountProfileDetailUseCase: AccountProfileDetailUseCase,
     private val accountWithdrawUseCase: AccountWithdrawUseCase
@@ -28,6 +30,11 @@ class AccountWebAdapter(
     @PatchMapping("/password")
     fun sendAuthCode(@RequestBody request: UpdatePasswordRequest): ResponseEntity<Void> =
         updatePasswordUseCase.execute(accountDataConverter toDto request)
+            .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
+
+    @PatchMapping("/phone-number/{phoneNumber}")
+    fun sendAuthCode(@PathVariable phoneNumber: String): ResponseEntity<Void> =
+        updatePhoneNumberUseCase.execute(phoneNumber)
             .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
 
     @PatchMapping("/profile")
