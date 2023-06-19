@@ -4,13 +4,13 @@ import javax.persistence.Column
 import javax.persistence.Embeddable
 
 @Embeddable
-class Address(
+class AddressEntity(
     @Column(nullable = true)
-    val zipcode: String,
+    val zipcode: String?,
 
     @Column(nullable = true)
-    val streetAddress: String,
+    val streetAddress: String?,
 
     @Column(nullable = true)
-    val detailAddress: String
+    val detailAddress: String?
 )

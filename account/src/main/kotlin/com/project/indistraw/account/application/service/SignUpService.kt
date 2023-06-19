@@ -9,6 +9,7 @@ import com.project.indistraw.account.application.port.output.CommandAccountPort
 import com.project.indistraw.account.application.port.output.PasswordEncodePort
 import com.project.indistraw.account.application.port.output.QueryAccountPort
 import com.project.indistraw.account.domain.Account
+import com.project.indistraw.account.domain.Address
 import com.project.indistraw.account.domain.Authority
 import com.project.indistraw.global.event.DeleteAuthenticationEvent
 import org.springframework.context.ApplicationEventPublisher
@@ -38,7 +39,7 @@ class SignUpService(
                 encodedPassword = passwordEncodePort.passwordEncode(dto.password),
                 name = it.name,
                 phoneNumber = it.phoneNumber,
-                address = null,
+                address = Address("", "", ""),
                 profileUrl = it.profileUrl,
                 authority = Authority.ROLE_ACCOUNT
             )

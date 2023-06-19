@@ -1,6 +1,7 @@
 package com.project.indistraw.account.adapter.input
 
 import com.project.indistraw.account.adapter.input.converter.AccountDataConverter
+import com.project.indistraw.account.adapter.input.request.UpdateAddressRequest
 import com.project.indistraw.account.adapter.input.request.UpdateAccountProfileRequest
 import com.project.indistraw.account.adapter.input.request.UpdatePasswordRequest
 import com.project.indistraw.account.adapter.input.response.AccountProfileDetailResponse
@@ -17,6 +18,7 @@ class AccountWebAdapter(
     private val findAccountIdUseCase: FindAccountIdUseCase,
     private val updatePasswordUseCase: UpdatePasswordUseCase,
     private val updatePhoneNumberUseCase: UpdatePhoneNumberUseCase,
+    private val updateAddressUseCase: UpdateAddressUseCase,
     private val updateAccountProfileUseCase: UpdateAccountProfileUseCase,
     private val accountProfileDetailUseCase: AccountProfileDetailUseCase,
     private val accountWithdrawUseCase: AccountWithdrawUseCase
@@ -35,6 +37,11 @@ class AccountWebAdapter(
     @PatchMapping("/phone-number/{phoneNumber}")
     fun sendAuthCode(@PathVariable phoneNumber: String): ResponseEntity<Void> =
         updatePhoneNumberUseCase.execute(phoneNumber)
+            .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
+
+    @PatchMapping("/address")
+    fun sendAuthCode(@RequestBody updateAddressRequest: UpdateAddressRequest): ResponseEntity<Void> =
+        updateAddressUseCase.execute(accountDataConverter toDto updateAddressRequest)
             .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
 
     @PatchMapping("/profile")
