@@ -17,12 +17,14 @@ class AccountProfileDetailService(
         val accountIdx = accountSecurityPort.getCurrentAccountIdx()
         val account = queryAccountPort.findByIdxOrNull(accountIdx)
             ?: throw AccountNotFoundException()
+
         return AccountProfileDetailDto(
             id = account.id,
             name = account.name,
             phoneNumber = account.phoneNumber,
             address = account.address?.let {
-                it.streetAddress + " " + it.detailAddress
+                if (it.zipcode.isNullOrBlank()) null
+                else it.streetAddress + " " + it.detailAddress
             },
             profileUrl = account.profileUrl
         )
