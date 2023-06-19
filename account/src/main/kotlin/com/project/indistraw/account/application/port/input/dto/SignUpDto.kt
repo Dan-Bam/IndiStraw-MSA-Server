@@ -5,6 +5,5 @@ data class SignUpDto(
     val password: String,
     val name: String,
     val phoneNumber: String,
-    val address: AddressDto,
     val profileUrl: String?
 )
