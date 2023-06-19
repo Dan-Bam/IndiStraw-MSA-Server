@@ -24,11 +24,13 @@ class UpdateAccountProfileService(
             account.copy(
                 name = dto.name,
                 phoneNumber = dto.phoneNumber,
-                address = Address(
-                    zipcode = dto.address.zipcode,
-                    streetAddress = dto.address.streetAddress,
-                    detailAddress = dto.address.streetAddress
-                ),
+                address = dto.address?.let {
+                    Address(
+                        zipcode = it.zipcode,
+                        streetAddress = it.streetAddress,
+                        detailAddress = it.streetAddress
+                    )
+                },
                 profileUrl = dto.profileUrl
             )
         )
