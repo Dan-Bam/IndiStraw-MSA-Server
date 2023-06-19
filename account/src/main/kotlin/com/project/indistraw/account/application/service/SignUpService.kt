@@ -39,7 +39,7 @@ class SignUpService(
                 encodedPassword = passwordEncodePort.passwordEncode(dto.password),
                 name = it.name,
                 phoneNumber = it.phoneNumber,
-                address = Address("", "", ""),
+                address = Address(null, null, null),
                 profileUrl = it.profileUrl,
                 authority = Authority.ROLE_ACCOUNT
             )
