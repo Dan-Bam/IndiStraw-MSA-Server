@@ -1,6 +1,6 @@
 package com.project.indistraw.common
 
-import com.project.indistraw.account.application.port.input.dto.AddressDto
+import com.project.indistraw.account.application.port.input.dto.UpdateAddressDto
 import com.project.indistraw.account.domain.Address
 import com.project.indistraw.account.domain.Authority
 import java.time.LocalDate
@@ -59,7 +59,7 @@ object AnyValueObjectGenerator {
 
             Authority::class -> Authority.ROLE_ACCOUNT
             Address::class -> Address("", "", "")
-            AddressDto::class -> AddressDto("", "", "")
+            UpdateAddressDto::class -> UpdateAddressDto("", "", "")
 
             else -> {
                 throw IllegalArgumentException(

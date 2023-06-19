@@ -40,6 +40,7 @@ class SecurityConfig(
             .mvcMatchers(HttpMethod.GET, "/api/v1/account/phone-number/{phoneNumber}").permitAll()
             .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/password").permitAll()
             .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/phone-number/{phoneNumber}").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
+            .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/address").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
             .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/profile").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
             .mvcMatchers(HttpMethod.GET, "/api/v1/account/profile").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
             .mvcMatchers(HttpMethod.DELETE, "/api/v1/account").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
