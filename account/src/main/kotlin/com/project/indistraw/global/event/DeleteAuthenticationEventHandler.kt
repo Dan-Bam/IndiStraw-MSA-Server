@@ -17,7 +17,7 @@ class DeleteAuthenticationEventHandler(
     fun deleteAuthentication(deleteAuthenticationEvent: DeleteAuthenticationEvent) {
         log.info("deleteAuthenticationEvent is activate")
 
-        commandAuthenticationPort.saveAuthentication(deleteAuthenticationEvent.authentication)
+        commandAuthenticationPort.deleteAuthentication(deleteAuthenticationEvent.authentication)
     }
 
 }
