@@ -7,7 +7,6 @@ import com.project.indistraw.account.application.port.input.dto.UpdateAccountPro
 import com.project.indistraw.account.application.port.output.AccountSecurityPort
 import com.project.indistraw.account.application.port.output.CommandAccountPort
 import com.project.indistraw.account.application.port.output.QueryAccountPort
-import com.project.indistraw.account.domain.Address
 
 @ServiceWithTransaction
 class UpdateAccountProfileService(
@@ -20,20 +19,12 @@ class UpdateAccountProfileService(
         val accountIdx = accountSecurityPort.getCurrentAccountIdx()
         val account = queryAccountPort.findByIdxOrNull(accountIdx)
             ?: throw AccountNotFoundException()
+
         commandAccountPort.saveAccount(
             account.copy(
                 name = dto.name,
-                phoneNumber = dto.phoneNumber,
-                address = dto.address?.let {
-                    Address(
-                        zipcode = it.zipcode,
-                        streetAddress = it.streetAddress,
-                        detailAddress = it.streetAddress
-                    )
-                },
                 profileUrl = dto.profileUrl
             )
         )
     }
-
 }
