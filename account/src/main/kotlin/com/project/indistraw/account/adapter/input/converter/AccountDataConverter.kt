@@ -22,13 +22,11 @@ class AccountDataConverter {
         UpdateAccountProfileDto(
             name = request.name,
             phoneNumber = request.phoneNumber,
-            address = request.address?.let {
-                AddressDto(
-                    zipcode = it.zipcode,
-                    streetAddress = request.address.streetAddress,
-                    detailAddress = request.address.detailAddress
-                )
-            },
+            address = AddressDto(
+                zipcode = request.address.zipcode,
+                streetAddress = request.address.streetAddress,
+                detailAddress = request.address.detailAddress
+            ),
             profileUrl = request.profileUrl
         )
 
@@ -36,6 +34,7 @@ class AccountDataConverter {
         AccountProfileDetailResponse(
             id = dto.id,
             name = dto.name,
+            phoneNumber = dto.phoneNumber,
             address = dto.address,
             profileUrl = dto.profileUrl
         )

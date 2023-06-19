@@ -20,8 +20,9 @@ class AccountProfileDetailService(
         return AccountProfileDetailDto(
             id = account.id,
             name = account.name,
+            phoneNumber = account.phoneNumber,
             address = account.address?.let {
-                it.streetAddress + it.detailAddress
+                it.streetAddress + " " + it.detailAddress
             },
             profileUrl = account.profileUrl
         )

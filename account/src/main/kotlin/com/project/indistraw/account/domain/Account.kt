@@ -6,7 +6,7 @@ data class Account(
     val accountIdx: UUID,
     val id: String,
     val encodedPassword: String,
-    var name: String,
+    val name: String,
     val phoneNumber: String,
     val address: Address?,
     val profileUrl: String?,
