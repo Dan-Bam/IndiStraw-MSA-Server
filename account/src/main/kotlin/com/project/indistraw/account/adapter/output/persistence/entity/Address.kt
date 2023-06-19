@@ -5,12 +5,12 @@ import javax.persistence.Embeddable
 
 @Embeddable
 class Address(
-    @Column(nullable = false)
+    @Column(nullable = true)
     val zipcode: String,
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     val streetAddress: String,
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     val detailAddress: String
 )
