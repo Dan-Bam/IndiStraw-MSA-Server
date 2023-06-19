@@ -4,6 +4,7 @@ import com.project.indistraw.account.adapter.input.request.UpdateAccountProfileR
 import com.project.indistraw.account.adapter.input.request.UpdatePasswordRequest
 import com.project.indistraw.account.adapter.input.response.AccountProfileDetailResponse
 import com.project.indistraw.account.application.port.input.dto.AccountProfileDetailDto
+import com.project.indistraw.account.application.port.input.dto.AddressDto
 import com.project.indistraw.account.application.port.input.dto.UpdateAccountProfileDto
 import com.project.indistraw.account.application.port.input.dto.UpdatePasswordDto
 import org.springframework.stereotype.Component
@@ -21,7 +22,13 @@ class AccountDataConverter {
         UpdateAccountProfileDto(
             name = request.name,
             phoneNumber = request.phoneNumber,
-            address = request.address,
+            address = request.address?.let {
+                AddressDto(
+                    zipcode = it.zipcode,
+                    streetAddress = request.address.streetAddress,
+                    detailAddress = request.address.detailAddress
+                )
+            },
             profileUrl = request.profileUrl
         )
 
@@ -29,6 +36,7 @@ class AccountDataConverter {
         AccountProfileDetailResponse(
             id = dto.id,
             name = dto.name,
+            address = dto.address,
             profileUrl = dto.profileUrl
         )
 
