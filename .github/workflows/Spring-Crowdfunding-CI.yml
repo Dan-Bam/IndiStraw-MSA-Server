@@ -1,8 +1,8 @@
-name: Spring-Account CI
+name: Spring-Crowdfunding CI
 
 on:
   push:
-    branches: [ "main", "Spring-Crowdfunding" ]
+    branches: [ "main", "Spring" ]
   pull_request:
     branches: [ "Spring", "Spring-Crowdfunding" ]
     
@@ -40,18 +40,18 @@ jobs:
     - name: Gradle clean and Build  
       run: ./gradlew clean build
       
-    - name: CI Discord Spring Success Notification
+    - name: Spring-Crowdfunding CI Success Discord Notification
       uses: sarisia/actions-status-discord@v1
       if: ${{ success() }}
       with:
-        title: ✅ Spring CI success ✅
+        title: ✅ Spring-Crowdfunding CI success ✅
         webhook: ${{ secrets.DISCORD_WEBHOOK }}
         color: 00FF00
     
-    - name:  CI Discord Spring Failed Notification
+    - name: Spring-Crowdfunding CI Success Discord Notification
       uses: sarisia/actions-status-discord@v1
       if: ${{ failure() }}
       with:
-        title: ❗️  Spring CI failed ❗️
+        title: ❗️ Spring-Crowdfunding CI failed ❗️
         webhook: ${{ secrets.DISCORD_WEBHOOK }}
         color: FF0000
