@@ -5,6 +5,5 @@ import java.time.LocalDateTime
 
 data class Date(
     val createdDate: LocalDateTime,
-    val startDate: LocalDate,
     val endDate: LocalDate
 )
