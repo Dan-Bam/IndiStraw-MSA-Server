@@ -21,8 +21,8 @@ class AccountProfileDetailServiceTest: BehaviorSpec({
 
     Given("계정이 주어질때") {
         val accountIdx = UUID.randomUUID()
-        val account = AnyValueObjectGenerator.anyValueObject<Account>()
-        val accountProfileDetailDto = AnyValueObjectGenerator.anyValueObject<AccountProfileDetailDto>("id" to account.id)
+        val account = AnyValueObjectGenerator.anyValueObject<Account>("accountIdx" to accountIdx)
+        val accountProfileDetailDto = AccountProfileDetailDto(id = "", name = "", phoneNumber = "", address = null, profileUrl = "")
 
         every { accountSecurityPort.getCurrentAccountIdx() } returns accountIdx
         every { queryAccountPort.findByIdxOrNull(accountIdx) } returns account
