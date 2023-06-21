@@ -22,8 +22,8 @@ class UpdateAccountProfileServiceTest: BehaviorSpec({
     val updateAccountProfileService = UpdateAccountProfileService(queryAccountPort, commandAccountPort, accountSecurityPort)
 
     Given("updateAccountProfileDto이 주어질때") {
-        val phoneNumber = "01012345678"
-        val updateAccountProfileDto = AnyValueObjectGenerator.anyValueObject<UpdateAccountProfileDto>("phoneNumber" to phoneNumber)
+        val updateName = "test update name"
+        val updateAccountProfileDto = AnyValueObjectGenerator.anyValueObject<UpdateAccountProfileDto>("name" to updateName)
         val accountIdx = UUID.randomUUID()
         val account = AnyValueObjectGenerator.anyValueObject<Account>("accountIdx" to accountIdx)
 
