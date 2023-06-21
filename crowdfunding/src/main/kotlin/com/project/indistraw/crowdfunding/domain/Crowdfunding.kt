@@ -8,8 +8,10 @@ data class Crowdfunding(
     val title: String,
     val description: String,
     val amount: Amount,
-    val directorAccount: String,
+    val directorAccount: DirectorAccount,
     val thumbnailUrl: String,
     val date: Date,
     val activity: Activity,
+    val imageList: List<String>,
+    val detailList: List<String>
 )

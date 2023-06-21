@@ -22,11 +22,8 @@ class CrowdfundingEntity(
     @Embedded
     val amount: AmountEntity,
 
-    @Column(nullable = false)
-    val directorAccount: String,
-
-    @Column(nullable = false)
-    val thumbnailUrl: String,
+    @Embedded
+    val directorAccount: DirectorAccountEntity,
 
     @Column(nullable = false)
     val date: DateEntity,
@@ -34,4 +31,15 @@ class CrowdfundingEntity(
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     val activity: Activity,
+
+    @Column(nullable = false)
+    val thumbnailUrl: String,
+
+    @ElementCollection
+    @CollectionTable(name = "crowdfunding_image", joinColumns = [JoinColumn(name = "crowdfunding_idx")])
+    val imageList: List<String>,
+
+    @ElementCollection
+    @CollectionTable(name = "crowdfunding_detail", joinColumns = [JoinColumn(name = "crowdfunding_idx")])
+    val detailList: List<String>,
 ): BaseIdxEntity(idx)
