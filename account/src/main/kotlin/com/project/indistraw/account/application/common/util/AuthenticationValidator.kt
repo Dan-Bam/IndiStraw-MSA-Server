@@ -4,12 +4,14 @@ import com.project.indistraw.account.application.exception.AuthenticationNotFoun
 import com.project.indistraw.account.application.port.output.QueryAuthenticationPort
 import com.project.indistraw.account.domain.Authentication
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 @Component
 class AuthenticationValidator(
     private val queryAuthenticationPort: QueryAuthenticationPort,
 ) {
 
+    @Transactional(readOnly = true, rollbackFor = [Exception::class])
     fun verifyAuthenticationByPhoneNumber(phoneNumber: String): Authentication {
         val authentication = queryAuthenticationPort.findByPhoneNumberOrNull(phoneNumber)
             ?: throw AuthenticationNotFoundException()
