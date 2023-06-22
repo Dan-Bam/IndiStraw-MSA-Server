@@ -4,7 +4,11 @@ import com.project.indistraw.crowdfunding.application.common.annotation.Aggregat
 import java.math.BigDecimal
 
 @Aggregate
-data class Amount(
-    val totalAmount: BigDecimal,
-    val targetAmount: BigDecimal
+data class Reword(
+    val idx: Long,
+    val title: String,
+    val description: String,
+    val price: BigDecimal,
+    val imageUrl: String,
+    val crowdfundingIdx: Long
 )

@@ -1,5 +1,6 @@
 package com.project.indistraw.crowdfunding.adapter.input.data.request
 
+import java.time.LocalDate
 import javax.validation.constraints.NotNull
 
 data class CreateCrowdfundingRequest(
@@ -16,7 +17,10 @@ data class CreateCrowdfundingRequest(
 
     val reword: List<RewordRequest>,
 
-    val date: DateRequest,
+    val endDate: LocalDate,
+
+    @field:NotNull
+    val thumbnailUrl: String,
 
     @field:NotNull
     val imageList: List<String>,

@@ -6,6 +6,7 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
+@Table(name = "crowdfunding")
 class CrowdfundingEntity(
     @Column(name = "crowdfunding_idx", nullable = false)
     override val idx: Long,
@@ -37,9 +38,11 @@ class CrowdfundingEntity(
 
     @ElementCollection
     @CollectionTable(name = "crowdfunding_image", joinColumns = [JoinColumn(name = "crowdfunding_idx")])
+    @Column(name = "image_url", columnDefinition = "TEXT", nullable = false)
     val imageList: List<String>,
 
     @ElementCollection
     @CollectionTable(name = "crowdfunding_detail", joinColumns = [JoinColumn(name = "crowdfunding_idx")])
+    @Column(name = "detail_url", columnDefinition = "TEXT", nullable = false)
     val detailList: List<String>,
 ): BaseIdxEntity(idx)

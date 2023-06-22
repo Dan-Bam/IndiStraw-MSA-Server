@@ -5,6 +5,7 @@ import com.project.indistraw.crowdfunding.application.port.input.CreateCrowdfund
 import com.project.indistraw.crowdfunding.application.port.input.dto.CreateCrowdfundingDto
 import com.project.indistraw.crowdfunding.application.port.output.AccountSecurityPort
 import com.project.indistraw.crowdfunding.application.port.output.CommandCrowdfundingPort
+import com.project.indistraw.crowdfunding.application.port.output.CommandRewordPort
 import com.project.indistraw.crowdfunding.domain.*
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -12,14 +13,16 @@ import java.time.LocalDateTime
 @ServiceWithTransaction
 class CreateCrowdfundingService(
     private val accountSecurityPort: AccountSecurityPort,
-    private val commandCrowdfundingPort: CommandCrowdfundingPort
+    private val commandCrowdfundingPort: CommandCrowdfundingPort,
+    private val commandRewordPort: CommandRewordPort
 ): CreateCrowdfundingUseCase {
 
-    override fun execute(dto: CreateCrowdfundingDto): Long {
+    override fun execute(dto: CreateCrowdfundingDto) {
+        // dto값을 토대로 crowdfunding 객체를 생성하여 저장합니다.
         val crowdfunding = Crowdfunding(
             idx = 0L,
-            title = dto.title,
             accountIdx = accountSecurityPort.getCurrentAccountIdx(),
+            title = dto.title,
             description = dto.description,
             amount = Amount(
                 targetAmount = BigDecimal.valueOf(dto.targetAmount),
@@ -29,17 +32,29 @@ class CreateCrowdfundingService(
                 bank = dto.directorAccount.bank,
                 account = dto.directorAccount.account
             ),
-            thumbnailUrl = dto.thumbnailUrl,
             date = Date(
                 createdDate = LocalDateTime.now(),
-                endDate = dto.date.endDate
+                endDate = dto.endDate
             ),
             activity = Activity.UNDER_REVIEW,
+            thumbnailUrl = dto.thumbnailUrl,
             imageList = dto.imageList,
             detailList = dto.detailList
         )
+        val crowdfundingIdx = commandCrowdfundingPort.saveCrowdfunding(crowdfunding)
 
-        return commandCrowdfundingPort.saveCrowdfunding(crowdfunding)
+        val rewordList = dto.reword.map {
+            Reword(
+                idx = 0L,
+                title = it.title,
+                description = it.description,
+                price = BigDecimal.valueOf(it.price),
+                imageUrl = it.imageUrl,
+                crowdfundingIdx = crowdfundingIdx
+            )
+        }
+
+        commandRewordPort.saveAllReword(rewordList)
     }
 
 }

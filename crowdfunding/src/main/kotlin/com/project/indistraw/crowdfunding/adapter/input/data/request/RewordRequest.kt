@@ -13,5 +13,5 @@ data class RewordRequest(
     val price: Long,
 
     @field:NotNull
-    val thumbnailUrl: String
+    val imageUrl: String
 )

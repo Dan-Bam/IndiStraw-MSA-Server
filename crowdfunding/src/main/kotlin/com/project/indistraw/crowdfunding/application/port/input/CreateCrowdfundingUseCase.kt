@@ -4,6 +4,6 @@ import com.project.indistraw.crowdfunding.application.port.input.dto.CreateCrowd
 
 interface CreateCrowdfundingUseCase {
 
-    fun execute(dto: CreateCrowdfundingDto): Long
+    fun execute(dto: CreateCrowdfundingDto)
 
 }
