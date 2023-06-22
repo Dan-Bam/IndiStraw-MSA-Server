@@ -4,5 +4,5 @@ data class RewordDto(
     val title: String,
     val description: String,
     val price: Long,
-    val thumbnailUrl: String
+    val imageUrl: String
 )
