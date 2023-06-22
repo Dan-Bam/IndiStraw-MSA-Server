@@ -29,12 +29,12 @@ class CrowdfundingConverter {
                     bank = it.directorAccount.bank,
                     account = it.directorAccount.account
                 ),
-                thumbnailUrl = it.thumbnailUrl,
                 date = DateEntity(
                     createdDate = LocalDateTime.now(),
                     endDate = it.date.endDate
                 ),
                 activity = it.activity,
+                thumbnailUrl = it.thumbnailUrl,
                 imageList = it.imageList,
                 detailList = it.detailList
             )
