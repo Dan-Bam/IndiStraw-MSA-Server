@@ -1,13 +1,20 @@
-from rest_framework.filters import SearchFilter
 from rest_framework import viewsets
-
-from .serializers import TestSeriaizer
-from .models import Test
-from .pagination import PageNumberPagination
+from .serializers import SearchSeriaizer
+from .models import Search
+import itertools 
 
 class SearchViewSet(viewsets.ModelViewSet):
-    queryset = Test.objects.all()
-    serializer_class = TestSeriaizer
+    queryset = Search.objects.all()
+    serializer_class = SearchSeriaizer        
 
-    filter_backends = [SearchFilter]
-    search_fields = ('title', 'description',)
+    def get_queryset(self):
+        qs= Search.objects.all()
+        qs2 = Search.objects.all()
+
+        search_field = self.request.query_params.get('search_field')
+
+        if search_field is not None:
+            qs = qs.filter(title__icontains=search_field)
+            qs2 = qs2.filter(genre__icontains=search_field)
+            
+        return list(itertools.chain(qs, qs2))
