@@ -24,9 +24,6 @@ DATABASES = {
     }
 }
 
-#######################################
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -34,6 +31,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'api',
+    'search',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -65,10 +65,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'search.wsgi.application'
-
-
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
