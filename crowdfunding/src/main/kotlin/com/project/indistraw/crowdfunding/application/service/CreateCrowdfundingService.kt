@@ -33,7 +33,7 @@ class CreateCrowdfundingService(
                 account = dto.directorAccount.account
             ),
             date = Date(
-                createdDate = LocalDateTime.now(),
+                createAt = LocalDateTime.now(),
                 endDate = dto.endDate
             ),
             activity = Activity.UNDER_REVIEW,
@@ -48,7 +48,7 @@ class CreateCrowdfundingService(
                 idx = 0L,
                 title = it.title,
                 description = it.description,
-                price = BigDecimal.valueOf(it.price),
+                price = it.price,
                 imageUrl = it.imageUrl,
                 crowdfundingIdx = crowdfundingIdx
             )
