@@ -3,8 +3,11 @@ package com.project.indistraw.crowdfunding.adapter.input
 import com.project.indistraw.crowdfunding.adapter.input.converter.CrowdfundingDataConverter
 import com.project.indistraw.crowdfunding.adapter.input.data.request.CreateCrowdfundingRequest
 import com.project.indistraw.crowdfunding.application.port.input.CreateCrowdfundingUseCase
+import com.project.indistraw.crowdfunding.application.port.input.CrowdfundingDetailUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -15,11 +18,17 @@ import org.springframework.web.bind.annotation.RestController
 class CrowdfundingWebAdapter(
     private val crowdfundingDataConverter: CrowdfundingDataConverter,
     private val createCrowdfundingUseCase: CreateCrowdfundingUseCase,
+    private val crowdfundingDetailUseCase: CrowdfundingDetailUseCase
 ) {
 
     @PostMapping
     fun createCrowdfunding(@RequestBody request: CreateCrowdfundingRequest): ResponseEntity<Void> =
         createCrowdfundingUseCase.execute(crowdfundingDataConverter toDto request)
             .let { ResponseEntity.status(HttpStatus.CREATED).build() }
+
+    @GetMapping("/{idx}")
+    fun createCrowdfunding(@PathVariable idx: Long) {
+        crowdfundingDetailUseCase.execute(idx)
+    }
 
 }
