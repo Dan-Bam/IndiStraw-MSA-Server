@@ -63,7 +63,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 	implementation("org.mariadb.jdbc:mariadb-java-client:3.1.2")
 
-	// validation
+	/* validation */
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 
 	/* logging */
