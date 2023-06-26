@@ -8,6 +8,5 @@ interface QueryCrowdfundingPort {
 
     fun findByIdxOrNull(idx: Long): Crowdfunding?
     fun findAll(pageRequest: PageRequest): Page<Crowdfunding>
-    fun findByTitleOrDescriptionContaining(pageRequest: PageRequest, keyword: String): Page<Crowdfunding>
 
 }
