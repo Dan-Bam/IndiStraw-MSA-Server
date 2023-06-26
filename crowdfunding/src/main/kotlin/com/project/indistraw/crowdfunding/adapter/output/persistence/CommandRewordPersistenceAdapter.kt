@@ -13,7 +13,7 @@ class CommandRewordPersistenceAdapter(
 ): CommandRewordPort {
 
     override fun saveAllReword(rewordList: List<Reword>) {
-        val rewordEntityList = rewordConverter toEntity rewordList
+        val rewordEntityList = rewordConverter toEntityList rewordList
         rewordRepository.saveAll(rewordEntityList)
     }
 
