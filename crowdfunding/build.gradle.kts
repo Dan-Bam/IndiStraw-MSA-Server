@@ -69,6 +69,9 @@ dependencies {
 	/* logging */
 	implementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
 	testImplementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
+
+	/* feign */
+	implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.1.3")
 }
 
 tasks.withType<KotlinCompile> {
