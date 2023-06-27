@@ -2,10 +2,14 @@ package com.project.indistraw.crowdfunding.adapter.output.persistence.entity
 
 import com.project.indistraw.crowdfunding.adapter.output.persistence.common.entity.BaseIdxEntity
 import com.project.indistraw.crowdfunding.domain.Activity
+import org.hibernate.annotations.Where
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.*
 
 @Entity
+@Where(clause = "activity <> 'UNDER_REVIEW'") // activity가 UNDER_REVIEW인 경우는 조회하지 않음
 @Table(name = "crowdfunding")
 class CrowdfundingEntity(
     @Column(name = "crowdfunding_idx", nullable = false)
@@ -26,12 +30,18 @@ class CrowdfundingEntity(
     @Embedded
     val directorAccount: DirectorAccountEntity,
 
-    @Column(nullable = false)
-    val date: DateEntity,
+    @Column(nullable = false, updatable = false)
+    val createdAt: LocalDateTime,
 
     @Column(nullable = false)
+    val endDate: LocalDate,
+
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     val activity: Activity,
+
+    @Column(nullable = false)
+    val viewCount: Long,
 
     @Column(nullable = false)
     val thumbnailUrl: String,

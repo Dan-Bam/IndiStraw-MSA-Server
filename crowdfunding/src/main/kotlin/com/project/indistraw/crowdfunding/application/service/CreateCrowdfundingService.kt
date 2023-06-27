@@ -32,10 +32,9 @@ class CreateCrowdfundingService(
                 bank = dto.directorAccount.bank,
                 account = dto.directorAccount.account
             ),
-            date = Date(
-                createAt = LocalDateTime.now(),
-                endDate = dto.endDate
-            ),
+            createdAt = LocalDateTime.now(),
+            endDate = dto.endDate,
+            viewCount = 0,
             activity = Activity.UNDER_REVIEW,
             thumbnailUrl = dto.thumbnailUrl,
             imageList = dto.imageList,
