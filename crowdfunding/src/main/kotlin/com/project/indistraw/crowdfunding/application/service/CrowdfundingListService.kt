@@ -1,6 +1,7 @@
 package com.project.indistraw.crowdfunding.application.service
 
 import com.project.indistraw.crowdfunding.application.common.annotation.ServiceWithReadOnlyTransaction
+import com.project.indistraw.crowdfunding.application.common.util.CalculateAmountUtil
 import com.project.indistraw.crowdfunding.application.port.input.CrowdfundingListUseCase
 import com.project.indistraw.crowdfunding.application.port.input.dto.CrowdfundingListDto
 import com.project.indistraw.crowdfunding.application.port.input.dto.CrowdfundingPagingDto
@@ -8,11 +9,11 @@ import com.project.indistraw.crowdfunding.application.port.output.QueryCrowdfund
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
-import java.math.BigDecimal
 
 @ServiceWithReadOnlyTransaction
 class CrowdfundingListService(
-    private val queryCrowdfundingPort: QueryCrowdfundingPort
+    private val queryCrowdfundingPort: QueryCrowdfundingPort,
+    private val calculateAmountUtil: CalculateAmountUtil
 ): CrowdfundingListUseCase {
 
     override fun execute(pageable: Pageable): CrowdfundingPagingDto {
@@ -24,7 +25,7 @@ class CrowdfundingListService(
                 idx = it.idx,
                 title = it.title,
                 description = it.description,
-                percentage = it.amount.targetAmount.divide(it.amount.totalAmount).multiply(BigDecimal.valueOf(100)),
+                percentage = calculateAmountUtil.calculateAmountPercentage(it.amount),
                 thumbnailUrl = it.thumbnailUrl,
                 activity = it.activity
             )

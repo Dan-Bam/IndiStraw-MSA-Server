@@ -2,7 +2,6 @@ package com.project.indistraw.crowdfunding.adapter.input.data.response
 
 import com.project.indistraw.crowdfunding.application.port.input.dto.RewordDto
 import java.math.BigDecimal
-import java.util.Date
 import java.util.UUID
 
 data class CrowdfundingDetailResponse(
@@ -10,7 +9,7 @@ data class CrowdfundingDetailResponse(
     val description: String,
     val writer: Writer,
     val amount: Amount,
-    val remainingDay: Date,
+    val remainingDay: Int,
     val fundingCount: Long,
     val reword: List<RewordDto>,
     val thumbnailUrl: String,
