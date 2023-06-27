@@ -6,6 +6,7 @@ import com.project.indistraw.crowdfunding.application.exception.CrowdfundingNotF
 import com.project.indistraw.crowdfunding.application.port.input.CrowdfundingDetailUseCase
 import com.project.indistraw.crowdfunding.application.port.input.dto.CrowdfundingDetailDto
 import com.project.indistraw.crowdfunding.application.port.input.dto.RewordDto
+import com.project.indistraw.crowdfunding.application.port.output.QueryAccountPort
 import com.project.indistraw.crowdfunding.application.port.output.QueryCrowdfundingPort
 import com.project.indistraw.crowdfunding.application.port.output.QueryRequestIpPort
 import com.project.indistraw.crowdfunding.application.port.output.QueryRewordPort
@@ -19,6 +20,7 @@ class CrowdfundingDetailService(
     private val queryCrowdfundingPort: QueryCrowdfundingPort,
     private val queryRewordPort: QueryRewordPort,
     private val queryRequestIpPort: QueryRequestIpPort,
+    private val queryAccountPort: QueryAccountPort,
     private val calculateAmountUtil: CalculateAmountUtil,
     private val publisher: ApplicationEventPublisher
 ) : CrowdfundingDetailUseCase {
@@ -27,6 +29,7 @@ class CrowdfundingDetailService(
         val crowdfunding = queryCrowdfundingPort.findByIdxOrNull(idx)
             ?: throw CrowdfundingNotFound()
         val reword = queryRewordPort.findByCrowdfundingIdx(crowdfunding.idx)
+        val writer = queryAccountPort.getAccountInfo(crowdfunding.accountIdx)
 
         publishEvent(crowdfunding)
 
@@ -34,8 +37,8 @@ class CrowdfundingDetailService(
             title = crowdfunding.title,
             description = crowdfunding.description,
             writer = CrowdfundingDetailDto.Writer(
-                accountIdx = crowdfunding.accountIdx,
-                name = ""
+                accountIdx = writer.idx,
+                name = writer.name
             ),
             amount = CrowdfundingDetailDto.Amount(
                 targetAmount = crowdfunding.amount.targetAmount,
