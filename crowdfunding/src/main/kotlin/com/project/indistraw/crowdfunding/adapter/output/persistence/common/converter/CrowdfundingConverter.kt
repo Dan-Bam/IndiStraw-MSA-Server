@@ -30,7 +30,7 @@ class CrowdfundingConverter {
                     account = it.directorAccount.account
                 ),
                 date = DateEntity(
-                    createdDate = LocalDateTime.now(),
+                    createAt = LocalDateTime.now(),
                     endDate = it.date.endDate
                 ),
                 activity = it.activity,
@@ -57,7 +57,7 @@ class CrowdfundingConverter {
                 ),
                 thumbnailUrl = it.thumbnailUrl,
                 date = Date(
-                    createdDate = LocalDateTime.now(),
+                    createAt = LocalDateTime.now(),
                     endDate = it.date.endDate
                 ),
                 activity = it.activity,

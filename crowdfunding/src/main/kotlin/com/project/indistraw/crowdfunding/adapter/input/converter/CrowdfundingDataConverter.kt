@@ -20,6 +20,7 @@ class CrowdfundingDataConverter {
             ),
             reword = dto.reword.map {
                 RewordDto(
+                    idx = 0L,
                     title = it.title,
                     description = it.description,
                     price = it.price,
@@ -31,5 +32,24 @@ class CrowdfundingDataConverter {
             imageList = dto.imageList,
             detailList = dto.detailList
         )
+
+//    infix fun toResponse(dto: CrowdfundingDetailDto): CrowdfundingDetailResponse =
+//        CrowdfundingDetailResponse(
+//            title = dto.title,
+//            description = dto.description,
+//            targetAmount = dto.targetAmount,
+//            reword = dto.reword.map {
+//                RewordDto(
+//                    idx = it.idx,
+//                    title = it.title,
+//                    description = it.description,
+//                    price = it.price,
+//                    imageUrl = it.imageUrl
+//                )
+//            },
+//            thumbnailUrl = dto.thumbnailUrl,
+//            imageList = dto.imageList,
+//            detailList = dto.detailList
+//        )
 
 }

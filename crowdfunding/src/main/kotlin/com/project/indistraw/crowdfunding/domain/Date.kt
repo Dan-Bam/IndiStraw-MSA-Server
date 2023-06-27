@@ -6,6 +6,6 @@ import java.time.LocalDateTime
 
 @Aggregate
 data class Date(
-    val createdDate: LocalDateTime,
+    val createAt: LocalDateTime,
     val endDate: LocalDate
 )

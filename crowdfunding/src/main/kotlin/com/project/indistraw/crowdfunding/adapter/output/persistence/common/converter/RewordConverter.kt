@@ -12,7 +12,7 @@ class RewordConverter(
     private val crowdfundingRepository: CrowdfundingRepository
 ) {
 
-    infix fun toEntity(domainList: List<Reword>): List<RewordEntity> {
+    infix fun toEntityList(domainList: List<Reword>): List<RewordEntity> {
         val crowdfundingEntity = crowdfundingRepository.findByIdOrNull(domainList[0].crowdfundingIdx)
             ?: throw CrowdfundingNotFound()
         return domainList.map {
@@ -23,6 +23,19 @@ class RewordConverter(
                 price = it.price,
                 imageUrl = it.imageUrl,
                 crowdfundingEntity = crowdfundingEntity
+            )
+        }
+    }
+
+    infix fun toDomainList(entityList: List<RewordEntity>): List<Reword> {
+        return entityList.map {
+            Reword(
+                idx = 0,
+                title = it.title,
+                description = it.description,
+                price = it.price,
+                imageUrl = it.imageUrl,
+                crowdfundingIdx = it.crowdfundingEntity.idx
             )
         }
     }

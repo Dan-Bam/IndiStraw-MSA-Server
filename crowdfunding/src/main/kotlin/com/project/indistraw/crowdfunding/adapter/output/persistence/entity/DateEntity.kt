@@ -10,7 +10,7 @@ import javax.persistence.Embeddable
 class DateEntity(
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    val createdDate: LocalDateTime,
+    val createAt: LocalDateTime,
 
     @Column(nullable = false)
     val endDate: LocalDate

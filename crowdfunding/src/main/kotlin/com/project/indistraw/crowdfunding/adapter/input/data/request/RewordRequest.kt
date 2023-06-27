@@ -1,5 +1,6 @@
 package com.project.indistraw.crowdfunding.adapter.input.data.request
 
+import java.math.BigDecimal
 import javax.validation.constraints.NotNull
 
 data class RewordRequest(
@@ -10,7 +11,7 @@ data class RewordRequest(
     val description: String,
 
     @field:NotNull
-    val price: Long,
+    val price: BigDecimal,
 
     @field:NotNull
     val imageUrl: String
