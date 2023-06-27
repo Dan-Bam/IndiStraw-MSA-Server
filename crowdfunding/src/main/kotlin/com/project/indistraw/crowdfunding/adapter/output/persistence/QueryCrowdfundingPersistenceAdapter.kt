@@ -25,4 +25,9 @@ class QueryCrowdfundingPersistenceAdapter(
         return crowdfundingList.map { crowdfundingConverter toDomain it }
     }
 
+    override fun findTop7ByOrderByViewCount(): List<Crowdfunding> {
+        val crowdfundingList = crowdfundingRepository.findTop5ByOrderByViewCountDesc()
+        return crowdfundingList.map { (crowdfundingConverter toDomain it)!! }
+    }
+
 }

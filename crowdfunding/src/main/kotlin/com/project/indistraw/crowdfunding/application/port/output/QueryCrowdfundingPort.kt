@@ -8,5 +8,6 @@ interface QueryCrowdfundingPort {
 
     fun findByIdxOrNull(idx: Long): Crowdfunding?
     fun findAll(pageRequest: PageRequest): Page<Crowdfunding>
+    fun findTop7ByOrderByViewCount(): List<Crowdfunding>
 
 }
