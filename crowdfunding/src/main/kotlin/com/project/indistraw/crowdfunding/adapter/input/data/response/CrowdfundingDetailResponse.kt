@@ -18,7 +18,7 @@ data class CrowdfundingDetailResponse(
 ) {
 
     data class Writer(
-        val accountIdx: UUID,
+        val idx: UUID,
         val name: String
     )
 
