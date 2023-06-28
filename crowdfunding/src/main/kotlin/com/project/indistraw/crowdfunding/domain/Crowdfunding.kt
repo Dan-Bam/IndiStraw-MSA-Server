@@ -8,7 +8,7 @@ import java.util.*
 @AggregateRoot
 data class Crowdfunding(
     val idx: Long,
-    val accountIdx: UUID,
+    val writerIdx: UUID,
     val title: String,
     val description: String,
     val amount: Amount,

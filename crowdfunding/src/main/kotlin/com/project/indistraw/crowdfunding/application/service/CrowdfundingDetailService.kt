@@ -29,7 +29,7 @@ class CrowdfundingDetailService(
         val crowdfunding = queryCrowdfundingPort.findByIdxOrNull(idx)
             ?: throw CrowdfundingNotFound()
         val reword = queryRewordPort.findByCrowdfundingIdx(crowdfunding.idx)
-        val writer = queryAccountPort.getAccountInfo(crowdfunding.accountIdx)
+        val writer = queryAccountPort.getAccountInfo()
 
         publishEvent(crowdfunding)
 
@@ -37,7 +37,7 @@ class CrowdfundingDetailService(
             title = crowdfunding.title,
             description = crowdfunding.description,
             writer = CrowdfundingDetailDto.Writer(
-                accountIdx = writer.idx,
+                idx = writer.accountIdx,
                 name = writer.name
             ),
             amount = CrowdfundingDetailDto.Amount(

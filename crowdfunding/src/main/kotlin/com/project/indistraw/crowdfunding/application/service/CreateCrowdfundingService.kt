@@ -21,7 +21,7 @@ class CreateCrowdfundingService(
         // dto값을 토대로 crowdfunding 객체를 생성하여 저장합니다.
         val crowdfunding = Crowdfunding(
             idx = 0L,
-            accountIdx = accountSecurityPort.getCurrentAccountIdx(),
+            writerIdx = accountSecurityPort.getCurrentAccountIdx(),
             title = dto.title,
             description = dto.description,
             amount = Amount(
@@ -52,7 +52,6 @@ class CreateCrowdfundingService(
                 crowdfundingIdx = crowdfundingIdx
             )
         }
-
         commandRewordPort.saveAllReword(rewordList)
     }
 

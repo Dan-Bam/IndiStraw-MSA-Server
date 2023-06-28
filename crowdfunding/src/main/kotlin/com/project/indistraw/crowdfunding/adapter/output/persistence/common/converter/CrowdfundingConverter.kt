@@ -16,7 +16,7 @@ class CrowdfundingConverter {
         domain.let {
             CrowdfundingEntity(
                 idx = it.idx,
-                accountIdx = it.accountIdx,
+                writerIdx = it.writerIdx,
                 title = it.title,
                 description = it.description,
                 amount = AmountEntity(
@@ -41,7 +41,7 @@ class CrowdfundingConverter {
         entity?.let {
             Crowdfunding(
                 idx = it.idx,
-                accountIdx = it.accountIdx,
+                writerIdx = it.writerIdx,
                 title = it.title,
                 description = it.description,
                 amount = Amount(

@@ -16,7 +16,7 @@ class CrowdfundingEntity(
     override val idx: Long,
 
     @Column(columnDefinition = "BINARY(16)", nullable = false)
-    val accountIdx: UUID,
+    val writerIdx: UUID,
 
     @Column(nullable = false)
     val title: String,
