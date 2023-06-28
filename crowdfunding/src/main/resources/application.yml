@@ -30,3 +30,6 @@ spring:
 
 jwt:
   accessSecret: ${JWT_ACCESS_SECRET}
+
+account:
+  serviceUrl: ${ACCOUNT_SERVICE_URL}
