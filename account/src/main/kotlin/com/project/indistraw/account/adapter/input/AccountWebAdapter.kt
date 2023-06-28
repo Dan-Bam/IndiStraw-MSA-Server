@@ -2,9 +2,9 @@ package com.project.indistraw.account.adapter.input
 
 import com.project.indistraw.account.adapter.input.converter.AccountDataConverter
 import com.project.indistraw.account.adapter.input.request.UpdateAddressRequest
-import com.project.indistraw.account.adapter.input.request.UpdateAccountProfileRequest
+import com.project.indistraw.account.adapter.input.request.UpdateAccountInfoRequest
 import com.project.indistraw.account.adapter.input.request.UpdatePasswordRequest
-import com.project.indistraw.account.adapter.input.response.AccountProfileDetailResponse
+import com.project.indistraw.account.adapter.input.response.AccountInfoResponse
 import com.project.indistraw.account.application.port.input.*
 import com.project.indistraw.account.application.port.output.UpdatePhoneNumberUseCase
 import org.springframework.http.HttpStatus
@@ -19,8 +19,8 @@ class AccountWebAdapter(
     private val updatePasswordUseCase: UpdatePasswordUseCase,
     private val updatePhoneNumberUseCase: UpdatePhoneNumberUseCase,
     private val updateAddressUseCase: UpdateAddressUseCase,
-    private val updateAccountProfileUseCase: UpdateAccountProfileUseCase,
-    private val accountProfileDetailUseCase: AccountProfileDetailUseCase,
+    private val updateAccountInfoUseCase: UpdateAccountInfoUseCase,
+    private val findAccountInfoUseCase: FindAccountInfoUseCase,
     private val accountWithdrawUseCase: AccountWithdrawUseCase
 ) {
 
@@ -45,13 +45,13 @@ class AccountWebAdapter(
             .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
 
     @PatchMapping("/profile")
-    fun sendAuthCode(@RequestBody request: UpdateAccountProfileRequest): ResponseEntity<Void> =
-        updateAccountProfileUseCase.execute(accountDataConverter toDto request)
+    fun sendAuthCode(@RequestBody request: UpdateAccountInfoRequest): ResponseEntity<Void> =
+        updateAccountInfoUseCase.execute(accountDataConverter toDto request)
             .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
 
-    @GetMapping("/profile")
-    fun findProfileDetail(): ResponseEntity<AccountProfileDetailResponse> =
-        accountProfileDetailUseCase.execute()
+    @GetMapping("/info")
+    fun findAccountInfo(): ResponseEntity<AccountInfoResponse> =
+        findAccountInfoUseCase.execute()
             .let { accountDataConverter toResponse it }
             .let { ResponseEntity.ok(it) }
 

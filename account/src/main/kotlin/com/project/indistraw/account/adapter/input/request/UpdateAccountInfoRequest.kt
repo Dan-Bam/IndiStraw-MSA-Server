@@ -3,7 +3,7 @@ package com.project.indistraw.account.adapter.input.request
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
-data class UpdateAccountProfileRequest(
+data class UpdateAccountInfoRequest(
     @field:NotNull
     @field:Size(min = 2, max = 10)
     val name: String,

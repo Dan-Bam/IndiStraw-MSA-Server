@@ -5,7 +5,7 @@ import com.project.indistraw.account.application.port.input.dto.UpdateAccountPro
 import com.project.indistraw.account.application.port.output.AccountSecurityPort
 import com.project.indistraw.account.application.port.output.CommandAccountPort
 import com.project.indistraw.account.application.port.output.QueryAccountPort
-import com.project.indistraw.account.application.service.UpdateAccountProfileService
+import com.project.indistraw.account.application.service.UpdateAccountInfoService
 import com.project.indistraw.account.domain.Account
 import com.project.indistraw.common.AnyValueObjectGenerator
 import io.kotest.assertions.throwables.shouldThrow
@@ -15,11 +15,11 @@ import io.mockk.mockk
 import io.mockk.verify
 import java.util.*
 
-class UpdateAccountProfileServiceTest: BehaviorSpec({
+class UpdateAccountInfoServiceTest: BehaviorSpec({
     val queryAccountPort = mockk<QueryAccountPort>()
     val commandAccountPort = mockk<CommandAccountPort>()
     val accountSecurityPort = mockk<AccountSecurityPort>()
-    val updateAccountProfileService = UpdateAccountProfileService(queryAccountPort, commandAccountPort, accountSecurityPort)
+    val updateAccountInfoService = UpdateAccountInfoService(queryAccountPort, commandAccountPort, accountSecurityPort)
 
     Given("updateAccountProfileDto이 주어질때") {
         val updateName = "test update name"
@@ -32,7 +32,7 @@ class UpdateAccountProfileServiceTest: BehaviorSpec({
         every { commandAccountPort.saveAccount(any()) } returns account.accountIdx
 
         When("프로필 수정 요청을 하면") {
-            updateAccountProfileService.execute(updateAccountProfileDto)
+            updateAccountInfoService.execute(updateAccountProfileDto)
 
             Then("프로필 수정이 되어야 한다.") {
                 verify { commandAccountPort.saveAccount(any()) }
@@ -44,7 +44,7 @@ class UpdateAccountProfileServiceTest: BehaviorSpec({
 
             Then("AccountNotFound가 터져야 한다.") {
                 shouldThrow<AccountNotFoundException> {
-                    updateAccountProfileService.execute(updateAccountProfileDto)
+                    updateAccountInfoService.execute(updateAccountProfileDto)
                 }
             }
         }
