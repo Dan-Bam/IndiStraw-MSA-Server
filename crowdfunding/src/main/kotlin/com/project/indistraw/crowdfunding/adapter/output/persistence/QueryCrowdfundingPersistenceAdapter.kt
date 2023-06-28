@@ -25,9 +25,9 @@ class QueryCrowdfundingPersistenceAdapter(
         return crowdfundingList.map { crowdfundingConverter toDomain it }
     }
 
-    override fun findByTitleOrDescriptionContaining(pageRequest: PageRequest, keyword: String): Page<Crowdfunding> {
-        val crowdfundingList = crowdfundingRepository.findAllByTitleContainingOrDescriptionContaining(pageRequest, keyword, keyword)
-        return crowdfundingList.map { crowdfundingConverter toDomain it }
+    override fun findTop7ByOrderByViewCount(): List<Crowdfunding> {
+        val crowdfundingList = crowdfundingRepository.findTop5ByOrderByViewCountDesc()
+        return crowdfundingList.map { (crowdfundingConverter toDomain it)!! }
     }
 
 }

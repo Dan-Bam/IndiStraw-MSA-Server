@@ -29,7 +29,8 @@ class SecurityConfig(
             // /crowdfunding
             .mvcMatchers(HttpMethod.POST, "/api/v1/crowdfunding").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ADMIN.name)
             .mvcMatchers(HttpMethod.GET, "/api/v1/crowdfunding/{idx}").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ADMIN.name)
-            .mvcMatchers(HttpMethod.GET, "/api/v1/crowdfunding").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ADMIN.name)
+            .mvcMatchers(HttpMethod.GET, "/api/v1/crowdfunding/list").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ADMIN.name)
+            .mvcMatchers(HttpMethod.GET, "/api/v1/crowdfunding/popular/list").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ADMIN.name)
             .mvcMatchers(HttpMethod.PATCH, "/api/v1/crowdfunding/{idx}").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ADMIN.name)
             .mvcMatchers(HttpMethod.DELETE, "/api/v1/crowdfunding/{idx}").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ADMIN.name)
             .mvcMatchers(HttpMethod.HEAD, "/api/v1/crowdfunding/{idx}/attend").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ADMIN.name)

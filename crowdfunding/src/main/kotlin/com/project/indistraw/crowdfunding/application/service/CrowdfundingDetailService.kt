@@ -1,39 +1,51 @@
 package com.project.indistraw.crowdfunding.application.service
 
-import com.project.indistraw.crowdfunding.application.common.annotation.ServiceWithReadOnlyTransaction
+import com.project.indistraw.crowdfunding.application.common.annotation.ServiceWithTransaction
+import com.project.indistraw.crowdfunding.application.common.util.CalculateAmountUtil
 import com.project.indistraw.crowdfunding.application.exception.CrowdfundingNotFound
 import com.project.indistraw.crowdfunding.application.port.input.CrowdfundingDetailUseCase
 import com.project.indistraw.crowdfunding.application.port.input.dto.CrowdfundingDetailDto
 import com.project.indistraw.crowdfunding.application.port.input.dto.RewordDto
+import com.project.indistraw.crowdfunding.application.port.output.QueryAccountPort
 import com.project.indistraw.crowdfunding.application.port.output.QueryCrowdfundingPort
+import com.project.indistraw.crowdfunding.application.port.output.QueryRequestIpPort
 import com.project.indistraw.crowdfunding.application.port.output.QueryRewordPort
-import java.math.BigDecimal
+import com.project.indistraw.crowdfunding.domain.Crowdfunding
+import com.project.indistraw.global.event.QueryCrowdfundingEvent
+import org.springframework.context.ApplicationEventPublisher
 import java.time.LocalDate
 
-@ServiceWithReadOnlyTransaction
+@ServiceWithTransaction
 class CrowdfundingDetailService(
     private val queryCrowdfundingPort: QueryCrowdfundingPort,
-    private val queryRewordPort: QueryRewordPort
-): CrowdfundingDetailUseCase {
+    private val queryRewordPort: QueryRewordPort,
+    private val queryRequestIpPort: QueryRequestIpPort,
+    private val queryAccountPort: QueryAccountPort,
+    private val calculateAmountUtil: CalculateAmountUtil,
+    private val publisher: ApplicationEventPublisher
+) : CrowdfundingDetailUseCase {
 
     override fun execute(idx: Long): CrowdfundingDetailDto {
         val crowdfunding = queryCrowdfundingPort.findByIdxOrNull(idx)
             ?: throw CrowdfundingNotFound()
         val reword = queryRewordPort.findByCrowdfundingIdx(crowdfunding.idx)
+        val writer = queryAccountPort.getAccountInfo()
+
+        publishEvent(crowdfunding)
 
         return CrowdfundingDetailDto(
             title = crowdfunding.title,
             description = crowdfunding.description,
             writer = CrowdfundingDetailDto.Writer(
-                accountIdx = crowdfunding.accountIdx,
-                name = ""
+                idx = writer.accountIdx,
+                name = writer.name
             ),
             amount = CrowdfundingDetailDto.Amount(
                 targetAmount = crowdfunding.amount.targetAmount,
                 totalAmount = crowdfunding.amount.totalAmount,
-                percentage = crowdfunding.amount.targetAmount.divide(crowdfunding.amount.totalAmount).multiply(BigDecimal.valueOf(100))
+                percentage = calculateAmountUtil.calculateAmountPercentage(crowdfunding.amount)
             ),
-            remainingDay = LocalDate.now().minusDays(crowdfunding.date.endDate.dayOfMonth.toLong()).dayOfMonth,
+            remainingDay = LocalDate.now().minusDays(crowdfunding.endDate.dayOfMonth.toLong()).dayOfMonth,
             fundingCount = 0,
             reword = reword.map {
                 RewordDto(
@@ -48,6 +60,12 @@ class CrowdfundingDetailService(
             imageList = crowdfunding.imageList,
             detailList = crowdfunding.detailList
         )
+    }
+
+    private fun publishEvent(crowdfunding: Crowdfunding) {
+        val currentIp = queryRequestIpPort.getCurrentRequestIp()
+        val queryCrowdfundingEvent = QueryCrowdfundingEvent(crowdfunding, currentIp)
+        publisher.publishEvent(queryCrowdfundingEvent)
     }
 
 }

@@ -2,25 +2,20 @@ package com.project.indistraw.crowdfunding.application.service
 
 import com.project.indistraw.crowdfunding.application.common.annotation.ServiceWithReadOnlyTransaction
 import com.project.indistraw.crowdfunding.application.common.util.CalculateAmountUtil
-import com.project.indistraw.crowdfunding.application.port.input.CrowdfundingListUseCase
+import com.project.indistraw.crowdfunding.application.port.input.PopularCrowdfundingListUseCase
 import com.project.indistraw.crowdfunding.application.port.input.dto.CrowdfundingListDto
-import com.project.indistraw.crowdfunding.application.port.input.dto.CrowdfundingPagingDto
 import com.project.indistraw.crowdfunding.application.port.output.QueryCrowdfundingPort
-import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Sort
 
 @ServiceWithReadOnlyTransaction
-class CrowdfundingListService(
+class PopularCrowdfundingListService(
     private val queryCrowdfundingPort: QueryCrowdfundingPort,
     private val calculateAmountUtil: CalculateAmountUtil
-): CrowdfundingListUseCase {
+): PopularCrowdfundingListUseCase {
 
-    override fun execute(pageable: Pageable): CrowdfundingPagingDto {
-        val pageRequest = PageRequest.of(pageable.pageNumber, pageable.pageSize, Sort.by(Sort.Order.desc("createdAt")))
-        val crowdfundingList = queryCrowdfundingPort.findAll(pageRequest)
+    override fun execute(): List<CrowdfundingListDto> {
+        val crowdfundingList = queryCrowdfundingPort.findTop7ByOrderByViewCount()
 
-        val crowdfundingListDto = crowdfundingList.map {
+        return crowdfundingList.map {
             CrowdfundingListDto(
                 idx = it.idx,
                 title = it.title,
@@ -29,13 +24,7 @@ class CrowdfundingListService(
                 thumbnailUrl = it.thumbnailUrl,
                 activity = it.activity
             )
-        }.toList()
-
-        return CrowdfundingPagingDto(
-            pageSize = pageable.pageNumber,
-            isLast = crowdfundingList.isLast,
-            list = crowdfundingListDto
-        )
+        }
     }
 
 }
