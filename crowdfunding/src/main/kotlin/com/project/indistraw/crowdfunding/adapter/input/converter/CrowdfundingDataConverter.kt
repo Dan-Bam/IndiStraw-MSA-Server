@@ -39,7 +39,7 @@ class CrowdfundingDataConverter {
             title = dto.title,
             description = dto.description,
             writer = CrowdfundingDetailResponse.Writer(
-                accountIdx = dto.writer.accountIdx,
+                idx = dto.writer.idx,
                 name = dto.writer.name
             ),
             amount = CrowdfundingDetailResponse.Amount(
