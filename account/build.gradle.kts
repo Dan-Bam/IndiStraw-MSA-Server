@@ -69,6 +69,10 @@ dependencies {
 
 	/* coolsms */
 	implementation("net.nurigo:javaSDK:2.2")
+
+	/* RabbitMQ */
+	implementation("org.springframework.boot:spring-boot-starter-amqp")
+	testImplementation("org.springframework.amqp:spring-rabbit-test")
 }
 
 tasks.withType<KotlinCompile> {
