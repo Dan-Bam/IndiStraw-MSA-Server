@@ -10,7 +10,7 @@ import com.project.indistraw.account.application.port.output.dto.TokenDto
 import com.project.indistraw.account.application.service.SignInService
 import com.project.indistraw.account.domain.Account
 import com.project.indistraw.common.AnyValueObjectGenerator
-import com.project.indistraw.global.event.SaveRefreshTokenEvent
+import com.project.indistraw.global.event.authentication.SaveRefreshTokenEvent
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe

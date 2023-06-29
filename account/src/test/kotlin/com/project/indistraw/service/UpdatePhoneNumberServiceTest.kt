@@ -9,7 +9,7 @@ import com.project.indistraw.account.application.service.UpdatePhoneNumberServic
 import com.project.indistraw.account.domain.Account
 import com.project.indistraw.account.domain.Authentication
 import com.project.indistraw.common.AnyValueObjectGenerator
-import com.project.indistraw.global.event.DeleteAuthenticationEvent
+import com.project.indistraw.global.event.authentication.DeleteAuthenticationEvent
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every
