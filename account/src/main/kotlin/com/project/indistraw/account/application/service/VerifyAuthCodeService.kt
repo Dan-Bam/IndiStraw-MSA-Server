@@ -5,7 +5,7 @@ import com.project.indistraw.account.application.exception.*
 import com.project.indistraw.account.application.port.input.VerifyAuthCodeUseCase
 import com.project.indistraw.account.application.port.output.QueryAuthCodePort
 import com.project.indistraw.account.application.port.output.QueryAuthenticationPort
-import com.project.indistraw.global.event.CreateAuthenticationEvent
+import com.project.indistraw.global.event.authentication.CreateAuthenticationEvent
 import org.springframework.context.ApplicationEventPublisher
 
 @ServiceWithTransaction

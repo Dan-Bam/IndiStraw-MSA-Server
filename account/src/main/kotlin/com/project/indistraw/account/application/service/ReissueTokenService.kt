@@ -9,7 +9,7 @@ import com.project.indistraw.account.application.port.output.TokenGeneratePort
 import com.project.indistraw.account.application.port.output.TokenParsePort
 import com.project.indistraw.account.application.port.output.dto.TokenDto
 import com.project.indistraw.account.domain.Account
-import com.project.indistraw.global.event.SaveRefreshTokenEvent
+import com.project.indistraw.global.event.authentication.SaveRefreshTokenEvent
 import com.project.indistraw.global.security.token.common.exception.ExpiredRefreshTokenException
 import com.project.indistraw.global.security.token.common.exception.InvalidTokenException
 import org.springframework.context.ApplicationEventPublisher
