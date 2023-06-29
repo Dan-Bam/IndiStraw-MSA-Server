@@ -3,4 +3,4 @@ package com.project.indistraw.crowdfunding.application.exception
 import com.project.indistraw.crowdfunding.application.common.error.ErrorCode
 import com.project.indistraw.crowdfunding.application.common.error.exception.IndiStrawCrowdfundingException
 
-class CrowdfundingNotFound: IndiStrawCrowdfundingException(ErrorCode.CROWDFUNDING_NOT_FOUND)
+class CrowdfundingNotFoundException: IndiStrawCrowdfundingException(ErrorCode.CROWDFUNDING_NOT_FOUND)
