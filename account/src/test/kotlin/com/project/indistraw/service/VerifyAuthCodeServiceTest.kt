@@ -10,7 +10,7 @@ import com.project.indistraw.account.application.service.VerifyAuthCodeService
 import com.project.indistraw.account.domain.AuthCode
 import com.project.indistraw.account.domain.Authentication
 import com.project.indistraw.common.AnyValueObjectGenerator
-import com.project.indistraw.global.event.CreateAuthenticationEvent
+import com.project.indistraw.global.event.authentication.CreateAuthenticationEvent
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every

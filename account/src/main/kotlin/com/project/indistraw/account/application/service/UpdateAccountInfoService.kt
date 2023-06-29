@@ -2,18 +2,18 @@ package com.project.indistraw.account.application.service
 
 import com.project.indistraw.account.application.common.annotation.ServiceWithTransaction
 import com.project.indistraw.account.application.exception.AccountNotFoundException
-import com.project.indistraw.account.application.port.input.UpdateAccountProfileUseCase
+import com.project.indistraw.account.application.port.input.UpdateAccountInfoUseCase
 import com.project.indistraw.account.application.port.input.dto.UpdateAccountProfileDto
 import com.project.indistraw.account.application.port.output.AccountSecurityPort
 import com.project.indistraw.account.application.port.output.CommandAccountPort
 import com.project.indistraw.account.application.port.output.QueryAccountPort
 
 @ServiceWithTransaction
-class UpdateAccountProfileService(
+class UpdateAccountInfoService(
     private val queryAccountPort: QueryAccountPort,
     private val commandAccountPort: CommandAccountPort,
     private val accountSecurityPort: AccountSecurityPort
-): UpdateAccountProfileUseCase {
+): UpdateAccountInfoUseCase {
 
     override fun execute(dto: UpdateAccountProfileDto) {
         val accountIdx = accountSecurityPort.getCurrentAccountIdx()
@@ -21,10 +21,7 @@ class UpdateAccountProfileService(
             ?: throw AccountNotFoundException()
 
         commandAccountPort.saveAccount(
-            account.copy(
-                name = dto.name,
-                profileUrl = dto.profileUrl
-            )
+            account.updateInfo(name = dto.name, profileUrl = dto.profileUrl)
         )
     }
 }

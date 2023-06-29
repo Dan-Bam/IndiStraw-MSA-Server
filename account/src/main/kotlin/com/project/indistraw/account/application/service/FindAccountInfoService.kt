@@ -2,23 +2,24 @@ package com.project.indistraw.account.application.service
 
 import com.project.indistraw.account.application.common.annotation.ServiceWithReadOnlyTransaction
 import com.project.indistraw.account.application.exception.AccountNotFoundException
-import com.project.indistraw.account.application.port.input.AccountProfileDetailUseCase
-import com.project.indistraw.account.application.port.input.dto.AccountProfileDetailDto
+import com.project.indistraw.account.application.port.input.FindAccountInfoUseCase
+import com.project.indistraw.account.application.port.input.dto.AccountInfoDto
 import com.project.indistraw.account.application.port.output.AccountSecurityPort
 import com.project.indistraw.account.application.port.output.QueryAccountPort
 
 @ServiceWithReadOnlyTransaction
-class AccountProfileDetailService(
+class FindAccountInfoService(
     private val queryAccountPort: QueryAccountPort,
     private val accountSecurityPort: AccountSecurityPort
-): AccountProfileDetailUseCase {
+): FindAccountInfoUseCase {
 
-    override fun execute(): AccountProfileDetailDto {
+    override fun execute(): AccountInfoDto {
         val accountIdx = accountSecurityPort.getCurrentAccountIdx()
         val account = queryAccountPort.findByIdxOrNull(accountIdx)
             ?: throw AccountNotFoundException()
 
-        return AccountProfileDetailDto(
+        return AccountInfoDto(
+            accountIdx = account.accountIdx,
             id = account.id,
             name = account.name,
             phoneNumber = account.phoneNumber,

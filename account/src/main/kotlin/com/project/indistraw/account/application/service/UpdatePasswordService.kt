@@ -9,7 +9,7 @@ import com.project.indistraw.account.application.port.input.dto.UpdatePasswordDt
 import com.project.indistraw.account.application.port.output.CommandAccountPort
 import com.project.indistraw.account.application.port.output.PasswordEncodePort
 import com.project.indistraw.account.application.port.output.QueryAccountPort
-import com.project.indistraw.global.event.DeleteAuthenticationEvent
+import com.project.indistraw.global.event.authentication.DeleteAuthenticationEvent
 import org.springframework.context.ApplicationEventPublisher
 
 @ServiceWithTransaction
@@ -33,7 +33,9 @@ class UpdatePasswordService(
         publisher.publishEvent(DeleteAuthenticationEvent(authentication))
 
         val encodedNewPassword = passwordEncodePort.passwordEncode(dto.newPassword)
-        commandAccountPort.saveAccount(account.copy(encodedPassword = encodedNewPassword))
+        commandAccountPort.saveAccount(
+            account.updateEncodedPassword(encodedNewPassword)
+        )
     }
 
 }
