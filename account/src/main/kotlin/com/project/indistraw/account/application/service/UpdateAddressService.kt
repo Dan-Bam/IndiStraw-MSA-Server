@@ -21,14 +21,14 @@ class UpdateAddressService(
         val account = queryAccountPort.findByIdxOrNull(accountIdx)
             ?: throw AccountNotFoundException()
 
+        val address = Address(
+            zipcode = updateAddressDto.zipcode,
+            streetAddress = updateAddressDto.streetAddress,
+            detailAddress = updateAddressDto.detailAddress
+        )
+
         commandAccountPort.saveAccount(
-            account.copy(
-                address = Address(
-                    zipcode = updateAddressDto.zipcode,
-                    streetAddress = updateAddressDto.streetAddress,
-                    detailAddress = updateAddressDto.detailAddress
-                )
-            )
+            account.updateAddress(address)
         )
     }
 }

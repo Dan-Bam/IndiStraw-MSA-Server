@@ -7,7 +7,7 @@ import com.project.indistraw.account.application.port.output.SendMessagePort
 import com.project.indistraw.account.application.service.SendAuthCodeService
 import com.project.indistraw.account.domain.Authentication
 import com.project.indistraw.common.AnyValueObjectGenerator
-import com.project.indistraw.global.event.CreateAuthenticationEvent
+import com.project.indistraw.global.event.authentication.CreateAuthenticationEvent
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every

@@ -21,10 +21,7 @@ class UpdateAccountInfoService(
             ?: throw AccountNotFoundException()
 
         commandAccountPort.saveAccount(
-            account.copy(
-                name = dto.name,
-                profileUrl = dto.profileUrl
-            )
+            account.updateInfo(name = dto.name, profileUrl = dto.profileUrl)
         )
     }
 }

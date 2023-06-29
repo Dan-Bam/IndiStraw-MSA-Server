@@ -1,4 +1,4 @@
-package com.project.indistraw.global.event
+package com.project.indistraw.global.event.authentication
 
 import com.project.indistraw.account.domain.Authentication
 

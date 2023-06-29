@@ -30,22 +30,22 @@ class AccountWebAdapter(
             .let { ResponseEntity.ok(mapOf("id" to it)) }
 
     @PatchMapping("/password")
-    fun sendAuthCode(@RequestBody request: UpdatePasswordRequest): ResponseEntity<Void> =
+    fun updatePassword(@RequestBody request: UpdatePasswordRequest): ResponseEntity<Void> =
         updatePasswordUseCase.execute(accountDataConverter toDto request)
             .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
 
     @PatchMapping("/phone-number/{phoneNumber}")
-    fun sendAuthCode(@PathVariable phoneNumber: String): ResponseEntity<Void> =
+    fun updatePhoneNumber(@PathVariable phoneNumber: String): ResponseEntity<Void> =
         updatePhoneNumberUseCase.execute(phoneNumber)
             .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
 
     @PatchMapping("/address")
-    fun sendAuthCode(@RequestBody updateAddressRequest: UpdateAddressRequest): ResponseEntity<Void> =
+    fun updateAddress(@RequestBody updateAddressRequest: UpdateAddressRequest): ResponseEntity<Void> =
         updateAddressUseCase.execute(accountDataConverter toDto updateAddressRequest)
             .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
 
-    @PatchMapping("/profile")
-    fun sendAuthCode(@RequestBody request: UpdateAccountInfoRequest): ResponseEntity<Void> =
+    @PatchMapping("/info")
+    fun updateAccountInfo(@RequestBody request: UpdateAccountInfoRequest): ResponseEntity<Void> =
         updateAccountInfoUseCase.execute(accountDataConverter toDto request)
             .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
 
