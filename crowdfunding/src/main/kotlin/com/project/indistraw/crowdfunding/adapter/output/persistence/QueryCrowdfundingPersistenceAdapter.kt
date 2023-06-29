@@ -4,10 +4,12 @@ import com.project.indistraw.crowdfunding.adapter.output.persistence.common.conv
 import com.project.indistraw.crowdfunding.adapter.output.persistence.repository.CrowdfundingRepository
 import com.project.indistraw.crowdfunding.application.port.output.QueryCrowdfundingPort
 import com.project.indistraw.crowdfunding.domain.Crowdfunding
+import com.project.indistraw.crowdfunding.domain.StatusType
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
+import java.util.*
 
 @Component
 class QueryCrowdfundingPersistenceAdapter(
@@ -21,12 +23,17 @@ class QueryCrowdfundingPersistenceAdapter(
     }
 
     override fun findAll(pageRequest: PageRequest): Page<Crowdfunding> {
-        val crowdfundingList = crowdfundingRepository.findAll(pageRequest)
+        val crowdfundingList = crowdfundingRepository.findAllByStatusTypeNot(StatusType.UNDER_REVIEW, pageRequest)
         return crowdfundingList.map { crowdfundingConverter toDomain it }
     }
 
-    override fun findTop7ByOrderByViewCount(): List<Crowdfunding> {
-        val crowdfundingList = crowdfundingRepository.findTop5ByOrderByViewCountDesc()
+    override fun findTop5ByOrderByViewCount(): List<Crowdfunding> {
+        val crowdfundingList = crowdfundingRepository.findTop5ByStatusTypeNotOrderByViewCountDesc(StatusType.UNDER_REVIEW)
+        return crowdfundingList.map { (crowdfundingConverter toDomain it)!! }
+    }
+
+    override fun findByWriterIdx(writerIdx: UUID): List<Crowdfunding> {
+        val crowdfundingList = crowdfundingRepository.findByWriterIdx(writerIdx)
         return crowdfundingList.map { (crowdfundingConverter toDomain it)!! }
     }
 
