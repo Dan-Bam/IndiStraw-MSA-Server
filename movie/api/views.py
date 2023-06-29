@@ -65,8 +65,7 @@ class MovieHistoryViewSet(ModelViewSet):
     pagination_class = PageNumberPagination
 
     def get_object(self, account_index):
-        ## account_index = get_object_or_404(MovieHistory, account_index = account_index)
-        account_index = MovieHistory.objects.filter()
+        account_index = get_object_or_404(MovieHistory, account_index = account_index)
         return account_index
     
     def create(self, request):
