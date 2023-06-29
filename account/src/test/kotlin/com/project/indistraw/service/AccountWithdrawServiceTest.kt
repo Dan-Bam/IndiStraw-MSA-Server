@@ -12,13 +12,15 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.springframework.context.ApplicationEventPublisher
 import java.util.*
 
 class AccountWithdrawServiceTest : BehaviorSpec({
     val queryAccountPort = mockk<QueryAccountPort>()
     val commandAccountPort = mockk<CommandAccountPort>()
     val accountSecurityPort = mockk<AccountSecurityPort>()
-    val accountWithdrawService = AccountWithdrawService(queryAccountPort, commandAccountPort, accountSecurityPort)
+    val publisher = mockk<ApplicationEventPublisher>()
+    val accountWithdrawService = AccountWithdrawService(queryAccountPort, commandAccountPort, accountSecurityPort, publisher)
 
     Given("계정이 주어질때") {
         val accountIdx = UUID.randomUUID()
