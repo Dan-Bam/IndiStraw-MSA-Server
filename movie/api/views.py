@@ -81,3 +81,8 @@ class MovieHistoryViewSet(ModelViewSet):
             return Response(data=serializers.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    def list(self, request, account_index):
+        movie_history = self.get_object(account_index)
+        serializer = MovieHistorySerializer(movie_history)
+        return Response(serializer.data, status=status.HTTP_200_OK)
