@@ -10,6 +10,11 @@ from .pagination import PageNumberPagination
 from django.shortcuts import render, get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 
+class AccountViewSet(ModelViewSet):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+    pagination_class = PageNumberPagination
+
 
 class MovieViewSet(ModelViewSet):
     queryset = Movie.objects.all()
@@ -20,9 +25,6 @@ class MovieViewSet(ModelViewSet):
     search_fields = ('title', 'description',)
 
 
-
-    
-    
 class MovieDefailView(APIView):
     
     def get_object(self, pk):
@@ -56,3 +58,26 @@ class MovieDefailView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_205_RESET_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class MovieHistoryViewSet(ModelViewSet):
+    queryset = MovieHistory.objects.all()
+    serializer_class = MovieHistorySerializer
+    pagination_class = PageNumberPagination
+
+    def get_object(self, account_index):
+        ## account_index = get_object_or_404(MovieHistory, account_index = account_index)
+        account_index = MovieHistory.objects.filter()
+        return account_index
+    
+    def create(self, request):
+        queryset = Movie.objects.all()
+        serializers = self.serializer_class(data=request.data)
+
+        if serializers.is_valid():
+            movie_idx = request.data.get('movie_idx')
+            movie_title = queryset.filter(id=movie_idx).title
+            movie_image = queryset.filter(id=movie_idx).thumbnail_url
+            serializers.save(title=movie_title, thumbnail_url = movie_image)
+            return Response(data=serializers.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(data=serializers.errors, status=status.HTTP_400_BAD_REQUEST)
