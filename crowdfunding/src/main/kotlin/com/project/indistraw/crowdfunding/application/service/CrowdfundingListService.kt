@@ -27,7 +27,7 @@ class CrowdfundingListService(
                 description = it.description,
                 percentage = calculateAmountUtil.calculateAmountPercentage(it.amount),
                 thumbnailUrl = it.thumbnailUrl,
-                activity = it.activity
+                statusType = it.statusType
             )
         }.toList()
 

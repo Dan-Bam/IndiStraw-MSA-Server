@@ -1,15 +1,13 @@
 package com.project.indistraw.crowdfunding.adapter.output.persistence.entity
 
 import com.project.indistraw.crowdfunding.adapter.output.persistence.common.entity.BaseIdxEntity
-import com.project.indistraw.crowdfunding.domain.Activity
-import org.hibernate.annotations.Where
+import com.project.indistraw.crowdfunding.domain.StatusType
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.*
 
 @Entity
-@Where(clause = "activity <> 'UNDER_REVIEW'") // activity가 UNDER_REVIEW인 경우는 조회하지 않음
 @Table(name = "crowdfunding")
 class CrowdfundingEntity(
     @Column(name = "crowdfunding_idx", nullable = false)
@@ -38,7 +36,7 @@ class CrowdfundingEntity(
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    val activity: Activity,
+    val statusType: StatusType,
 
     @Column(nullable = false)
     val viewCount: Long,

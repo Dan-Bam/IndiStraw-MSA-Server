@@ -58,6 +58,7 @@ class CrowdfundingDataConverter {
                     imageUrl = it.imageUrl
                 )
             },
+            status = dto.statusType,
             thumbnailUrl = dto.thumbnailUrl,
             imageList = dto.imageList,
             detailList = dto.detailList
@@ -74,7 +75,7 @@ class CrowdfundingDataConverter {
                     description = it.description,
                     percentage = it.percentage,
                     thumbnailUrl = it.thumbnailUrl,
-                    activity = it.activity
+                    status = it.statusType
                 )
             }
         )
@@ -87,7 +88,7 @@ class CrowdfundingDataConverter {
                 description = it.description,
                 percentage = it.percentage,
                 thumbnailUrl = it.thumbnailUrl,
-                activity = it.activity
+                status = it.statusType
             )
         }
 
