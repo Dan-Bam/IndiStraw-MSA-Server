@@ -30,7 +30,7 @@ class CrowdfundingConverter {
                 createdAt = LocalDateTime.now(),
                 endDate = it.endDate,
                 viewCount = it.viewCount,
-                activity = it.activity,
+                statusType = it.statusType,
                 thumbnailUrl = it.thumbnailUrl,
                 imageList = it.imageList,
                 detailList = it.detailList
@@ -55,7 +55,7 @@ class CrowdfundingConverter {
                 createdAt = LocalDateTime.now(),
                 endDate = it.endDate,
                 viewCount = it.viewCount,
-                activity = it.activity,
+                statusType = it.statusType,
                 thumbnailUrl = it.thumbnailUrl,
                 imageList = it.imageList,
                 detailList = it.detailList

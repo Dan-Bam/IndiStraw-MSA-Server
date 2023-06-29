@@ -13,8 +13,7 @@ class PopularCrowdfundingListService(
 ): PopularCrowdfundingListUseCase {
 
     override fun execute(): List<CrowdfundingListDto> {
-        val crowdfundingList = queryCrowdfundingPort.findTop7ByOrderByViewCount()
-
+        val crowdfundingList = queryCrowdfundingPort.findTop5ByOrderByViewCount()
         return crowdfundingList.map {
             CrowdfundingListDto(
                 idx = it.idx,
@@ -22,7 +21,7 @@ class PopularCrowdfundingListService(
                 description = it.description,
                 percentage = calculateAmountUtil.calculateAmountPercentage(it.amount),
                 thumbnailUrl = it.thumbnailUrl,
-                activity = it.activity
+                statusType = it.statusType
             )
         }
     }

@@ -2,7 +2,7 @@ package com.project.indistraw.crowdfunding.application.service
 
 import com.project.indistraw.crowdfunding.application.common.annotation.ServiceWithTransaction
 import com.project.indistraw.crowdfunding.application.common.util.CalculateAmountUtil
-import com.project.indistraw.crowdfunding.application.exception.CrowdfundingNotFound
+import com.project.indistraw.crowdfunding.application.exception.CrowdfundingNotFoundException
 import com.project.indistraw.crowdfunding.application.port.input.CrowdfundingDetailUseCase
 import com.project.indistraw.crowdfunding.application.port.input.dto.CrowdfundingDetailDto
 import com.project.indistraw.crowdfunding.application.port.input.dto.RewordDto
@@ -27,7 +27,7 @@ class CrowdfundingDetailService(
 
     override fun execute(idx: Long): CrowdfundingDetailDto {
         val crowdfunding = queryCrowdfundingPort.findByIdxOrNull(idx)
-            ?: throw CrowdfundingNotFound()
+            ?: throw CrowdfundingNotFoundException()
         val reword = queryRewordPort.findByCrowdfundingIdx(crowdfunding.idx)
         val writer = queryAccountPort.getAccountInfo()
 
@@ -56,6 +56,7 @@ class CrowdfundingDetailService(
                     imageUrl = it.imageUrl
                 )
             },
+            statusType = crowdfunding.statusType,
             thumbnailUrl = crowdfunding.thumbnailUrl,
             imageList = crowdfunding.imageList,
             detailList = crowdfunding.detailList

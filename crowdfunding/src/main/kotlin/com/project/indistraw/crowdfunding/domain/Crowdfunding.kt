@@ -15,16 +15,21 @@ data class Crowdfunding(
     val directorAccount: DirectorAccount,
     val createdAt: LocalDateTime,
     val endDate: LocalDate,
-    val viewCount: Long,
-    val activity: Activity,
+    var viewCount: Long,
+    var statusType: StatusType,
     val thumbnailUrl: String,
     val imageList: List<String>,
     val detailList: List<String>
 ) {
 
-    fun increaseViewCount(): Crowdfunding =
-        this.copy(
-            viewCount = viewCount.inc()
-        )
+    fun increaseViewCount(): Crowdfunding {
+        this.viewCount = viewCount.inc()
+        return this
+    }
+
+    fun updateStatus(statusType: StatusType): Crowdfunding {
+        this.statusType = statusType
+        return this
+    }
 
 }

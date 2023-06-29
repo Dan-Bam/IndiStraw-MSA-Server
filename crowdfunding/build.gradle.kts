@@ -72,6 +72,10 @@ dependencies {
 
 	/* feign */
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.1.3")
+
+	/* RabbitMQ */
+	implementation("org.springframework.boot:spring-boot-starter-amqp")
+	testImplementation("org.springframework.amqp:spring-rabbit-test")
 }
 
 tasks.withType<KotlinCompile> {
