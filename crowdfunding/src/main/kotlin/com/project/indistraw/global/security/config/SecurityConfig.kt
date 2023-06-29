@@ -1,5 +1,6 @@
 package com.project.indistraw.global.security.config
 
+import com.project.indistraw.global.security.handler.CustomAccessDeniedHandler
 import com.project.indistraw.global.security.handler.CustomAuthenticationEntryPoint
 import com.project.indistraw.global.security.token.TokenParser
 import com.project.indistraw.global.security.token.common.emums.Authority
@@ -39,10 +40,13 @@ class SecurityConfig(
             // /health
             .mvcMatchers(HttpMethod.GET, "/").permitAll()
 
-            .anyRequest().denyAll()
+            .anyRequest().authenticated()
             .and()
 
             .exceptionHandling()
+            .accessDeniedHandler(CustomAccessDeniedHandler())
+            .and()
+            .httpBasic()
             .authenticationEntryPoint(CustomAuthenticationEntryPoint())
             .and()
 
