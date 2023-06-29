@@ -1,13 +1,19 @@
 package com.project.indistraw.account.adapter.output.persistence.common.entity
 
-import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.MappedSuperclass
 
 @MappedSuperclass
 abstract class BaseTimeEntity(
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    val createdDate: LocalDateTime = LocalDateTime.now()
+    @Column(nullable = false, updatable = false, columnDefinition = "DATETIME(6)")
+    val createdDate: LocalDateTime = LocalDateTime.now(),
+
+    @LastModifiedDate
+    @Column(nullable = false, columnDefinition = "DATETIME(6)")
+    val modifiedAt: LocalDateTime = LocalDateTime.now(),
+
+    @Column(nullable = true, updatable = false, columnDefinition = "DATETIME(6)")
+    val deletedAt: LocalDateTime? = null
 )
