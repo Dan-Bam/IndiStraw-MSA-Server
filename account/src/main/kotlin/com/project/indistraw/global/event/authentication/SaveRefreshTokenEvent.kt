@@ -1,6 +1,6 @@
-package com.project.indistraw.global.event
+package com.project.indistraw.global.event.authentication
 
-import java.util.UUID
+import java.util.*
 
 data class SaveRefreshTokenEvent(
     val refreshToken: String,
