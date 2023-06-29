@@ -44,7 +44,7 @@ class AccountWebAdapter(
         updateAddressUseCase.execute(accountDataConverter toDto updateAddressRequest)
             .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
 
-    @PatchMapping("/profile")
+    @PatchMapping("/info")
     fun sendAuthCode(@RequestBody request: UpdateAccountInfoRequest): ResponseEntity<Void> =
         updateAccountInfoUseCase.execute(accountDataConverter toDto request)
             .run { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
