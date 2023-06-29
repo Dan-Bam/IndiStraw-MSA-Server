@@ -5,15 +5,14 @@ import com.project.indistraw.crowdfunding.adapter.input.data.request.CreateCrowd
 import com.project.indistraw.crowdfunding.adapter.input.data.response.CrowdfundingDetailResponse
 import com.project.indistraw.crowdfunding.adapter.input.data.response.CrowdfundingListResponse
 import com.project.indistraw.crowdfunding.adapter.input.data.response.CrowdfundingPagingResponse
-import com.project.indistraw.crowdfunding.application.port.input.CreateCrowdfundingUseCase
-import com.project.indistraw.crowdfunding.application.port.input.CrowdfundingDetailUseCase
-import com.project.indistraw.crowdfunding.application.port.input.CrowdfundingListUseCase
-import com.project.indistraw.crowdfunding.application.port.input.PopularCrowdfundingListUseCase
+import com.project.indistraw.crowdfunding.application.port.input.*
+import com.project.indistraw.crowdfunding.domain.StatusType
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -27,7 +26,9 @@ class CrowdfundingWebAdapter(
     private val createCrowdfundingUseCase: CreateCrowdfundingUseCase,
     private val crowdfundingDetailUseCase: CrowdfundingDetailUseCase,
     private val crowdfundingListUseCase: CrowdfundingListUseCase,
-    private val popularCrowdfundingListUseCase: PopularCrowdfundingListUseCase
+    private val popularCrowdfundingListUseCase: PopularCrowdfundingListUseCase,
+    private val findMyCrowdfundingListUseCase: FindMyCrowdfundingListUseCase,
+    private val updateCrowdfundingStatusUseCase: UpdateCrowdfundingStatusUseCase
 ) {
 
     @PostMapping
@@ -53,5 +54,15 @@ class CrowdfundingWebAdapter(
             .let { crowdfundingDataConverter.toResponse(it) }
             .let { ResponseEntity.ok(it) }
 
+    @GetMapping("/my")
+    fun findMyCrowdfunding(): ResponseEntity<List<CrowdfundingListResponse>> =
+        findMyCrowdfundingListUseCase.execute()
+            .let { crowdfundingDataConverter.toResponse(it) }
+            .let { ResponseEntity.ok(it) }
+
+    @PatchMapping("/{idx}/status/{statusType}")
+    fun updateCrowdfundingStatus(@PathVariable idx: Long, @PathVariable statusType: StatusType): ResponseEntity<Void> =
+        updateCrowdfundingStatusUseCase.execute(idx, statusType)
+            .let { ResponseEntity.status(HttpStatus.RESET_CONTENT).build() }
 
 }
