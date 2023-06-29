@@ -37,7 +37,7 @@ class CrowdfundingDetailService(
             title = crowdfunding.title,
             description = crowdfunding.description,
             writer = CrowdfundingDetailDto.Writer(
-                idx = writer.idx,
+                idx = writer.accountIdx,
                 name = writer.name
             ),
             amount = CrowdfundingDetailDto.Amount(
