@@ -8,6 +8,5 @@ urlpatterns = [
     path('account/', AccountViewSet.as_view({'post':'create'}), name = "account"),
     path('movie/detail/', include(router.urls)),
     path('movie/detail/<int:pk>/', MovieDefailView.as_view(), name = "movie_api_detail"),
-    path('movie/history/', MovieHistoryViewSet.as_view({'get': 'list','post' : 'create'}), name = "movie_history"),
-    path('movie/history/<int:account_index>/', MovieHistoryViewSet.as_view({'get': 'list'}), name = "movie_history_detail")
+    path('movie/history/<int:account_index>/', MovieHistoryViewSet.as_view({'get': 'list','post' : 'create'}), name = "movie_history"),
 ]
