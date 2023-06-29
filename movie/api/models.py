@@ -15,7 +15,7 @@ class MovieHistory(models.Model):
     account_index = models.ForeignKey("Account", on_delete=models.CASCADE)
     movie_idx = models.ForeignKey("Movie", on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    image_url = models.URLField(default = "")
+    thumbnail_url = models.URLField(default = "")
     history_time = models.DecimalField(max_digits = 5, decimal_places = 3)
 
 class Account(models.Model):
