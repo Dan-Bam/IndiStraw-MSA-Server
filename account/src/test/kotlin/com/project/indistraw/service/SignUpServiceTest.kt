@@ -10,12 +10,11 @@ import com.project.indistraw.account.application.service.SignUpService
 import com.project.indistraw.account.domain.Account
 import com.project.indistraw.account.domain.Authentication
 import com.project.indistraw.common.AnyValueObjectGenerator
+import com.project.indistraw.global.event.account.CreateAccountPublishEvent
 import com.project.indistraw.global.event.authentication.DeleteAuthenticationEvent
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
 import org.springframework.context.ApplicationEventPublisher
 import java.util.*
 
@@ -33,18 +32,24 @@ class SignUpServiceTest: BehaviorSpec({
         val encodedPassword = "encoded password"
         val authentication = AnyValueObjectGenerator.anyValueObject<Authentication>("isVerified" to false)
         val deleteAuthenticationEvent = DeleteAuthenticationEvent(authentication)
+        val createAccountPublishEvent = CreateAccountPublishEvent(account.accountIdx)
 
         every { passwordEncodePort.passwordEncode(signUpDto.password) } returns encodedPassword
         every { queryAccountPort.existsById(signUpDto.id) } returns false
         every { commandAccountPort.saveAccount(any()) } returns account.accountIdx
         every { authenticationValidator.verifyAuthenticationByPhoneNumber(signUpDto.phoneNumber) } returns authentication
         every { publisher.publishEvent(deleteAuthenticationEvent) } returns Unit
+        every { publisher.publishEvent(createAccountPublishEvent) } returns Unit
 
         When("회원가입 요청을 하면") {
             signUpService.execute(signUpDto)
 
             Then("비밀번호가 인코딩 되어야 한다.") {
                 verify { passwordEncodePort.passwordEncode(signUpDto.password) }
+            }
+
+            Then("createAccountPublishEvent 객체가 발행되어야 한다.") {
+                verify { publisher.publishEvent(createAccountPublishEvent) }
             }
 
             Then("계정이 생성이 되어야 한다.") {
