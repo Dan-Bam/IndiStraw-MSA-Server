@@ -16,7 +16,7 @@ class CreateAccountPublishEventHandler(
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     fun createAccount(createAccountPublishEvent: CreateAccountPublishEvent) {
         log.info("createAccountPublishEvent is active")
-        crateAccountPublishPort.execute(createAccountPublishEvent.account)
+        crateAccountPublishPort.execute(createAccountPublishEvent.accountIdx)
     }
 
 }

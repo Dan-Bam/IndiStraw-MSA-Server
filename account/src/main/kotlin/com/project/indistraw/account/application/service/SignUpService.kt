@@ -49,7 +49,7 @@ class SignUpService(
         commandAccountPort.saveAccount(account)
 
         // 계정을 생성 할때 각 서비스로 message를 publish 한다.
-        val createAccountPublishEvent = CreateAccountPublishEvent(account)
+        val createAccountPublishEvent = CreateAccountPublishEvent(account.accountIdx)
         publisher.publishEvent(createAccountPublishEvent)
     }
 

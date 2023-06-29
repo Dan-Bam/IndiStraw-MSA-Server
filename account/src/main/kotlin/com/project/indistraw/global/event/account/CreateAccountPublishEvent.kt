@@ -1,7 +1,7 @@
 package com.project.indistraw.global.event.account
 
-import com.project.indistraw.account.domain.Account
+import java.util.UUID
 
 data class CreateAccountPublishEvent(
-    val account: Account
+    val accountIdx: UUID
 )
