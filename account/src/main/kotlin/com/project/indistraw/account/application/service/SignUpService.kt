@@ -45,11 +45,10 @@ class SignUpService(
                 authority = Authority.ROLE_ACCOUNT
             )
         }
-
-        commandAccountPort.saveAccount(account)
+        val accountIdx = commandAccountPort.saveAccount(account)
 
         // 계정을 생성 할때 각 서비스로 message를 publish 한다.
-        val createAccountPublishEvent = CreateAccountPublishEvent(account.accountIdx)
+        val createAccountPublishEvent = CreateAccountPublishEvent(accountIdx)
         publisher.publishEvent(createAccountPublishEvent)
     }
 
