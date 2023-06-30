@@ -110,6 +110,10 @@ class ActorViewSet(ModelViewSet):
     serializer_class = ActorSerializer
     pagination_class = PageNumberPagination
 
+    def get_object(self, pk):
+        actor = get_object_or_404(Actor, pk = pk)
+        return actor
+    
     def get_queryset(self):
         qs= Actor.objects.all()
 
@@ -119,3 +123,13 @@ class ActorViewSet(ModelViewSet):
             qs = qs.filter(name__icontains=name)
             
         return qs
+
+class ActorDefailView(APIView):
+    def get_object(self, pk):
+        actor = get_object_or_404(Actor, pk = pk)
+        return actor
+
+    def get(self, request, pk):
+        actor = self.get_object(pk)
+        serializer = ActorSerializer(actor)
+        return Response(serializer.data, status=status.HTTP_200_OK)
