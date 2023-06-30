@@ -6,9 +6,10 @@ import java.math.BigDecimal
 @Aggregate
 data class Reword(
     val idx: Long,
+    val crowdfundingIdx: Long,
     val title: String,
     val description: String,
     val price: BigDecimal,
     val imageUrl: String,
-    val crowdfundingIdx: Long
+    val totalCount: Long?
 )

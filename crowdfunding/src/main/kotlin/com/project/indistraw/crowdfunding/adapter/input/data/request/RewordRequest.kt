@@ -14,5 +14,7 @@ data class RewordRequest(
     val price: BigDecimal,
 
     @field:NotNull
-    val imageUrl: String
+    val imageUrl: String,
+
+    val totalCount: Long
 )

@@ -25,7 +25,8 @@ class CrowdfundingDataConverter {
                     title = it.title,
                     description = it.description,
                     price = it.price,
-                    imageUrl = it.imageUrl
+                    imageUrl = it.imageUrl,
+                    totalCount = it.totalCount
                 )
             },
             endDate = dto.endDate,
@@ -55,7 +56,8 @@ class CrowdfundingDataConverter {
                     title = it.title,
                     description = it.description,
                     price = it.price,
-                    imageUrl = it.imageUrl
+                    imageUrl = it.imageUrl,
+                    totalCount = it.totalCount
                 )
             },
             status = dto.statusType,
