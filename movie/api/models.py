@@ -6,10 +6,18 @@ class Movie(models.Model):
     description = models.TextField()
     movie_url = models.URLField(default = "")
     thumbnail_url = models.URLField(default = "")
-    director = models.JSONField(default='{}')
-    actor = models.JSONField(default='{}')
+    director = models.ForeignKey("Director", on_delete=models.PROTECT)
+    actor = models.ForeignKey("Actor", on_delete=models.PROTECT)
     genre = models.JSONField(default='{}')
     movie_highlight = models.JSONField(default='{}')
+
+class Actor(models.Model):
+    profile_url = models.URLField()
+    name = models.CharField(max_length=24)
+
+class Director(models.Model):
+    profile_url = models.URLField()
+    name = models.CharField(max_length=24)
 
 class MovieHistory(models.Model):
     account_index = models.ForeignKey("Account", on_delete=models.CASCADE)
