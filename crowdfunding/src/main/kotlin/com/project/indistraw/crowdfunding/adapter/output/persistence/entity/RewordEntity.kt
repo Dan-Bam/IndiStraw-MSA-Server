@@ -24,6 +24,9 @@ class RewordEntity(
     @Column(columnDefinition = "TEXT", nullable = false)
     val imageUrl: String,
 
+    @Column(nullable = true)
+    val totalCount: Long?,
+
     @Cascade(CascadeType.DELETE)
     @ManyToOne(fetch = FetchType.LAZY)
     val crowdfundingEntity: CrowdfundingEntity

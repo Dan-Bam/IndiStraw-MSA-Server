@@ -46,11 +46,12 @@ class CreateCrowdfundingService(
         val rewordList = dto.reword.map {
             Reword(
                 idx = 0L,
+                crowdfundingIdx = crowdfundingIdx,
                 title = it.title,
                 description = it.description,
                 price = it.price,
                 imageUrl = it.imageUrl,
-                crowdfundingIdx = crowdfundingIdx
+                totalCount = it.totalCount
             )
         }
         commandRewordPort.saveAllReword(rewordList)

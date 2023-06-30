@@ -17,12 +17,13 @@ class RewordConverter(
             ?: throw CrowdfundingNotFoundException()
         return domainList.map {
             RewordEntity(
-                idx = 0,
+                idx = it.idx,
                 title = it.title,
                 description = it.description,
                 price = it.price,
                 imageUrl = it.imageUrl,
-                crowdfundingEntity = crowdfundingEntity
+                crowdfundingEntity = crowdfundingEntity,
+                totalCount = it.totalCount
             )
         }
     }
@@ -30,12 +31,13 @@ class RewordConverter(
     infix fun toDomainList(entityList: List<RewordEntity>): List<Reword> {
         return entityList.map {
             Reword(
-                idx = 0,
+                idx = it.idx,
+                crowdfundingIdx = it.crowdfundingEntity.idx,
                 title = it.title,
                 description = it.description,
                 price = it.price,
                 imageUrl = it.imageUrl,
-                crowdfundingIdx = it.crowdfundingEntity.idx
+                totalCount = it.totalCount
             )
         }
     }
