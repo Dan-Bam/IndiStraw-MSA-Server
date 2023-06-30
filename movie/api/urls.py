@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import MovieViewSet, MovieDefailView, MovieHistoryViewSet, AccountViewSet, ActorViewSet
+from .views import MovieViewSet, MovieDefailView, MovieHistoryViewSet, AccountViewSet, ActorViewSet, ActorDefailView
 from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register('', MovieViewSet)  
@@ -13,5 +13,7 @@ urlpatterns = [
                                                                             'put' : 'update',
                                                                             'delete' : 'destroy'}), name = "movie_history"),
     path('movie/actor/', ActorViewSet.as_view({'get':'list',
-                                                'post': 'create'}), name = "actor")
+                                                'post': 'create'}), name = "actor"),
+    path('movie/actor/<int:pk>/', ActorDefailView.as_view(), name = "actor_detail"),
+    
 ]
