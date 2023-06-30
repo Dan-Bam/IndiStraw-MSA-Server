@@ -12,7 +12,7 @@ class CalculateAmountUtil {
         return if (amount.totalAmount.compareTo(BigDecimal.ZERO) == 0) {
             BigDecimal.ZERO
         } else {
-            amount.targetAmount.divide(amount.totalAmount, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100))
+            amount.totalAmount.divide(amount.targetAmount, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100))
         }
     }
 
