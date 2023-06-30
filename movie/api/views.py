@@ -9,6 +9,7 @@ from .models import *
 from .pagination import PageNumberPagination
 from django.shortcuts import render, get_object_or_404
 from rest_framework.viewsets import ModelViewSet
+from .producer import publish
 
 class AccountViewSet(ModelViewSet):
     queryset = Account.objects.all()
@@ -77,6 +78,7 @@ class MovieHistoryViewSet(ModelViewSet):
             movie_title = queryset.filter(id=movie_idx).title
             movie_image = queryset.filter(id=movie_idx).thumbnail_url
             serializers.save(title=movie_title, thumbnail_url = movie_image)
+            publish('create_record', serializers.data)
             return Response(data=serializers.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=serializers.errors, status=status.HTTP_400_BAD_REQUEST)
