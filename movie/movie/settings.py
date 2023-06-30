@@ -39,7 +39,7 @@ INSTALLED_APPS = [
 
     # In Folder Installed App
     'movie',
-    'api'
+    'api',
 ]
 
 MIDDLEWARE = [
