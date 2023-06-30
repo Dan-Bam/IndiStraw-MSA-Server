@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 private val log = KotlinLogging.logger {  }
 
 @Component
-class QueryCrowdfundingEventListener(
+class QueryCrowdfundingEventHandler(
     private val queryCrowdfundingViewPort: QueryCrowdfundingViewPort,
     private val commandCrowdfundingViewPort: CommandCrowdfundingViewPort,
     private val commandCrowdfundingPort: CommandCrowdfundingPort,
