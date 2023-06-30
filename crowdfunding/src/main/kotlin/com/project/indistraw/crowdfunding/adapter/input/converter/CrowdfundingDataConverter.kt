@@ -66,7 +66,6 @@ class CrowdfundingDataConverter {
 
     fun toResponse(dto: CrowdfundingPagingDto): CrowdfundingPagingResponse =
         CrowdfundingPagingResponse(
-            pageSize = dto.pageSize,
             isLast = dto.isLast,
             list = dto.list.map {
                 CrowdfundingListResponse(

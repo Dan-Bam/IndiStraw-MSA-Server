@@ -32,7 +32,6 @@ class CrowdfundingListService(
         }.toList()
 
         return CrowdfundingPagingDto(
-            pageSize = pageable.pageNumber,
             isLast = crowdfundingList.isLast,
             list = crowdfundingListDto
         )
