@@ -7,9 +7,9 @@ import java.math.BigDecimal
 import javax.persistence.*
 
 @Entity
-@Table(name = "reword")
-class RewordEntity(
-    @Column(name = "reword_idx", nullable = false)
+@Table(name = "reward")
+class RewardEntity(
+    @Column(name = "reward_idx", nullable = false)
     override val idx: Long,
 
     @Column(nullable = false)

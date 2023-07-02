@@ -33,7 +33,7 @@ class CrowdfundingConverter {
                 statusType = it.statusType,
                 thumbnailUrl = it.thumbnailUrl,
                 imageList = it.imageList,
-                detailList = it.detailList
+                fileList = it.fileList
             )
         }
 
@@ -58,7 +58,7 @@ class CrowdfundingConverter {
                 statusType = it.statusType,
                 thumbnailUrl = it.thumbnailUrl,
                 imageList = it.imageList,
-                detailList = it.detailList
+                fileList = it.fileList
             )
         }
 

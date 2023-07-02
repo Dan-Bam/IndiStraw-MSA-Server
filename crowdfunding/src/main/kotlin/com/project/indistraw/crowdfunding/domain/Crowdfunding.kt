@@ -19,7 +19,7 @@ data class Crowdfunding(
     var statusType: StatusType,
     val thumbnailUrl: String,
     val imageList: List<String>,
-    val detailList: List<String>
+    val fileList: List<String>
 ) {
 
     fun increaseViewCount(): Crowdfunding {

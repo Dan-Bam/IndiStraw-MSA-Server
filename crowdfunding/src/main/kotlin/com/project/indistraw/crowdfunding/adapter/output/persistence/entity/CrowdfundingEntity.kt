@@ -50,7 +50,7 @@ class CrowdfundingEntity(
     val imageList: List<String>,
 
     @ElementCollection
-    @CollectionTable(name = "crowdfunding_detail", joinColumns = [JoinColumn(name = "crowdfunding_idx")])
-    @Column(name = "detail_url", columnDefinition = "TEXT", nullable = false)
-    val detailList: List<String>,
+    @CollectionTable(name = "crowdfunding_file", joinColumns = [JoinColumn(name = "crowdfunding_idx")])
+    @Column(name = "file_url", columnDefinition = "TEXT", nullable = false)
+    val fileList: List<String>,
 ): BaseIdxEntity(idx)

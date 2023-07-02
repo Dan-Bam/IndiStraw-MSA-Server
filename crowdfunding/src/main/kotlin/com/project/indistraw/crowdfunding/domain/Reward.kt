@@ -4,7 +4,7 @@ import com.project.indistraw.crowdfunding.application.common.annotation.Aggregat
 import java.math.BigDecimal
 
 @Aggregate
-data class Reword(
+data class Reward(
     val idx: Long,
     val crowdfundingIdx: Long,
     val title: String,

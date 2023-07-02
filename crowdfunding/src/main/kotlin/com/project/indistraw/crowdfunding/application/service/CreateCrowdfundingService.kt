@@ -38,13 +38,13 @@ class CreateCrowdfundingService(
             statusType = StatusType.UNDER_REVIEW,
             thumbnailUrl = dto.thumbnailUrl,
             imageList = dto.imageList,
-            detailList = dto.detailList
+            fileList = dto.fileList
         )
         val crowdfundingIdx = commandCrowdfundingPort.saveCrowdfunding(crowdfunding)
 
         // dto값을 토대로 reword 객체를 생성하여 저장합니다.
-        val rewordList = dto.reword.map {
-            Reword(
+        val rewordList = dto.reward.map {
+            Reward(
                 idx = 0L,
                 crowdfundingIdx = crowdfundingIdx,
                 title = it.title,

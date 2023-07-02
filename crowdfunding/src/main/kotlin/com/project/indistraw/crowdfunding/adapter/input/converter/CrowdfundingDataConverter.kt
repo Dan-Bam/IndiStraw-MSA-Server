@@ -4,6 +4,7 @@ import com.project.indistraw.crowdfunding.adapter.input.data.request.CreateCrowd
 import com.project.indistraw.crowdfunding.adapter.input.data.response.CrowdfundingDetailResponse
 import com.project.indistraw.crowdfunding.adapter.input.data.response.CrowdfundingListResponse
 import com.project.indistraw.crowdfunding.adapter.input.data.response.CrowdfundingPagingResponse
+import com.project.indistraw.crowdfunding.adapter.input.data.response.RewardResponse
 import com.project.indistraw.crowdfunding.application.port.input.dto.*
 import org.springframework.stereotype.Component
 
@@ -19,8 +20,8 @@ class CrowdfundingDataConverter {
                 bank = dto.directorAccount.bank,
                 account = dto.directorAccount.account
             ),
-            reword = dto.reword.map {
-                RewordDto(
+            reward = dto.reward.map {
+                RewardDto(
                     idx = 0L,
                     title = it.title,
                     description = it.description,
@@ -32,7 +33,7 @@ class CrowdfundingDataConverter {
             endDate = dto.endDate,
             thumbnailUrl = dto.thumbnailUrl,
             imageList = dto.imageList,
-            detailList = dto.detailList
+            fileList = dto.fileList
         )
 
     infix fun toResponse(dto: CrowdfundingDetailDto): CrowdfundingDetailResponse =
@@ -50,8 +51,8 @@ class CrowdfundingDataConverter {
             ),
             remainingDay = dto.remainingDay,
             fundingCount = dto.fundingCount,
-            reword = dto.reword.map {
-                RewordDto(
+            reward = dto.reward.map {
+                RewardResponse(
                     idx = it.idx,
                     title = it.title,
                     description = it.description,
@@ -63,7 +64,7 @@ class CrowdfundingDataConverter {
             status = dto.statusType,
             thumbnailUrl = dto.thumbnailUrl,
             imageList = dto.imageList,
-            detailList = dto.detailList
+            fileList = dto.fileList
         )
 
     fun toResponse(dto: CrowdfundingPagingDto): CrowdfundingPagingResponse =

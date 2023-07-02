@@ -15,7 +15,7 @@ data class CreateCrowdfundingRequest(
 
     val directorAccount: DirectorAccountRequest,
 
-    val reword: List<RewordRequest>,
+    val reward: List<RewardRequest>,
 
     val endDate: LocalDate,
 
@@ -26,5 +26,5 @@ data class CreateCrowdfundingRequest(
     val imageList: List<String>,
 
     @field:NotNull
-    val detailList: List<String>
+    val fileList: List<String>
 )

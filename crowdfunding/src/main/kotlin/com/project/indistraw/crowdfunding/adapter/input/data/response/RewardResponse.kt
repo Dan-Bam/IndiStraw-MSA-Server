@@ -1,8 +1,8 @@
-package com.project.indistraw.crowdfunding.application.port.input.dto
+package com.project.indistraw.crowdfunding.adapter.input.data.response
 
 import java.math.BigDecimal
 
-data class RewordDto(
+data class RewardResponse(
     val idx: Long,
     val title: String,
     val description: String,

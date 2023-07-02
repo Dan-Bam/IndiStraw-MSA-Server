@@ -5,11 +5,11 @@ import com.project.indistraw.crowdfunding.application.common.util.CalculateAmoun
 import com.project.indistraw.crowdfunding.application.exception.CrowdfundingNotFoundException
 import com.project.indistraw.crowdfunding.application.port.input.CrowdfundingDetailUseCase
 import com.project.indistraw.crowdfunding.application.port.input.dto.CrowdfundingDetailDto
-import com.project.indistraw.crowdfunding.application.port.input.dto.RewordDto
+import com.project.indistraw.crowdfunding.application.port.input.dto.RewardDto
 import com.project.indistraw.crowdfunding.application.port.output.QueryAccountPort
 import com.project.indistraw.crowdfunding.application.port.output.QueryCrowdfundingPort
 import com.project.indistraw.crowdfunding.application.port.output.QueryRequestIpPort
-import com.project.indistraw.crowdfunding.application.port.output.QueryRewordPort
+import com.project.indistraw.crowdfunding.application.port.output.QueryRewardPort
 import com.project.indistraw.crowdfunding.domain.Crowdfunding
 import com.project.indistraw.global.event.QueryCrowdfundingEvent
 import org.springframework.context.ApplicationEventPublisher
@@ -18,7 +18,7 @@ import java.time.LocalDate
 @ServiceWithTransaction
 class CrowdfundingDetailService(
     private val queryCrowdfundingPort: QueryCrowdfundingPort,
-    private val queryRewordPort: QueryRewordPort,
+    private val queryRewardPort: QueryRewardPort,
     private val queryRequestIpPort: QueryRequestIpPort,
     private val queryAccountPort: QueryAccountPort,
     private val calculateAmountUtil: CalculateAmountUtil,
@@ -28,7 +28,7 @@ class CrowdfundingDetailService(
     override fun execute(idx: Long): CrowdfundingDetailDto {
         val crowdfunding = queryCrowdfundingPort.findByIdxOrNull(idx)
             ?: throw CrowdfundingNotFoundException()
-        val reword = queryRewordPort.findByCrowdfundingIdx(crowdfunding.idx)
+        val reward = queryRewardPort.findByCrowdfundingIdx(crowdfunding.idx)
         val writer = queryAccountPort.getAccountInfo()
 
         publishEvent(crowdfunding)
@@ -47,8 +47,8 @@ class CrowdfundingDetailService(
             ),
             remainingDay = LocalDate.now().minusDays(crowdfunding.endDate.dayOfMonth.toLong()).dayOfMonth,
             fundingCount = 0,
-            reword = reword.map {
-                RewordDto(
+            reward = reward.map {
+                RewardDto(
                     idx = it.idx,
                     title = it.title,
                     description = it.description,
@@ -60,7 +60,7 @@ class CrowdfundingDetailService(
             statusType = crowdfunding.statusType,
             thumbnailUrl = crowdfunding.thumbnailUrl,
             imageList = crowdfunding.imageList,
-            detailList = crowdfunding.detailList
+            fileList = crowdfunding.fileList
         )
     }
 
