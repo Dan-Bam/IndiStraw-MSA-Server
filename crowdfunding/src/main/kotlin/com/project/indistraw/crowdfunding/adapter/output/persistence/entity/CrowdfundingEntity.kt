@@ -52,5 +52,5 @@ class CrowdfundingEntity(
     @ElementCollection
     @CollectionTable(name = "crowdfunding_detail", joinColumns = [JoinColumn(name = "crowdfunding_idx")])
     @Column(name = "detail_url", columnDefinition = "TEXT", nullable = false)
-    val detailList: List<String>,
+    val fileList: List<String>,
 ): BaseIdxEntity(idx)
