@@ -2,8 +2,8 @@ package com.project.indistraw.crowdfunding.application.port.output
 
 import com.project.indistraw.crowdfunding.domain.Reward
 
-interface CommandRewordPort {
+interface QueryRewardPort {
 
-    fun saveAllReword(rewordList: List<Reward>)
+    fun findByCrowdfundingIdx(crowdfundingIdx: Long): List<Reward>
 
 }

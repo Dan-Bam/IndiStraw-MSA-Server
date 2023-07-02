@@ -3,7 +3,7 @@ package com.project.indistraw.crowdfunding.adapter.input.data.request
 import java.math.BigDecimal
 import javax.validation.constraints.NotNull
 
-data class RewordRequest(
+data class RewardRequest(
     @field:NotNull
     val title: String,
 

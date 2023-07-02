@@ -7,5 +7,6 @@ import org.springframework.data.redis.core.RedisHash
 data class CrowdfundingViewCountEntity(
     @Id
     val crowdfundingIdx: Long,
+
     val ips: Set<String>
 )

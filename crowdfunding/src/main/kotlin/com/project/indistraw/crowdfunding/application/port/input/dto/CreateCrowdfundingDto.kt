@@ -7,9 +7,9 @@ data class CreateCrowdfundingDto(
     val description: String,
     val targetAmount: Long,
     val directorAccount: DirectorAccountDto,
-    val reword: List<RewordDto>,
+    val reward: List<RewardDto>,
     val endDate: LocalDate,
     val thumbnailUrl: String,
     val imageList: List<String>,
-    val detailList: List<String>
+    val fileList: List<String>
 )

@@ -1,9 +1,8 @@
 package com.project.indistraw.crowdfunding.adapter.input.data.response
 
-import com.project.indistraw.crowdfunding.application.port.input.dto.RewordDto
 import com.project.indistraw.crowdfunding.domain.StatusType
 import java.math.BigDecimal
-import java.util.UUID
+import java.util.*
 
 data class CrowdfundingDetailResponse(
     val title: String,
@@ -12,11 +11,11 @@ data class CrowdfundingDetailResponse(
     val amount: Amount,
     val remainingDay: Int,
     val fundingCount: Long,
-    val reword: List<RewordDto>,
+    val reward: List<RewardResponse>,
     val status: StatusType,
     val thumbnailUrl: String,
     val imageList: List<String>,
-    val detailList: List<String>
+    val fileList: List<String>
 ) {
 
     data class Writer(

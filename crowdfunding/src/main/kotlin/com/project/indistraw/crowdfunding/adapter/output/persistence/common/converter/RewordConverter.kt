@@ -3,7 +3,7 @@ package com.project.indistraw.crowdfunding.adapter.output.persistence.common.con
 import com.project.indistraw.crowdfunding.adapter.output.persistence.entity.*
 import com.project.indistraw.crowdfunding.adapter.output.persistence.repository.CrowdfundingRepository
 import com.project.indistraw.crowdfunding.application.exception.CrowdfundingNotFoundException
-import com.project.indistraw.crowdfunding.domain.Reword
+import com.project.indistraw.crowdfunding.domain.Reward
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 
@@ -12,11 +12,11 @@ class RewordConverter(
     private val crowdfundingRepository: CrowdfundingRepository
 ) {
 
-    infix fun toEntityList(domainList: List<Reword>): List<RewordEntity> {
+    infix fun toEntityList(domainList: List<Reward>): List<RewardEntity> {
         val crowdfundingEntity = crowdfundingRepository.findByIdOrNull(domainList[0].crowdfundingIdx)
             ?: throw CrowdfundingNotFoundException()
         return domainList.map {
-            RewordEntity(
+            RewardEntity(
                 idx = it.idx,
                 title = it.title,
                 description = it.description,
@@ -28,9 +28,9 @@ class RewordConverter(
         }
     }
 
-    infix fun toDomainList(entityList: List<RewordEntity>): List<Reword> {
+    infix fun toDomainList(entityList: List<RewardEntity>): List<Reward> {
         return entityList.map {
-            Reword(
+            Reward(
                 idx = it.idx,
                 crowdfundingIdx = it.crowdfundingEntity.idx,
                 title = it.title,

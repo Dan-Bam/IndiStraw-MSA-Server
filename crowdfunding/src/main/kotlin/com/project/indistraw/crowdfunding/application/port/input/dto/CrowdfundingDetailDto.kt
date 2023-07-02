@@ -11,11 +11,11 @@ data class CrowdfundingDetailDto(
     val amount: Amount,
     val remainingDay: Int,
     val fundingCount: Long,
-    val reword: List<RewordDto>,
+    val reward: List<RewardDto>,
     val statusType: StatusType,
     val thumbnailUrl: String,
     val imageList: List<String>,
-    val detailList: List<String>
+    val fileList: List<String>
 ) {
 
     data class Writer(

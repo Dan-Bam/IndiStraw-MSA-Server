@@ -2,25 +2,25 @@ package com.project.indistraw.crowdfunding.adapter.output.persistence
 
 import com.project.indistraw.crowdfunding.adapter.output.persistence.common.converter.RewordConverter
 import com.project.indistraw.crowdfunding.adapter.output.persistence.repository.CrowdfundingRepository
-import com.project.indistraw.crowdfunding.adapter.output.persistence.repository.RewordRepository
+import com.project.indistraw.crowdfunding.adapter.output.persistence.repository.RewardRepository
 import com.project.indistraw.crowdfunding.application.exception.CrowdfundingNotFoundException
-import com.project.indistraw.crowdfunding.application.port.output.QueryRewordPort
-import com.project.indistraw.crowdfunding.domain.Reword
+import com.project.indistraw.crowdfunding.application.port.output.QueryRewardPort
+import com.project.indistraw.crowdfunding.domain.Reward
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 
 @Component
-class QueryRewordPersistenceAdapter(
+class QueryRewardPersistenceAdapter(
     private val rewordConverter: RewordConverter,
     private val crowdfundingRepository: CrowdfundingRepository,
-    private val rewordRepository: RewordRepository
-): QueryRewordPort {
+    private val rewardRepository: RewardRepository
+): QueryRewardPort {
 
-    override fun findByCrowdfundingIdx(crowdfundingIdx: Long): List<Reword> {
+    override fun findByCrowdfundingIdx(crowdfundingIdx: Long): List<Reward> {
         val crowdfundingEntity = crowdfundingRepository.findByIdOrNull(crowdfundingIdx)
             ?: throw CrowdfundingNotFoundException()
-        val rewordList = rewordRepository.findByCrowdfundingEntity(crowdfundingEntity)
-        return rewordConverter toDomainList rewordList
+        val rewardList = rewardRepository.findByCrowdfundingEntity(crowdfundingEntity)
+        return rewordConverter toDomainList rewardList
     }
 
 }
