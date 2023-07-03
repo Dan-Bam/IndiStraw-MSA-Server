@@ -1,7 +1,6 @@
 package com.project.indistraw.crowdfunding.domain
 
 import com.project.indistraw.crowdfunding.application.common.annotation.Aggregate
-import java.math.BigDecimal
 
 @Aggregate
 data class Reward(
@@ -9,7 +8,7 @@ data class Reward(
     val crowdfundingIdx: Long,
     val title: String,
     val description: String,
-    val price: BigDecimal,
+    val price: Long,
     val imageUrl: String,
     val totalCount: Long?
 )
