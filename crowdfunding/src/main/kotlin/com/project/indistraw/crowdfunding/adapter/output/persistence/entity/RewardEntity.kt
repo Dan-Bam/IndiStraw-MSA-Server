@@ -3,7 +3,6 @@ package com.project.indistraw.crowdfunding.adapter.output.persistence.entity
 import com.project.indistraw.crowdfunding.adapter.output.persistence.common.entity.BaseIdxEntity
 import org.hibernate.annotations.Cascade
 import org.hibernate.annotations.CascadeType
-import java.math.BigDecimal
 import javax.persistence.*
 
 @Entity
@@ -19,7 +18,7 @@ class RewardEntity(
     val description: String,
 
     @Column(nullable = false)
-    val price: BigDecimal,
+    val price: Long,
 
     @Column(columnDefinition = "TEXT", nullable = false)
     val imageUrl: String,

@@ -1,7 +1,6 @@
 package com.project.indistraw.crowdfunding.adapter.input.data.response
 
 import com.project.indistraw.crowdfunding.domain.StatusType
-import java.math.BigDecimal
 import java.util.*
 
 data class CrowdfundingDetailResponse(
@@ -24,9 +23,9 @@ data class CrowdfundingDetailResponse(
     )
 
     data class Amount(
-        val targetAmount: BigDecimal,
-        val totalAmount: BigDecimal,
-        val percentage: BigDecimal
+        val targetAmount: Long,
+        val totalAmount: Long,
+        val percentage: Double
     )
 
 }

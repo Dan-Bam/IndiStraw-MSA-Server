@@ -7,7 +7,6 @@ import com.project.indistraw.crowdfunding.application.port.output.AccountSecurit
 import com.project.indistraw.crowdfunding.application.port.output.CommandCrowdfundingPort
 import com.project.indistraw.crowdfunding.application.port.output.CommandRewordPort
 import com.project.indistraw.crowdfunding.domain.*
-import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @ServiceWithTransaction
@@ -25,8 +24,8 @@ class CreateCrowdfundingService(
             title = dto.title,
             description = dto.description,
             amount = Amount(
-                targetAmount = BigDecimal.valueOf(dto.targetAmount),
-                totalAmount = BigDecimal.ZERO
+                targetAmount = dto.targetAmount,
+                totalAmount = 0L
             ),
             directorAccount = DirectorAccount(
                 bank = dto.directorAccount.bank,
