@@ -45,7 +45,7 @@ jobs:
         cd movie
         docker build -t ${{ secrets.MOVIE_ECR_REPOSITORY }} .
         docker tag ${{ secrets.MOVIE_ECR_REPOSITORY }}:$IMAGE_TAG ${{ secrets.MOVIE_REPO_URL }}:$IMAGE_TAG
-        docker push ${{ secrets.REPO_URL }}:$IMAGE_TAG
+        docker push ${{ secrets.MOVIE_REPO_URL }}:$IMAGE_TAG
           
     - name: CD Discord Django Success Notification
       uses: sarisia/actions-status-discord@v1
