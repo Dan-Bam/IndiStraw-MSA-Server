@@ -8,7 +8,7 @@ data class CrowdfundingDetailResponse(
     val description: String,
     val writer: Writer,
     val amount: Amount,
-    val remainingDay: Int,
+    val remainingDay: Long,
     val fundingCount: Long,
     val reward: List<RewardResponse>,
     val status: StatusType,

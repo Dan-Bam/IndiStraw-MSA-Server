@@ -14,6 +14,7 @@ import com.project.indistraw.crowdfunding.domain.Crowdfunding
 import com.project.indistraw.global.event.QueryCrowdfundingEvent
 import org.springframework.context.ApplicationEventPublisher
 import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 @ServiceWithTransaction
 class CrowdfundingDetailService(
@@ -23,7 +24,7 @@ class CrowdfundingDetailService(
     private val queryAccountPort: QueryAccountPort,
     private val calculateAmountUtil: CalculateAmountUtil,
     private val publisher: ApplicationEventPublisher
-) : CrowdfundingDetailUseCase {
+): CrowdfundingDetailUseCase {
 
     override fun execute(idx: Long): CrowdfundingDetailDto {
         val crowdfunding = queryCrowdfundingPort.findByIdxOrNull(idx)
@@ -45,7 +46,7 @@ class CrowdfundingDetailService(
                 totalAmount = crowdfunding.amount.totalAmount,
                 percentage = calculateAmountUtil.calculateAmountPercentage(crowdfunding.amount)
             ),
-            remainingDay = LocalDate.now().minusDays(crowdfunding.endDate.dayOfMonth.toLong()).dayOfMonth,
+            remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), crowdfunding.endDate),
             fundingCount = 0,
             reward = reward.map {
                 RewardDto(
