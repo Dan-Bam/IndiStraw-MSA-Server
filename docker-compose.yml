@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  blue:
+    image : ${MOVIE_REPO_URL}
+    ports:
+      - 8001:8000
+      
+  green:
+    image : ${AI_REPO_URL}
+    ports:
+      - 8002:8000
