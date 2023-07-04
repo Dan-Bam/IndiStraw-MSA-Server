@@ -1,5 +1,6 @@
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,django
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,python,django
+
+# Created by https://www.toptal.com/developers/gitignore/api/django,python,windows
+# Edit at https://www.toptal.com/developers/gitignore?templates=django,python,windows
 
 ### Django ###
 *.log
@@ -10,6 +11,7 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media
+
 .env
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
@@ -264,6 +266,33 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -284,3 +313,4 @@ pyrightconfig.json
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,django
+
