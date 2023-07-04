@@ -8,7 +8,7 @@ data class CrowdfundingDetailDto(
     val description: String,
     val writer: Writer,
     val amount: Amount,
-    val remainingDay: Int,
+    val remainingDay: Long,
     val fundingCount: Long,
     val reward: List<RewardDto>,
     val statusType: StatusType,
