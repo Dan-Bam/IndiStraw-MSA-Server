@@ -1,5 +1,6 @@
 package com.project.indistraw.account.adapter.output.persistence.common.converter
 
+import com.project.indistraw.account.adapter.output.persistence.common.GenericConverter
 import com.project.indistraw.account.adapter.output.persistence.entity.AccountEntity
 import com.project.indistraw.account.adapter.output.persistence.entity.AddressEntity
 import com.project.indistraw.account.domain.Account
@@ -8,9 +9,9 @@ import com.project.indistraw.account.domain.Authority
 import org.springframework.stereotype.Component
 
 @Component
-class AccountConverter {
+class AccountConverter: GenericConverter<Account, AccountEntity> {
 
-    infix fun toEntity(domain: Account): AccountEntity =
+    override infix fun toEntity(domain: Account): AccountEntity =
         domain.let {
             AccountEntity(
                 accountIdx = it.accountIdx,
@@ -28,7 +29,7 @@ class AccountConverter {
             )
         }
 
-    infix fun toDomain(entity: AccountEntity?): Account? =
+    override infix fun toDomain(entity: AccountEntity?): Account? =
         entity?.let {
             Account(
                 accountIdx = it.accountIdx,
