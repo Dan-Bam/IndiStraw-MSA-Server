@@ -2,8 +2,9 @@ name: Django Movie CD
 
 on:
   push:
+    branches: [ "Django" ]
     paths:
-    - "AI/**"  
+      - "AI/**"  
 
 jobs:
   build:
