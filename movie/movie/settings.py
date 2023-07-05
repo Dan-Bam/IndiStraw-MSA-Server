@@ -6,7 +6,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 ###### 환경변수 쪽 설정 ##################
 env = environ.Env(DEBUG=(bool, True))
