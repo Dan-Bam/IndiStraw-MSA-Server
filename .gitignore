@@ -137,6 +137,7 @@ celerybeat.pid
 # Environments
 .env
 .venv
+AI/indiestraw.json
 env/
 venv/
 ENV/
