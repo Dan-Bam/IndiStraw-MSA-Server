@@ -79,8 +79,9 @@ class MovieHistoryViewSet(ModelViewSet):
 
         if serializers.is_valid():
             movie_idx = request.data.get('movie_idx')
-            movie_title = queryset.filter(id=movie_idx).title
-            movie_image = queryset.filter(id=movie_idx).thumbnail_url
+            movie_qs_filter = queryset.get(id=movie_idx)
+            movie_title = movie_qs_filter.title
+            movie_image = movie_qs_filter.thumbnail_url
             serializers.save(title=movie_title, thumbnail_url = movie_image)
 
             publish('create_record', serializers.data)
@@ -88,10 +89,10 @@ class MovieHistoryViewSet(ModelViewSet):
         else:
             return Response(data=serializers.errors, status=status.HTTP_400_BAD_REQUEST)
         
-    def list(self, request, account_index):
-        movie_history = self.get_object(account_index)
-        serializer = MovieHistorySerializer(movie_history, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    # def list(self, request, account_index):
+    #     movie_history = self.get_object(account_index)
+    #     serializer = MovieHistorySerializer(movie_history, many=True)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
     
     def update(self, request, pk=None) :
         movie_history = MovieHistory.objects.get(id=pk)
