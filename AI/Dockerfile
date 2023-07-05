@@ -4,4 +4,4 @@ WORKDIR /AI
 COPY requirements.txt /AI/requirements.txt
 RUN pip install -r requirements.txt
 RUN export GOOGLE_APPLICATION_CREDENTIALS="indiestraw.json"
-COPY ../.. /AI
+COPY . /AI
