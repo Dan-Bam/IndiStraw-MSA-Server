@@ -1,9 +1,13 @@
 import pika
-import os, django, json
-from api.models import MovieHistory
+import os, json
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE",'movie.settings')
+
+import django 
+
 django.setup()
+
+from api.models import MovieHistory
 
 params = pika.URLParameters('amqps://igqylvwy:TcwMgVG-nqWB4Riz7lSMPp17hEg3qOAC@vulture.rmq.cloudamqp.com/igqylvwy')
 
