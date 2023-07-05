@@ -27,7 +27,7 @@ class MovieViewSet(ModelViewSet):
     pagination_class = PageNumberPagination
 
     filter_backends = [SearchFilter]
-    search_fields = ('title', 'description',)
+    search_fields = ('title',)
 
 
 class MovieDefailView(APIView):
