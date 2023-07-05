@@ -1,10 +1,10 @@
 package com.project.indistraw.account.adapter.input
 
 import com.project.indistraw.account.adapter.input.converter.AccountDataConverter
-import com.project.indistraw.account.adapter.input.request.UpdateAddressRequest
-import com.project.indistraw.account.adapter.input.request.UpdateAccountInfoRequest
-import com.project.indistraw.account.adapter.input.request.UpdatePasswordRequest
-import com.project.indistraw.account.adapter.input.response.AccountInfoResponse
+import com.project.indistraw.account.adapter.input.data.request.UpdateAddressRequest
+import com.project.indistraw.account.adapter.input.data.request.UpdateAccountInfoRequest
+import com.project.indistraw.account.adapter.input.data.request.UpdatePasswordRequest
+import com.project.indistraw.account.adapter.input.data.response.AccountInfoResponse
 import com.project.indistraw.account.application.port.input.*
 import com.project.indistraw.account.application.port.output.UpdatePhoneNumberUseCase
 import org.springframework.http.HttpStatus

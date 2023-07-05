@@ -1,4 +1,4 @@
-package com.project.indistraw.account.adapter.input.request
+package com.project.indistraw.account.adapter.input.data.request
 
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size

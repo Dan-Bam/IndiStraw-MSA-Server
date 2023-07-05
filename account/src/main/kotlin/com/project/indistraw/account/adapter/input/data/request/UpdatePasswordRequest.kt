@@ -1,4 +1,4 @@
-package com.project.indistraw.account.adapter.input.request
+package com.project.indistraw.account.adapter.input.data.request
 
 import org.hibernate.validator.constraints.Length
 import javax.validation.constraints.NotNull

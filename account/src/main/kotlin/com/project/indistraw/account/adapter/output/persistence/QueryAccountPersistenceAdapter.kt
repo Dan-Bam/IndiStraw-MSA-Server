@@ -12,7 +12,7 @@ import java.util.*
 class QueryAccountPersistenceAdapter(
     private val accountRepository: AccountRepository,
     private val accountConverter: AccountConverter
-) : QueryAccountPort {
+): QueryAccountPort {
 
     override fun existsById(id: String): Boolean =
         accountRepository.existsById(id)
