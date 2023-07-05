@@ -1,8 +1,8 @@
 package com.project.indistraw.account.adapter.input.converter
 
-import com.project.indistraw.account.adapter.input.request.SignInRequest
-import com.project.indistraw.account.adapter.input.request.SignUpRequest
-import com.project.indistraw.account.adapter.input.response.TokenResponse
+import com.project.indistraw.account.adapter.input.data.request.SignInRequest
+import com.project.indistraw.account.adapter.input.data.request.SignUpRequest
+import com.project.indistraw.account.adapter.input.data.response.TokenResponse
 import com.project.indistraw.account.application.port.input.dto.SignInDto
 import com.project.indistraw.account.application.port.input.dto.SignUpDto
 import com.project.indistraw.account.application.port.output.dto.TokenDto

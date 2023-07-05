@@ -1,4 +1,4 @@
-package com.project.indistraw.account.adapter.input.response
+package com.project.indistraw.account.adapter.input.data.response
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.time.LocalDateTime

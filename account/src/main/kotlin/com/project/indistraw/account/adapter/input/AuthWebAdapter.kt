@@ -1,9 +1,9 @@
 package com.project.indistraw.account.adapter.input
 
 import com.project.indistraw.account.adapter.input.converter.AuthDataConverter
-import com.project.indistraw.account.adapter.input.request.SignInRequest
-import com.project.indistraw.account.adapter.input.request.SignUpRequest
-import com.project.indistraw.account.adapter.input.response.TokenResponse
+import com.project.indistraw.account.adapter.input.data.request.SignInRequest
+import com.project.indistraw.account.adapter.input.data.request.SignUpRequest
+import com.project.indistraw.account.adapter.input.data.response.TokenResponse
 import com.project.indistraw.account.application.common.enums.CheckPhoneNumberType
 import com.project.indistraw.account.application.port.input.*
 import org.springframework.http.HttpStatus

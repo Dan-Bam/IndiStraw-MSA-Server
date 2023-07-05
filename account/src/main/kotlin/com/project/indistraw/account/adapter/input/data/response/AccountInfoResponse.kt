@@ -1,4 +1,4 @@
-package com.project.indistraw.account.adapter.input.response
+package com.project.indistraw.account.adapter.input.data.response
 
 import java.util.UUID
 
