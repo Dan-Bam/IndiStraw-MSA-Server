@@ -1,4 +1,4 @@
-name: Django Movie CD
+name: Django AI CD
 
 on:
   push:
