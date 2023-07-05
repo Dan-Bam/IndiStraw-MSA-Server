@@ -3,5 +3,5 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /AI
 COPY requirements.txt /AI/requirements.txt
 RUN pip install -r requirements.txt
-RUN export GOOGLE_APPLICATION_CREDENTIALS="indisraw.json"
-COPY . /AI
+RUN export GOOGLE_APPLICATION_CREDENTIALS="indiestraw.json"
+COPY .. /AI
