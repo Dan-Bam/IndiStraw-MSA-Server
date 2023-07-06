@@ -1,3 +1,4 @@
+import os.path
 from django.shortcuts import render
 from google.cloud import videointelligence, storage
 from rest_framework.views import APIView
@@ -14,11 +15,8 @@ def check_porno(req):
     if default_storage.exists(path):
         print('save suc')
     bucket_name = "indiestraw-bucket"
-    # The contents to upload to the file
-
-    source_file_name = "/Users/dongdong/PycharmProjects/IndiStraw-MSA-Server/AI/anti_porno/static/workspace/data.mp4"
-
-
+    source_file_name = f"{os.path.dirname(__file__)}/static/workspace/data.mp4"
+    print(source_file_name)
 
     # The ID of your GCS object
     destination_blob_name = req.data['movie_name']
