@@ -84,7 +84,8 @@ class MovieHistoryViewSet(ModelViewSet):
             movie_image = movie_qs_filter.thumbnail_url
             serializers.save(title=movie_title, thumbnail_url = movie_image)
 
-            publish('create_record', serializers.data)
+            publish_data = MovieHistory.objects.filter(account_index=1)
+            publish('create_record', publish_data)
             return Response(data=serializers.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=serializers.errors, status=status.HTTP_400_BAD_REQUEST)
