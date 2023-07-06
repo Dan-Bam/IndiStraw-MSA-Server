@@ -1,6 +1,7 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/django,python,windows
-# Edit at https://www.toptal.com/developers/gitignore?templates=django,python,windows
+# Created by https://www.toptal.com/developers/gitignore/api/django,python,visualstudiocode,windows
+# Edit at https://www.toptal.com/developers/gitignore?templates=django,python,visualstudiocode,windows
+
 
 ### Django ###
 *.log
@@ -13,6 +14,7 @@ db.sqlite3-journal
 media
 
 .env
+
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
@@ -137,6 +139,7 @@ celerybeat.pid
 # Environments
 .env
 .venv
+
 AI/indiestraw.json
 env/
 venv/
@@ -293,6 +296,10 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+indiestraw.json
+# End of https://www.toptal.com/developers/gitignore/api/django,python,visualstudiocode,windows
+
+
 
 ### VisualStudioCode ###
 .vscode/*
@@ -314,4 +321,5 @@ $RECYCLE.BIN/
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,django
+
 

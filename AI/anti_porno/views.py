@@ -15,7 +15,10 @@ def check_porno(req):
         print('save suc')
     bucket_name = "indiestraw-bucket"
     # The contents to upload to the file
-    source_file_name = "C:\\Users\\dong\\PycharmProjects\\indistraw-AI\\AI\\anti_porno\\static\\workspace\\data.mp4"
+
+    source_file_name = "/Users/dongdong/PycharmProjects/IndiStraw-MSA-Server/AI/anti_porno/static/workspace/data.mp4"
+
+
 
     # The ID of your GCS object
     destination_blob_name = req.data['movie_name']
