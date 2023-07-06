@@ -26,18 +26,18 @@ def callback(ch, method, properties, body):
     if properties.content_type == 'create_record':
         record_arr = data["record"]
         dong = list(map(lambda x: x["id"], record_arr))
-        view = View_Record(account_id=data['account_idx'],record=json.dumps(dong))
+        view = View_Record(account_id=data['account_index'],record=json.dumps(dong))
         view.save()
 
     elif properties.content_type == 'update_record':
         record_arr = data["record"]
         dong = list(map(lambda x: x["id"], record_arr))
-        view = View_Record.objects.get(account_id=data['account_idx'])
+        view = View_Record.objects.get(account_id=data['account_index'])
         view.record = json.dumps(dong)
         view.save()
 
     elif properties.content_type == 'delete_record':
-        view = View_Record.objects.get(account_id=data['account_idx'])
+        view = View_Record.objects.get(account_id=data['account_index'])
         view.delete()
 
     elif properties.content_type == 'create_movie':
