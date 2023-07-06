@@ -2,6 +2,7 @@ import pika
 import json
 from models import View_Record, Genre_Data
 
+
 params = pika.URLParameters('amqps://igqylvwy:TcwMgVG-nqWB4Riz7lSMPp17hEg3qOAC@vulture.rmq.cloudamqp.com/igqylvwy')
 
 connection = pika.BlockingConnection(params)
@@ -15,6 +16,7 @@ def callback(ch, method, properties, body):
     print('Received in boss')
     data = json.loads(body)
     print(data)
+
     if properties.content_type == 'Create_Record':
         record_arr = data["record"]
         dong = list(map(lambda x: x["id"], record_arr))
@@ -52,8 +54,10 @@ def callback(ch, method, properties, body):
 
 channel.basic_consume(queue='AI', on_message_callback=callback, auto_ack=True)
 
+
 print('Started consuming')
 
 channel.start_consuming()
 
 channel.close()
+
