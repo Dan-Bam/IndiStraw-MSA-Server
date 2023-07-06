@@ -16,7 +16,7 @@ connection = pika.BlockingConnection(params)
 
 channel = connection.channel()
 
-channel.queue_declare(queue='AI')
+channel.queue_declare(queue='ai')
 
 
 def callback(ch, method, properties, body):
