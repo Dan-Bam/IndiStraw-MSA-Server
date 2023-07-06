@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -12,7 +13,7 @@ from .serializers import *
 from .models import *
 from .pagination import PageNumberPagination
 from .producer import publish
-
+from django import core
 import itertools 
 
 class AccountViewSet(ModelViewSet):
@@ -83,9 +84,12 @@ class MovieHistoryViewSet(ModelViewSet):
             movie_title = movie_qs_filter.title
             movie_image = movie_qs_filter.thumbnail_url
             serializers.save(title=movie_title, thumbnail_url = movie_image)
-
+            
             publish_data = MovieHistory.objects.filter(account_index=1)
-            publish('create_record', publish_data)
+            publish_serialized = core.serializers.serialize('json', publish_data)
+            print(publish_serialized)
+            publish('create_record', publish_serialized)
+            
             return Response(data=serializers.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=serializers.errors, status=status.HTTP_400_BAD_REQUEST)
