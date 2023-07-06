@@ -34,6 +34,10 @@ class TokenParseAdapter(
         getAuthority(getTokenBody(token, jwtProperties.accessSecret))
             .let { UsernamePasswordAuthenticationToken(it, "", it.authorities) }
 
+    override fun getAccessTokenClaim(accessToken: String): Claims {
+        return getTokenBody(accessToken, jwtProperties.accessSecret)
+    }
+
     private fun getTokenBody(token: String, secret: Key): Claims =
         Jwts.parserBuilder()
             .setSigningKey(secret)
