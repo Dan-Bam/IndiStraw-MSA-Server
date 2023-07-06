@@ -58,7 +58,7 @@ def callback(ch, method, properties, body):
         movie.delete()
 
 
-channel.basic_consume(queue='AI', on_message_callback=callback, auto_ack=True)
+channel.basic_consume(queue='ai', on_message_callback=callback, auto_ack=True)
 
 print('Started consuming')
 
