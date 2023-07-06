@@ -37,6 +37,11 @@ class SecurityConfig(
             .mvcMatchers(HttpMethod.POST, "/api/v1/auth/send/phone-number/{phoneNumber}").permitAll()
             .mvcMatchers(HttpMethod.GET, "/api/v1/auth/auth-code/{authCode}/phone-number/{phoneNumber}").permitAll()
 
+            // qr-code
+            .mvcMatchers(HttpMethod.POST, "/api/v1/qr-code").permitAll()
+            .mvcMatchers(HttpMethod.POST, "/api/v1/check/uuid/{uuid}").permitAll()
+            .mvcMatchers(HttpMethod.PATCH, "/api/v1/ping/{uuid}").permitAll()
+
             // /account
             .mvcMatchers(HttpMethod.GET, "/api/v1/account/phone-number/{phoneNumber}").permitAll()
             .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/password").permitAll()
