@@ -20,7 +20,7 @@ channel.queue_declare(queue='ai')
 
 
 def callback(ch, method, properties, body):
-    print('Received in boss')
+    print('Received')
     data = json.loads(body)
     print(data)
     if properties.content_type == 'create_record':
