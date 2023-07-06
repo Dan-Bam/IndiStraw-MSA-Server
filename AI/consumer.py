@@ -26,35 +26,35 @@ def callback(ch, method, properties, body):
     if properties.content_type == 'create_record':
         record_arr = data["record"]
         dong = list(map(lambda x: x["id"], record_arr))
-        view = View_Record(account_id=data['account_id'],record=json.dumps(dong))
+        view = View_Record(account_id=data['account_idx'],record=json.dumps(dong))
         view.save()
 
     elif properties.content_type == 'update_record':
         record_arr = data["record"]
         dong = list(map(lambda x: x["id"], record_arr))
-        view = View_Record.objects.get(account_id=data['account_id'])
+        view = View_Record.objects.get(account_id=data['account_idx'])
         view.record = json.dumps(dong)
         view.save()
 
     elif properties.content_type == 'delete_record':
-        view = View_Record.objects.get(account_id=data['account_id'])
+        view = View_Record.objects.get(account_id=data['account_idx'])
         view.delete()
 
     elif properties.content_type == 'create_movie':
         genre_arr = data["genre"]
         dong = list(map(lambda x: x["id"], genre_arr))
-        movie = Genre_Data(movie_id=data['movie_id'], genre=json.dumps(dong))
+        movie = Genre_Data(movie_id=data['movie_idx'], genre=json.dumps(dong))
         movie.save()
 
     elif properties.content_type == 'update_movie':
         genre_arr = data["genre"]
         dong = list(map(lambda x: x["id"], genre_arr))
-        movie = Genre_Data.objects.get(movie_id=data['movie_id'])
+        movie = Genre_Data.objects.get(movie_id=data['movie_idx'])
         movie.genre = json.dumps(dong)
         movie.save()
 
     elif properties.content_type == 'delete_movie':
-        movie = Genre_Data.objects.get(movie_id=data['movie_id'])
+        movie = Genre_Data.objects.get(movie_id=data['movie_idx'])
         movie.delete()
 
 
