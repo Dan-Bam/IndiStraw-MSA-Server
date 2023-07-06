@@ -86,8 +86,9 @@ class MovieHistoryViewSet(ModelViewSet):
             movie_image = movie_qs_filter.thumbnail_url
             serializers.save(title=movie_title, thumbnail_url = movie_image)
             
-            publish_queryset = MovieHistory.objects.filter(account_index=1).values('movie_idx')
+            publish_queryset = MovieHistory.objects.filter(account_index=1).values('account_index', 'movie_idx')
             json_object = json.dumps(list(publish_queryset), indent = 4) 
+            print(json_object)
             publish('create_record', json_object)
             
             return Response(data=serializers.data, status=status.HTTP_201_CREATED)
