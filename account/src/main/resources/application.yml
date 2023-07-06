@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    driver-class-name: ${DB_DRIVER}
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
+
+  jpa:
+    database-platform: ${DB_PLATFORM}
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO}
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+
+jwt:
+  accessSecret: ${JWT_ACCESS_SECRET}
+  refreshSecret: ${JWT_REFRESH_SECRET}
+  time:
+    accessExp: ${JWT_ACCESS_EXP}
+    refreshExp: ${JWT_REFRESH_EXP}
+
+coolsms:
+  access: ${COOLSMS_ACCESS}
+  secret: ${COOLSMS_SECRET}
+  phoneNumber: ${COOLSMS_PHONE_NUMBER}
