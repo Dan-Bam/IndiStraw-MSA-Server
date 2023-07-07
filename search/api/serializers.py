@@ -4,4 +4,4 @@ from .models import *
 class SearchSeriaizer(serializers.ModelSerializer):
     class Meta:
         model = Search
-        fields = ('id', 'title')
+        fields = ('id', 'title', 'genre')
