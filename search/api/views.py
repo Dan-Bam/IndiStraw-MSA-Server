@@ -4,6 +4,7 @@ from .models import Search
 import itertools 
 from .pagination import PageNumberPagination
 from rest_framework.response import Response
+from rest_framework import status
 
 class SearchViewSet(viewsets.ModelViewSet):
     queryset = Search.objects.all()
@@ -20,6 +21,8 @@ class SearchViewSet(viewsets.ModelViewSet):
         if search_field is not None:
             qs = qs.filter(title__icontains=search_field)
             qs2 = qs2.filter(genre__keyword__contains= [search_field])
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
         return list(itertools.chain(qs, qs2))
