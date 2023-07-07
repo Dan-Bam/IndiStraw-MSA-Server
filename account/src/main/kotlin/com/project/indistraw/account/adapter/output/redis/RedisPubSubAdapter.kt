@@ -38,7 +38,7 @@ class RedisPubSubAdapter(
     /**
      * SSE 채널을 생성하고 Redis Lister Container 이벤트를 등록한다.
      */
-    override fun createSseToRedisChanel(uuid: UUID) {
+    override fun createSseToRedisChanel(uuid: UUID): SseEmitter {
         // SSE 통신을 위한 SSE emitter 객체를 생성한다.
         val emitter = SseEmitter(TimeUnit.MINUTES.toMillis(DEFAULT_TIMEOUT))
         val listenerAdapter = MessageListenerAdapter(setMessageListener(uuid, emitter))
@@ -53,6 +53,8 @@ class RedisPubSubAdapter(
             log.info("Removed emitter {} from listenerAdapter {}", emitter, listenerAdapter)
             redisMessageListenerContainer.removeMessageListener(listenerAdapter)
         }
+
+        return emitter
     }
 
     override fun pingCheck(uuid: UUID) {
