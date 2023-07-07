@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from .serializers import SearchSeriaizer
+from .serializers import SearchSeriaizer, SearchTagSerializer
 from .models import Search, Genre
 import itertools 
 from .pagination import PageNumberPagination
@@ -23,3 +23,13 @@ class SearchViewSet(viewsets.ModelViewSet):
             qs2.update(view_count=+1)
 
         return list(itertools.chain(qs, qs2))
+    
+class SearchTagViewSet(viewsets.ModelViewSet):
+    queryset = Search.objects.all()
+    serializer_class = SearchTagSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        qs= Search.objects.all().order_by('-view_count')[:5]
+
+        return qs
