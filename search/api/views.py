@@ -13,7 +13,7 @@ class SearchViewSet(viewsets.ModelViewSet):
         qs= Search.objects.all()
         qs2 = Search.objects.all()
 
-        search_field = self.request.query_params.get('title')
+        search_field = self.request.query_params.get('keyword')
 
         if search_field is not None:
             qs = qs.filter(title__icontains=search_field)
