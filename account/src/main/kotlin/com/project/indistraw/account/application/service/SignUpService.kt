@@ -11,7 +11,8 @@ import com.project.indistraw.account.application.port.output.QueryAccountPort
 import com.project.indistraw.account.domain.Account
 import com.project.indistraw.account.domain.Address
 import com.project.indistraw.account.domain.Authority
-import com.project.indistraw.global.event.DeleteAuthenticationEvent
+import com.project.indistraw.global.event.account.CreateAccountPublishEvent
+import com.project.indistraw.global.event.authentication.DeleteAuthenticationEvent
 import org.springframework.context.ApplicationEventPublisher
 import java.util.*
 
@@ -24,7 +25,7 @@ class SignUpService(
     private val publisher: ApplicationEventPublisher
 ): SignUpUseCase {
 
-    override fun execute(dto: SignUpDto): UUID {
+    override fun execute(dto: SignUpDto) {
         if (queryAccountPort.existsById(dto.id)) throw DuplicatedAccountIdException()
 
         // 인증된 사용자라면 확인 후, authentication 삭제 이벤트를 발행합니다.
@@ -39,17 +40,16 @@ class SignUpService(
                 encodedPassword = passwordEncodePort.passwordEncode(dto.password),
                 name = it.name,
                 phoneNumber = it.phoneNumber,
-                address = Address(
-                    zipcode = dto.address.zipcode,
-                    streetAddress = dto.address.streetAddress,
-                    detailAddress = dto.address.detailAddress
-                ),
+                address = Address(null, null, null),
                 profileUrl = it.profileUrl,
                 authority = Authority.ROLE_ACCOUNT
             )
         }
+        val accountIdx = commandAccountPort.saveAccount(account)
 
-        return commandAccountPort.saveAccount(account)
+        // 계정을 생성 할때 각 서비스로 message를 publish 한다.
+        val createAccountPublishEvent = CreateAccountPublishEvent(accountIdx)
+        publisher.publishEvent(createAccountPublishEvent)
     }
 
 }

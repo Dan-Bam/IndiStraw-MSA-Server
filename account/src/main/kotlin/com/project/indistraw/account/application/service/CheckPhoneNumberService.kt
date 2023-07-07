@@ -14,7 +14,7 @@ class CheckPhoneNumberService(
 
     override fun execute(phoneNumber: String, type: CheckPhoneNumberType) {
         when(type) {
-            CheckPhoneNumberType.SIGNUP -> {
+            CheckPhoneNumberType.SIGNUP, CheckPhoneNumberType.CHANGE_PHONE -> {
                 if (queryAccountPort.existsByPhoneNumber(phoneNumber)) {
                     throw DuplicatedPhoneNumberException()
                 }

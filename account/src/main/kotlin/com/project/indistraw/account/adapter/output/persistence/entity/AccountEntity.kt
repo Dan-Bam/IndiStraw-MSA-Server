@@ -1,18 +1,17 @@
 package com.project.indistraw.account.adapter.output.persistence.entity
 
+import com.project.indistraw.account.adapter.output.persistence.common.entity.BaseUUIDEntity
 import com.project.indistraw.account.domain.Authority
-import org.hibernate.annotations.GenericGenerator
+import org.hibernate.annotations.SQLDelete
 import java.util.*
 import javax.persistence.*
 
 @Entity
 @Table(name = "account")
+@SQLDelete(sql = "update account set deleted_at = CURRENT_TIMESTAMP where account_idx = ?")
 class AccountEntity(
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name="uuid2", strategy = "uuid2")
     @Column(name = "account_idx", columnDefinition = "BINARY(16)", nullable = false)
-    val accountIdx: UUID,
+    override val accountIdx: UUID,
 
     @Column(nullable = false, length = 20)
     val id: String,
@@ -27,11 +26,11 @@ class AccountEntity(
     val phoneNumber: String,
 
     @Embedded
-    val address: Address,
+    val address: AddressEntity?,
 
     @Column(nullable = true, columnDefinition = "TEXT")
-    var profileUrl: String?,
+    val profileUrl: String?,
 
     @Enumerated(EnumType.STRING)
-    val authority: Authority
-)
+    val authority: Authority,
+): BaseUUIDEntity(accountIdx)

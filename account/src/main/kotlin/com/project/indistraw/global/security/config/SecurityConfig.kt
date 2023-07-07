@@ -3,6 +3,7 @@ package com.project.indistraw.global.security.config
 import com.project.indistraw.global.security.handler.CustomAuthenticationEntryPoint
 import com.project.indistraw.global.security.token.TokenParseAdapter
 import com.project.indistraw.account.domain.Authority
+import com.project.indistraw.global.security.handler.CustomAccessDeniedHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -29,8 +30,8 @@ class SecurityConfig(
             // /auth
             .mvcMatchers(HttpMethod.POST, "/api/v1/auth/signup").permitAll()
             .mvcMatchers(HttpMethod.POST, "/api/v1/auth/signin").permitAll()
-            .mvcMatchers(HttpMethod.PATCH, "/api/v1/auth").permitAll()
             .mvcMatchers(HttpMethod.PATCH, "/api/v1/auth/reissue").permitAll()
+            .mvcMatchers(HttpMethod.DELETE, "/api/v1/auth/logout").permitAll()
             .mvcMatchers(HttpMethod.HEAD, "/api/v1/auth/check/id/{id}").permitAll()
             .mvcMatchers(HttpMethod.HEAD, "/api/v1/auth/check/phone-number/{phone-number}/type/{type}").permitAll()
             .mvcMatchers(HttpMethod.POST, "/api/v1/auth/send/phone-number/{phoneNumber}").permitAll()
@@ -38,21 +39,23 @@ class SecurityConfig(
 
             // /account
             .mvcMatchers(HttpMethod.GET, "/api/v1/account/phone-number/{phoneNumber}").permitAll()
-            .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/update/password").permitAll()
-            .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/update/profile").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
-            .mvcMatchers(HttpMethod.GET, "/api/v1/account/profile").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
-            .mvcMatchers(HttpMethod.DELETE, "/api/v1/account/withdraw").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ACCOUNT.name)
+            .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/password").permitAll()
+            .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/phone-number/{phoneNumber}").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ADMIN.name)
+            .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/address").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ADMIN.name)
+            .mvcMatchers(HttpMethod.PATCH, "/api/v1/account/info").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ADMIN.name)
+            .mvcMatchers(HttpMethod.GET, "/api/v1/account/info").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ADMIN.name)
+            .mvcMatchers(HttpMethod.DELETE, "/api/v1/account").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ADMIN.name)
 
             // /health
             .mvcMatchers(HttpMethod.GET, "/").permitAll()
 
-            // /roadSearch.html
-            .mvcMatchers(HttpMethod.GET, "/roadSearch.html").permitAll()
-
-            .anyRequest().denyAll()
+            .anyRequest().authenticated()
             .and()
 
             .exceptionHandling()
+            .accessDeniedHandler(CustomAccessDeniedHandler())
+            .and()
+            .httpBasic()
             .authenticationEntryPoint(CustomAuthenticationEntryPoint())
             .and()
 

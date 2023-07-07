@@ -1,13 +1,14 @@
 package com.project.indistraw.account.adapter.output.persistence.common.converter
 
+import com.project.indistraw.account.adapter.output.persistence.common.GenericConverter
 import com.project.indistraw.account.adapter.output.persistence.entity.AuthenticationEntity
 import com.project.indistraw.account.domain.Authentication
 import org.springframework.stereotype.Component
 
 @Component
-class AuthenticationConverter {
+class AuthenticationConverter: GenericConverter<Authentication, AuthenticationEntity> {
 
-    infix fun toEntity(domain: Authentication): AuthenticationEntity =
+    override infix fun toEntity(domain: Authentication): AuthenticationEntity =
         domain.let {
             AuthenticationEntity(
                 phoneNumber = it.phoneNumber,
@@ -18,7 +19,7 @@ class AuthenticationConverter {
             )
         }
 
-    infix fun toDomain(entity: AuthenticationEntity?): Authentication? =
+    override infix fun toDomain(entity: AuthenticationEntity?): Authentication? =
         entity?.let {
             Authentication(
                 phoneNumber = it.phoneNumber,
