@@ -26,12 +26,6 @@ class PageNumberPagination(PageNumberPagination):
             raise NotFound(msg)
 
         return list(self.page)
-    
-    def get_page_number(self, request, paginator):
-        page_number = request.query_params.get(self.page_query_param, 1)
-        if page_number in self.last_page_strings:
-            page_number = paginator.num_pages
-        return page_number
 
     def get_next_link(self):
         if not self.page.has_next():
@@ -41,7 +35,6 @@ class PageNumberPagination(PageNumberPagination):
     
     def get_paginated_response(self, data):
         return Response(OrderedDict([
-            ('pageSize', self.page.paginator.count),
             ('isLast', self.get_next_link()),
             ('list', data)
         ]))
