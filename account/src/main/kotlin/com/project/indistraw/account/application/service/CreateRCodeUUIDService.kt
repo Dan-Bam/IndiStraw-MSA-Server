@@ -15,7 +15,7 @@ class CreateRCodeUUIDService(
         val uuid = UUID.randomUUID()
         val qrCodeUUID = QRCodeUUID(
             uuid = uuid,
-            expiredAt = 180L
+            expiredAt = 300L
         )
         commandQRCodeUUIDPort.saveQRCodeUUID(qrCodeUUID)
 
