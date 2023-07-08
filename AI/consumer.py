@@ -26,7 +26,7 @@ def callback(ch, method, properties, body):
     if properties.content_type == 'create_record':
         history = []
         for i in data:
-            print(i)
+            print(f"dongdong{i}dongdong")
             history.append(i["movie_idx"])
         db_data = View_Record.objects.filter(account_id=data[0]['account_index'])
         if db_data.exists():
