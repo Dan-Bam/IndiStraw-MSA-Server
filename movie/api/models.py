@@ -6,8 +6,8 @@ class Movie(models.Model):
     description = models.TextField()
     movie_url = models.URLField(default = "")
     thumbnail_url = models.URLField(default = "")
-    director = models.ForeignKey("Director", on_delete=models.PROTECT)
-    actor = models.ForeignKey("Actor", on_delete=models.PROTECT)
+    director = models.JSONField()
+    actor = models.JSONField()
     genre = models.JSONField(default='{}')
     movie_highlight = models.JSONField(default='{}')
 
