@@ -1,6 +1,6 @@
-from models import View_Record, Genre_Data, Default_Recommandation, Recommandation
-view = View_Record.objects.all()
-genre = Genre_Data.objects.all()
+from models import ViewRecord, GenreData, DefaultRecommandation, Recommandation
+view = ViewRecord.objects.all()
+genre = GenreData.objects.all()
 dict = {}
 for i in range(genre.count()):
     view = view.filter(record__contains='3')

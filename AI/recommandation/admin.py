@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Default_Recommandation, View_Record, Genre_Data, Recommandation
+from .models import DefaultRecommandation, ViewRecord, GenreData, Recommandation
 
-admin.site.register(Default_Recommandation)
-admin.site.register(View_Record)
-admin.site.register(Genre_Data)
+admin.site.register(DefaultRecommandation)
+admin.site.register(ViewRecord)
+admin.site.register(GenreData)
 admin.site.register(Recommandation)
 
 # Register your models here.

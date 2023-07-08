@@ -1,6 +1,6 @@
 from django.db.models import Count
 from django.shortcuts import render
-from .models import View_Record, Genre_Data, Default_Recommandation, Recommandation
+from .models import ViewRecord, GenreData, DefaultRecommandation, Recommandation
 from rest_framework import viewsets
 from .serializers import ViewSerializer
 from rest_framework.response import Response
@@ -8,7 +8,7 @@ import json
 
 
 class ViewSet(viewsets.ModelViewSet):
-    queryset = View_Record.objects.all()
+    queryset = ViewRecord.objects.all()
     serializer_class = ViewSerializer
 
     def get_queryset(self):
@@ -27,15 +27,15 @@ class ViewSet(viewsets.ModelViewSet):
         ]
         history = list(map(lambda x: x["movie_idx"], data))
         try:
-            db_data = View_Record.objects.get(account_id=data[0]['account_index'])
+            db_data = ViewRecord.objects.get(account_id=data[0]['account_index'])
         except:
-            view = View_Record(account_id=data[0]['account_index'], record=json.dumps(history))
+            view = ViewRecord(account_id=data[0]['account_index'], record=json.dumps(history))
             view.save()
         else:
             db_data.record = json.dumps(history)
             db_data.save()
 
-        view = View_Record.objects.all()
+        view = ViewRecord.objects.all()
         return list(view)
 
 # Create your views here.
