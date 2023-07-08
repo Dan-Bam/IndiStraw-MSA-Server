@@ -27,7 +27,7 @@ class ViewSet(viewsets.ModelViewSet):
         ]
         history = list(map(lambda x: x["movie_idx"], data))
         try:
-            db_data = ViewRecord.objects.get(account_id=data[0]['account_index'])
+            db_data = ViewRecord.query.get(account_id=data[0]['account_index'])
         except:
             view = ViewRecord(account_id=data[0]['account_index'], record=json.dumps(history))
             view.save()

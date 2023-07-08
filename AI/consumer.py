@@ -26,7 +26,7 @@ def callback(ch, method, properties, body):
     if properties.content_type == 'create_record':
         history = list(map(lambda x: x["movie_idx"], data))
         try:
-            db_data = ViewRecord.objects.get(account_id=data[0]['account_index'])
+            db_data = ViewRecord.query.get(account_id=data[0]['account_index'])
         except:
             view = ViewRecord(account_id=data[0]['account_index'], record=json.dumps(history))
             view.save()
@@ -36,7 +36,7 @@ def callback(ch, method, properties, body):
 
 
     elif properties.content_type == 'delete_record':
-        view = ViewRecord.objects.get(account_id=data[0]['account_index'])
+        view = ViewRecord.query.get(account_id=data[0]['account_index'])
         view.delete()
 
     elif properties.content_type == 'create_movie':
@@ -46,12 +46,12 @@ def callback(ch, method, properties, body):
 
     elif properties.content_type == 'update_movie':
         genre = list(map(lambda x: x["movie_idx"], data))
-        movie = GenreData.objects.get(movie_id=data[0]['movie_idx'])
+        movie = GenreData.query.get(movie_id=data[0]['movie_idx'])
         movie.genre = json.dumps(genre)
         movie.save()
 
     elif properties.content_type == 'delete_movie':
-        movie = GenreData.objects.get(movie_id=data[0]['movie_idx'])
+        movie = GenreData.query.get(movie_id=data[0]['movie_idx'])
         movie.delete()
 
 
