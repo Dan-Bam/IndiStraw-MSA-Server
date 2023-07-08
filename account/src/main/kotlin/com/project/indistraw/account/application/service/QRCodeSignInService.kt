@@ -19,7 +19,7 @@ class QRCodeSignInService(
 ): QRCodeSignInUseCase {
 
     override fun execute(dto: QRCodeUUIDDto) {
-        if (queryQRCodeUUIDPort.existByUUID(dto.uuid)) {
+        if (!queryQRCodeUUIDPort.existByUUID(dto.uuid)) {
             throw InvalidQRCodeUUIDException()
         }
         val account = queryAccountPort.findByIdxOrNull(accountSecurityPort.getCurrentAccountIdx())

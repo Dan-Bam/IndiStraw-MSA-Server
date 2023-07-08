@@ -15,7 +15,7 @@ class ConnectSseService(
 ): ConnectSseUseCase {
 
     override fun execute(uuid: UUID): SseEmitter {
-        if (queryQRCodeUUIDPort.existByUUID(uuid)) {
+        if (!queryQRCodeUUIDPort.existByUUID(uuid)) {
             throw InvalidQRCodeUUIDException()
         }
         // 생성된 uuid를 key로 redis sse 채널을 생성한다.
