@@ -1,6 +1,5 @@
 package com.project.indistraw.account.application.port.output.dto
 
-import com.fasterxml.jackson.annotation.JsonFormat
 import java.time.LocalDateTime
 
 data class TokenDto(
