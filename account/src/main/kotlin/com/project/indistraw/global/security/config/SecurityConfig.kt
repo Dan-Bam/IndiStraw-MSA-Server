@@ -38,9 +38,10 @@ class SecurityConfig(
             .mvcMatchers(HttpMethod.GET, "/api/v1/auth/auth-code/{authCode}/phone-number/{phoneNumber}").permitAll()
 
             // qr-code
+            .mvcMatchers(HttpMethod.POST, "/api/v1/qr-code/connect/{uuid}").permitAll()
             .mvcMatchers(HttpMethod.POST, "/api/v1/qr-code").permitAll()
-            .mvcMatchers(HttpMethod.POST, "/api/v1/check/uuid/{uuid}").permitAll()
-            .mvcMatchers(HttpMethod.PATCH, "/api/v1/ping/{uuid}").permitAll()
+            .mvcMatchers(HttpMethod.PATCH, "/api/v1/qr-code/ping/{uuid}").permitAll()
+            .mvcMatchers(HttpMethod.HEAD, "/api/v1/qr-code/check/{uuid}").hasAnyAuthority(Authority.ROLE_ACCOUNT.name, Authority.ROLE_ADMIN.name)
 
             // /account
             .mvcMatchers(HttpMethod.GET, "/api/v1/account/phone-number/{phoneNumber}").permitAll()
@@ -54,7 +55,7 @@ class SecurityConfig(
             // /health
             .mvcMatchers(HttpMethod.GET, "/").permitAll()
 
-            .anyRequest().authenticated()
+            .anyRequest().permitAll()
             .and()
 
             .exceptionHandling()
