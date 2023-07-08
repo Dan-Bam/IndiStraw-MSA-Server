@@ -2,7 +2,7 @@ import os
 
 import pika
 import json
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", '/AI.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'AI.settings')
 
 import django
 
