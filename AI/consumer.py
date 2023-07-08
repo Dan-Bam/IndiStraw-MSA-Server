@@ -1,14 +1,14 @@
-# import os
+import os
 
 import pika
 import json
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", '../AI.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", '/AI.settings')
 
 import django
 
 django.setup()
-
-from models import ViewRecord, GenreData
+from recommandation import models
+#from models import models.ViewRecord, models.GenreData
 params = pika.URLParameters('amqps://igqylvwy:TcwMgVG-nqWB4Riz7lSMPp17hEg3qOAC@vulture.rmq.cloudamqp.com/igqylvwy')
 
 connection = pika.BlockingConnection(params)
@@ -26,9 +26,9 @@ def callback(ch, method, properties, body):
     if properties.content_type == 'create_record':
         history = list(map(lambda x: x["movie_idx"], data))
         try:
-            db_data = ViewRecord.query.get(account_id=data[0]['account_index'])
+            db_data = models.ViewRecord.query.get(account_id=data[0]['account_index'])
         except:
-            view = ViewRecord(account_id=data[0]['account_index'], record=json.dumps(history))
+            view = models.ViewRecord(account_id=data[0]['account_index'], record=json.dumps(history))
             view.save()
         else:
             db_data.record = json.dumps(history)
@@ -36,22 +36,22 @@ def callback(ch, method, properties, body):
 
 
     elif properties.content_type == 'delete_record':
-        view = ViewRecord.query.get(account_id=data[0]['account_index'])
+        view = models.ViewRecord.query.get(account_id=data[0]['account_index'])
         view.delete()
 
     elif properties.content_type == 'create_movie':
         genre = list(map(lambda x: x["movie_idx"], data))
-        movie = GenreData(movie_id=data[0]['movie_idx'], genre=json.dumps(genre))
+        movie = models.GenreData(movie_id=data[0]['movie_idx'], genre=json.dumps(genre))
         movie.save()
 
     elif properties.content_type == 'update_movie':
         genre = list(map(lambda x: x["movie_idx"], data))
-        movie = GenreData.query.get(movie_id=data[0]['movie_idx'])
+        movie = models.GenreData.query.get(movie_id=data[0]['movie_idx'])
         movie.genre = json.dumps(genre)
         movie.save()
 
     elif properties.content_type == 'delete_movie':
-        movie = GenreData.query.get(movie_id=data[0]['movie_idx'])
+        movie = models.GenreData.query.get(movie_id=data[0]['movie_idx'])
         movie.delete()
 
 
