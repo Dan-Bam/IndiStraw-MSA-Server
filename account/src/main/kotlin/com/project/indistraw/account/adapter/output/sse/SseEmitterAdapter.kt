@@ -40,8 +40,8 @@ class SseEmitterAdapter(
         clients.forEach{ (uuid, emitter) ->
             log.info("sseEmitter {}", emitter)
             sendToClient(emitter, "$uuid", "TOKEN", tokenDto)
-            emitter.complete()
         }
+        clients[uuid]?.complete()
     }
 
     private fun createToken(account: Account): TokenDto {
