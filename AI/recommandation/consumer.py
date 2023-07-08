@@ -8,7 +8,7 @@ import json
 #
 # django.setup()
 
-from recommandation.models import ViewRecord, GenreData
+from .models import ViewRecord, GenreData
 params = pika.URLParameters('amqps://igqylvwy:TcwMgVG-nqWB4Riz7lSMPp17hEg3qOAC@vulture.rmq.cloudamqp.com/igqylvwy')
 
 connection = pika.BlockingConnection(params)
