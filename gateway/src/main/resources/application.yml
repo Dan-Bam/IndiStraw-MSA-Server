@@ -24,6 +24,13 @@ spring:
           predicates:
             - Path=/api/v1/qr-code/**
 
+        - id: indistraw-qr-code-route
+          uri: ${AUTH_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/qr-code/check/{uuid}
+          filters:
+            - JwtAuthenticationGatewayFilter
+
         - id: indistraw-crowdfunding-route
           uri: ${CROWDFUNDING_ROUTE_URI}
           predicates:
