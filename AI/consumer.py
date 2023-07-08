@@ -8,7 +8,7 @@ import django
 
 django.setup()
 
-from recommandation.models import View_Record, Genre_Data
+from recommandation.models import ViewRecord, GenreData
 params = pika.URLParameters('amqps://igqylvwy:TcwMgVG-nqWB4Riz7lSMPp17hEg3qOAC@vulture.rmq.cloudamqp.com/igqylvwy')
 
 connection = pika.BlockingConnection(params)
@@ -26,9 +26,9 @@ def callback(ch, method, properties, body):
     if properties.content_type == 'create_record':
         history = list(map(lambda x: x["movie_idx"], data))
         try:
-            db_data = View_Record.objects.get(account_id=data[0]['account_index'])
+            db_data = ViewRecord.objects.get(account_id=data[0]['account_index'])
         except:
-            view = View_Record(account_id=data[0]['account_index'], record=json.dumps(history))
+            view = ViewRecord(account_id=data[0]['account_index'], record=json.dumps(history))
             view.save()
         else:
             db_data.record = json.dumps(history)
@@ -36,22 +36,22 @@ def callback(ch, method, properties, body):
 
 
     elif properties.content_type == 'delete_record':
-        view = View_Record.objects.get(account_id=data[0]['account_index'])
+        view = ViewRecord.objects.get(account_id=data[0]['account_index'])
         view.delete()
 
     elif properties.content_type == 'create_movie':
         genre = list(map(lambda x: x["movie_idx"], data))
-        movie = Genre_Data(movie_id=data[0]['movie_idx'], genre=json.dumps(genre))
+        movie = GenreData(movie_id=data[0]['movie_idx'], genre=json.dumps(genre))
         movie.save()
 
     elif properties.content_type == 'update_movie':
         genre = list(map(lambda x: x["movie_idx"], data))
-        movie = Genre_Data.objects.get(movie_id=data[0]['movie_idx'])
+        movie = GenreData.objects.get(movie_id=data[0]['movie_idx'])
         movie.genre = json.dumps(genre)
         movie.save()
 
     elif properties.content_type == 'delete_movie':
-        movie = Genre_Data.objects.get(movie_id=data[0]['movie_idx'])
+        movie = GenreData.objects.get(movie_id=data[0]['movie_idx'])
         movie.delete()
 
 

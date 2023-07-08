@@ -4,5 +4,5 @@ from .models import *
 
 class ViewSerializer(serializers.ModelSerializer):
     class Meta:
-        model = View_Record
+        model = ViewRecord
         fields = "__all__"
