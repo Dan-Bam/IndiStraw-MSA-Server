@@ -1,14 +1,14 @@
-import os
+# import os
 
 import pika
 import json
-#os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'AI.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", '../AI.settings')
 
-# import django
-#
-# django.setup()
+import django
 
-from .models import ViewRecord, GenreData
+django.setup()
+
+from models import ViewRecord, GenreData
 params = pika.URLParameters('amqps://igqylvwy:TcwMgVG-nqWB4Riz7lSMPp17hEg3qOAC@vulture.rmq.cloudamqp.com/igqylvwy')
 
 connection = pika.BlockingConnection(params)
