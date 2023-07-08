@@ -13,8 +13,8 @@ data class TokenDto(
         return "{" +
                 "\"accessToken\":" + "\"" + this.accessToken + "\"," +
                 "\"refreshToken\":" + "\"" + this.refreshToken + "\"," +
-                "\"accessTokenExpiredAt\":" + LocalDateTime.now().plusSeconds(this.accessTokenExpiredAt).withNano(0) + "," +
-                "\"refreshTokenExpiredAt\":" + LocalDateTime.now().plusSeconds(this.refreshTokenExpiredAt).withNano(0) + "}"
+                "\"accessTokenExpiredAt\":" + "\"" + LocalDateTime.now().plusSeconds(this.accessTokenExpiredAt).withNano(0) + "\"," +
+                "\"refreshTokenExpiredAt\":" + "\"" + LocalDateTime.now().plusSeconds(this.refreshTokenExpiredAt).withNano(0) + "\"}"
     }
 
 }
