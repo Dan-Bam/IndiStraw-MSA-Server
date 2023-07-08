@@ -9,7 +9,6 @@ import django
 django.setup()
 
 from recommandation.models import View_Record, Genre_Data
-
 params = pika.URLParameters('amqps://igqylvwy:TcwMgVG-nqWB4Riz7lSMPp17hEg3qOAC@vulture.rmq.cloudamqp.com/igqylvwy')
 
 connection = pika.BlockingConnection(params)
@@ -26,19 +25,15 @@ def callback(ch, method, properties, body):
     print(data)
     if properties.content_type == 'create_record':
         history = list(map(lambda x: x["movie_idx"], data))
-        db_data = View_Record.objects.filter(account_id=data[0]['account_index'])
-        if db_data.exists():
+        try:
+            db_data = View_Record.objects.get(account_id=data[0]['account_index'])
+        except:
+            view = View_Record(account_id=data[0]['account_index'], record=json.dumps(history))
+            view.save()
+        else:
             db_data.record = json.dumps(history)
             db_data.save()
-        else:
-            view = View_Record(account_id=data[0]['account_index'],record=json.dumps(history))
-            view.save()
 
-    elif properties.content_type == 'update_record':
-        history = list(map(lambda x: x["movie_idx"], data))
-        view = View_Record.objects.get(account_id=data['account_index'])
-        view.record = json.dumps(history)
-        view.save()
 
     elif properties.content_type == 'delete_record':
         view = View_Record.objects.get(account_id=data[0]['account_index'])
