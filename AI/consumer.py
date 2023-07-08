@@ -27,7 +27,7 @@ def callback(ch, method, properties, body):
         history = []
         for i in data:
             print(f"dongdong{i}dongdong")
-            if i == '[' or i == ']' :
+            if i == '[' or i == ']' or i == "\n":
                 continue
             history.append(i["movie_idx"])
         db_data = View_Record.objects.filter(account_id=data[0]['account_index'])
