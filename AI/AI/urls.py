@@ -20,5 +20,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('porno/', include('anti_porno.urls'))
+    path('porno/', include('anti_porno.urls')),
+    path('recommend/', include('recommandation.urls'))
 ]
