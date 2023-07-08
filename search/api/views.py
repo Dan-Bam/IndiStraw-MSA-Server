@@ -20,16 +20,22 @@ class SearchViewSet(viewsets.ModelViewSet):
             qs = qs.filter(title__icontains=search_field)
             qs2 = qs2.filter(genre__keyword__contains= [search_field])
 
-            qs2.update(view_count=+1)
+            if len(Genre.objects.all().filter(keyword__icontains=search_field)) > 0:
+                count_object = Genre.objects.get(keyword=search_field)
+                count_object.view_count += 1
+                count_object.save()
+            else:
+                create_genre_object = Genre(keyword=search_field, view_count=1)
+                create_genre_object.save()
 
         return list(itertools.chain(qs, qs2))
     
 class SearchTagViewSet(viewsets.ModelViewSet):
-    queryset = Search.objects.all()
+    queryset = Genre.objects.all()
     serializer_class = SearchTagSerializer
     pagination_class = PageNumberPagination
 
     def get_queryset(self):
-        qs= Search.objects.all().order_by('-view_count')[:5]
+        qs = Genre.objects.all().order_by('-view_count')
 
         return qs
