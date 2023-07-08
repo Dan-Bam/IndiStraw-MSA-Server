@@ -21,11 +21,12 @@ channel.queue_declare(queue='ai')
 
 def callback(ch, method, properties, body):
     print('Received')
-    data = '['+json.loads(body)+']'
+    data = json.loads(body)
     print(data)
     if properties.content_type == 'create_record':
         history = []
         for i in data:
+            print(i)
             history.append(i["movie_idx"])
         db_data = View_Record.objects.filter(account_id=data[0]['account_index'])
         if db_data.exists():
