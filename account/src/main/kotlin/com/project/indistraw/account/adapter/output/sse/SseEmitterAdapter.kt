@@ -38,6 +38,7 @@ class SseEmitterAdapter(
         val tokenDto = createToken(account).toString()
         clients.forEach{ (uuid, emitter) ->
             sendToClient(emitter, "$uuid", "TOKEN", tokenDto)
+            emitter.complete()
         }
     }
 
