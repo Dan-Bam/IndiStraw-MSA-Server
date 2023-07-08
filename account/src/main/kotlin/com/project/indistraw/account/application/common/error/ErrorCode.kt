@@ -31,6 +31,9 @@ enum class ErrorCode(
     EXPIRED_REFRESH_TOKEN("만료된 refreshToken 입니다.", 401),
 
     // QRCODE
-    INVALID_QRCODE_UUID("유효하지 않은 QR UUID 입니다..", 400);
+    INVALID_QRCODE_UUID("유효하지 않은 QR UUID 입니다.", 400),
+
+    // SSE
+    INVALID_SSE_CONNECTION("유효하지 않은 sse 커넥션 입니다.", 400);
 
 }
