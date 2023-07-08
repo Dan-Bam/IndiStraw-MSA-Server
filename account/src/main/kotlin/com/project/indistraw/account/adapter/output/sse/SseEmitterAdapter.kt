@@ -41,6 +41,7 @@ class SseEmitterAdapter(
             log.info("sseEmitter {}", emitter)
             sendToClient(emitter, "$uuid", "TOKEN", tokenDto)
         }
+        clients.remove(uuid)
         clients[uuid]?.complete()
     }
 
