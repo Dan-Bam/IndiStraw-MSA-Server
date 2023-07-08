@@ -1,11 +1,11 @@
 package com.project.indistraw.global.security.token
 
-import com.project.indistraw.global.security.token.common.exception.InvalidTokenTypeException
-import com.project.indistraw.global.security.token.common.properties.JwtProperties
-import com.project.indistraw.global.security.principal.AccountDetailsService
-import com.project.indistraw.global.security.principal.AdminDetailsService
 import com.project.indistraw.account.application.port.output.TokenParsePort
 import com.project.indistraw.account.domain.Authority
+import com.project.indistraw.global.security.principal.AccountDetailsService
+import com.project.indistraw.global.security.principal.AdminDetailsService
+import com.project.indistraw.global.security.token.common.exception.InvalidTokenTypeException
+import com.project.indistraw.global.security.token.common.properties.JwtProperties
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -33,10 +33,6 @@ class TokenParseAdapter(
     override fun authentication(token: String): Authentication =
         getAuthority(getTokenBody(token, jwtProperties.accessSecret))
             .let { UsernamePasswordAuthenticationToken(it, "", it.authorities) }
-
-    override fun getAccessTokenClaim(accessToken: String): Claims {
-        return getTokenBody(accessToken, jwtProperties.accessSecret)
-    }
 
     private fun getTokenBody(token: String, secret: Key): Claims =
         Jwts.parserBuilder()
