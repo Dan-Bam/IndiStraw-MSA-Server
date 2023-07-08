@@ -1,6 +1,11 @@
 from rest_framework import serializers
 from .models import *
 
+class MovieResponseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = ('id', 'thumbnail_url', )
+
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie

@@ -11,7 +11,6 @@ from django.shortcuts import render, get_object_or_404
 
 from .serializers import *
 from .models import *
-from .pagination import PageNumberPagination
 from .producer import publish
 from django import core
 import itertools 
@@ -20,13 +19,11 @@ import json
 class AccountViewSet(ModelViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-    pagination_class = PageNumberPagination
 
 
 class MovieViewSet(ModelViewSet):
     queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
-    pagination_class = PageNumberPagination
+    serializer_class = MovieResponseSerializer
 
     filter_backends = [SearchFilter]
     search_fields = ('title',)
