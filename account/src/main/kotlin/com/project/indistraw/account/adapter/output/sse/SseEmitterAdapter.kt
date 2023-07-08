@@ -1,5 +1,6 @@
 package com.project.indistraw.account.adapter.output.sse
 
+import com.project.indistraw.account.adapter.output.sse.exception.InvalidSseConnectionException
 import com.project.indistraw.account.application.port.output.SseEmitterPort
 import com.project.indistraw.account.application.port.output.TokenGeneratePort
 import com.project.indistraw.account.application.port.output.dto.TokenDto
@@ -7,7 +8,6 @@ import com.project.indistraw.account.domain.Account
 import mu.KotlinLogging
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
-import java.io.IOException
 import java.time.LocalDateTime
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -37,6 +37,7 @@ class SseEmitterAdapter(
     override fun sendTokenToSse(uuid: UUID, account: Account) {
         val tokenDto = createToken(account).toString()
         clients.forEach{ (uuid, emitter) ->
+            log.info("sseEmitter {}", emitter)
             sendToClient(emitter, "$uuid", "TOKEN", tokenDto)
             emitter.complete()
         }
@@ -46,20 +47,19 @@ class SseEmitterAdapter(
         return tokenGeneratePort.generateToken(account.accountIdx, account.authority)
     }
 
-    private fun sendToClient(emitter: SseEmitter, id: String, name: String, data: Any): Boolean {
-        try {
+    private fun sendToClient(emitter: SseEmitter, id: String, name: String, data: Any) {
+        runCatching {
             emitter.send(
                 SseEmitter.event()
                     .id(id)
                     .name(name)
                     .data(data)
             )
-        } catch (exception: IOException) {
-            emitter.completeWithError(exception)
+        }.onFailure {
+            it.printStackTrace()
             log.info("Connection end")
-            return false
+            throw InvalidSseConnectionException()
         }
-        return true
     }
 
 }
