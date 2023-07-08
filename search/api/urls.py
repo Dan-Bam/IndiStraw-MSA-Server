@@ -1,10 +1,11 @@
 from django.urls import path, include
-from .views import SearchViewSet
+from .views import SearchViewSet, SearchTagViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register(r'search', SearchViewSet)  
+router.register(r'', SearchViewSet)  
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('search/tag', SearchTagViewSet.as_view({'get':'list'})),
+    path('search/', include(router.urls))
 ]
