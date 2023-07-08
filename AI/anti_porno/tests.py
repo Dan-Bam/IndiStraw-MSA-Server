@@ -1,15 +1,11 @@
+import json
+
 from django.test import TestCase
 
-dong = [
-    {"account_index": 1,
-     "movie_idx": 1
-     },
-    {"account_index": 1,
-     "movie_idx": 1
-     }
-]
+dong = b'"[\n    {\n        "account_index": 1,\n        "movie_idx": 1\n    },\n    {\n        "account_index": 1,\n        "movie_idx": 1\n    },\n    {\n        "account_index": 1,\n        "movie_idx": 1\n    },\n    {\n        "account_index": 1,\n        "movie_idx": 1\n    },\n    {\n        "account_index": 1,\n        "movie_idx": 1\n    },\n    {\n        "account_index": 1,\n        "movie_idx": 1\n    }\n]"'
 # Create your tests here.
+ding = json.loads(dong)
 history = []
-for i in dong:
-    history.append(i["movie_idx"])
+for i in ding:
+    print(i)
 print(history)
