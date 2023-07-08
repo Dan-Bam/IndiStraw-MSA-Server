@@ -27,7 +27,7 @@ spring:
         - id: indistraw-qr-code-route
           uri: ${AUTH_ROUTE_URI}
           predicates:
-            - Path=/api/v1/qr-code/check/{uuid}
+            - Path=/api/v1/qr-code/signin
           filters:
             - JwtAuthenticationGatewayFilter
 
