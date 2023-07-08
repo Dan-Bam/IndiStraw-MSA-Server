@@ -8,5 +8,5 @@ class SearchSeriaizer(serializers.ModelSerializer):
 
 class SearchTagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Search
-        fields = ('genre',)
+        model = Genre
+        fields = ('keyword', 'view_count')
