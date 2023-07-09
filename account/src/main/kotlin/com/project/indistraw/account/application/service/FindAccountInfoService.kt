@@ -23,6 +23,7 @@ class FindAccountInfoService(
             id = account.id,
             name = account.name,
             phoneNumber = account.phoneNumber,
+            zipcode = account.address?.zipcode,
             address = account.address?.let {
                 if (it.zipcode.isNullOrBlank()) null
                 else it.streetAddress + " " + it.detailAddress
