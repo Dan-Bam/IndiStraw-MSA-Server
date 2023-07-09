@@ -20,7 +20,11 @@ DEBUG=env('DEBUG')
 DATABASES = {
     'default': {
         'ENGINE': env('DATABASES_ENGINE'),
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'django_movie',
+        'USER': 'root',
+        'PASSWORD': env('PASSWORD'),
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
