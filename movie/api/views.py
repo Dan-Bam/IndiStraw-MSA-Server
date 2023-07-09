@@ -12,22 +12,25 @@ from django.shortcuts import render, get_object_or_404
 from .serializers import *
 from .models import *
 from .producer import publish
-from django import core
-import itertools 
 import json
 
-class AccountViewSet(ModelViewSet):
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
+class MovieView(APIView):
 
 
-class MovieViewSet(ModelViewSet):
-    queryset = Movie.objects.all()
-    serializer_class = MovieResponseSerializer
+    def post(self, request):
+        queryset = Movie.objects.all()
+        serializer = MovieSerializer(data=request.data)
 
-    filter_backends = [SearchFilter]
-    search_fields = ('title',)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({'message' : 'Success'})
+    
+    def get(self, request):
+        queryset = Movie.objects.all()
+        serializer = MovieResponseSerializer(queryset, many=True)
 
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
 
 class MovieDefailView(APIView):
     
