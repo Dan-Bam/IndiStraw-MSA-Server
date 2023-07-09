@@ -4,23 +4,22 @@ from .models import *
 class MovieResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = ('id', 'thumbnail_url', )
+        fields = ('movie_idx', 'thumbnail_url', )
 
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = '__all__'
+        fields = ('title','description', 'movie_url', 'thumbnail_url', 'director', 'actor', 'movie_highlight', 'clowd_true', )
 
+class TestMovieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = '__all__'
 class MovieHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = MovieHistory
         fields = '__all__'
 
-
-class AccountSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Account
-        fields = '__all__'
 
 class ActorSerializer(serializers.ModelSerializer):
     class Meta:
