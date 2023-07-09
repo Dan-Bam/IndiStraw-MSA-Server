@@ -35,6 +35,7 @@ class AccountDataConverter {
             id = dto.id,
             name = dto.name,
             phoneNumber = dto.phoneNumber,
+            zipcode = dto.zipcode,
             address = dto.address,
             profileUrl = dto.profileUrl
         )
