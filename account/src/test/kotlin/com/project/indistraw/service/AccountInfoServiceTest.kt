@@ -22,7 +22,7 @@ class AccountInfoServiceTest: BehaviorSpec({
     Given("계정이 주어질때") {
         val accountIdx = UUID.randomUUID()
         val account = AnyValueObjectGenerator.anyValueObject<Account>("accountIdx" to accountIdx)
-        val accountInfoDto = AccountInfoDto(accountIdx = accountIdx, id = "", name = "", phoneNumber = "", address = null, profileUrl = "")
+        val accountInfoDto = AccountInfoDto(accountIdx = accountIdx, id = "", name = "", phoneNumber = "", zipcode = "", address = null, profileUrl = "")
 
         every { accountSecurityPort.getCurrentAccountIdx() } returns accountIdx
         every { queryAccountPort.findByIdxOrNull(accountIdx) } returns account
