@@ -1,11 +1,8 @@
 from django.urls import path, include
-from .views import MovieViewSet, MovieDefailView, MovieHistoryViewSet, AccountViewSet, ActorViewSet, ActorDefailView, DirectorViewSet, DirectorDefailView
-from rest_framework.routers import DefaultRouter
-router = DefaultRouter()
-router.register('', MovieViewSet)  
+from .views import MovieView, MovieDefailView, MovieHistoryViewSet, ActorViewSet, ActorDefailView, DirectorViewSet, DirectorDefailView
+
 
 urlpatterns = [
-    path('account/', AccountViewSet.as_view({'post':'create'}), name = "account"),
     path('movie/history/', MovieHistoryViewSet.as_view({'get': 'list',
                                                         'post' : 'create',
                                                         'put' : 'update',
@@ -17,5 +14,5 @@ urlpatterns = [
                                                 'post': 'create'}), name = "director"),
     path('movie/director/<int:pk>/', DirectorDefailView.as_view(), name = "director_detail"),
     path('movie/<int:pk>/', MovieDefailView.as_view(), name = "movie_api_detail"),
-    path('movie/', include(router.urls)),
+    path('movie/', MovieView.as_view(),),
 ]
