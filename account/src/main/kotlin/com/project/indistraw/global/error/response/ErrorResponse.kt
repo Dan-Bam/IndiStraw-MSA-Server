@@ -1,4 +1,4 @@
-package com.project.indistraw.account.application.common.error.response
+package com.project.indistraw.global.error.response
 
 data class ErrorResponse(
     val message: String,

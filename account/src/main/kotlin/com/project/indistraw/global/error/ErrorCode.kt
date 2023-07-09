@@ -1,4 +1,4 @@
-package com.project.indistraw.account.application.common.error
+package com.project.indistraw.global.error
 
 enum class ErrorCode(
     val message: String,
