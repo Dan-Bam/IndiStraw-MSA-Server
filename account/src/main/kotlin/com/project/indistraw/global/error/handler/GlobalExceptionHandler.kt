@@ -1,7 +1,7 @@
-package com.project.indistraw.account.application.common.error.handler
+package com.project.indistraw.global.error.handler
 
-import com.project.indistraw.account.application.common.error.exception.IndiStrawAccountException
-import com.project.indistraw.account.application.common.error.response.ErrorResponse
+import com.project.indistraw.global.error.exception.IndiStrawAccountException
+import com.project.indistraw.global.error.response.ErrorResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler

@@ -1,9 +1,9 @@
 package com.project.indistraw.global.security.filter
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.project.indistraw.account.application.common.error.ErrorCode
-import com.project.indistraw.account.application.common.error.exception.IndiStrawAccountException
-import com.project.indistraw.account.application.common.error.response.ErrorResponse
+import com.project.indistraw.global.error.ErrorCode
+import com.project.indistraw.global.error.exception.IndiStrawAccountException
+import com.project.indistraw.global.error.response.ErrorResponse
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.JwtException
 import org.springframework.web.filter.OncePerRequestFilter
