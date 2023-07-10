@@ -81,7 +81,7 @@ class MovieHistoryViewSet(ModelViewSet):
 
         if serializers.is_valid():
             movie_idx = request.data.get('movie_idx')
-            movie_qs_filter = queryset.get(id=movie_idx)
+            movie_qs_filter = queryset.get(movie_idx=movie_idx)
             movie_title = movie_qs_filter.title
             movie_image = movie_qs_filter.thumbnail_url
             serializers.save(title=movie_title, thumbnail_url = movie_image) 
