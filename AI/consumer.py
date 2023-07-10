@@ -26,28 +26,28 @@ def callback(ch, method, properties, body):
     if properties.content_type == 'create_record':
         history = list(map(lambda x: x["movie_idx"], data))
         try:
-            db_data = models.ViewRecord.query.get(account_id=data[0]['account_index'])
+            db_data = models.ViewRecord.query.get(account_id=data[0]['account_idx'])
         except:
-            view = models.ViewRecord(account_id=data[0]['account_index'], record=json.dumps(history))
+            view = models.ViewRecord(account_id=data[0]['account_idx'], record=history)
             view.save()
         else:
-            db_data.record = json.dumps(history)
+            db_data.record = history
             db_data.save()
 
 
     elif properties.content_type == 'delete_record':
-        view = models.ViewRecord.query.get(account_id=data[0]['account_index'])
+        view = models.ViewRecord.query.get(account_id=data[0]['account_idx'])
         view.delete()
 
     elif properties.content_type == 'create_movie':
         genre = list(map(lambda x: x["movie_idx"], data))
-        movie = models.GenreData(movie_id=data[0]['movie_idx'], genre=json.dumps(genre))
+        movie = models.GenreData(movie_id=data[0]['movie_idx'], genre=genre)
         movie.save()
 
     elif properties.content_type == 'update_movie':
         genre = list(map(lambda x: x["movie_idx"], data))
         movie = models.GenreData.query.get(movie_id=data[0]['movie_idx'])
-        movie.genre = json.dumps(genre)
+        movie.genre = genre
         movie.save()
 
     elif properties.content_type == 'delete_movie':
