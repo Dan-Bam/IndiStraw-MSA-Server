@@ -71,9 +71,9 @@ class MovieHistoryViewSet(ModelViewSet):
     serializer_class = MovieHistorySerializer
     pagination_class = PageNumberPagination
 
-    def get_object(self, account_index):
-        account_index = MovieHistory.objects.filter(account_index=account_index)
-        return account_index
+    def get_object(self, account_idx):
+        account_idx = MovieHistory.objects.filter(account_idx=account_idx)
+        return account_idx
     
     def create(self, request):
         queryset = Movie.objects.all()
@@ -84,9 +84,9 @@ class MovieHistoryViewSet(ModelViewSet):
             movie_qs_filter = queryset.get(id=movie_idx)
             movie_title = movie_qs_filter.title
             movie_image = movie_qs_filter.thumbnail_url
-            serializers.save(title=movie_title, thumbnail_url = movie_image)
+            serializers.save(title=movie_title, thumbnail_url = movie_image) 
             
-            publish_queryset = MovieHistory.objects.filter(account_index=1).values('account_index', 'movie_idx')
+            publish_queryset = MovieHistory.objects.filter(account_idx=1).values('account_idx', 'movie_idx')
             json_object = json.dumps(list(publish_queryset), indent = 4) 
             print(json_object)
             publish('create_record', json_object)
