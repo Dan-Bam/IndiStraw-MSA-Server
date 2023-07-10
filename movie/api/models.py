@@ -1,15 +1,20 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 class Movie(models.Model):
-    account_index = models.ForeignKey("Account", on_delete=models.PROTECT)
+    # Request
     title = models.CharField(max_length=255)
     description = models.TextField()
     movie_url = models.URLField(default = "")
     thumbnail_url = models.URLField(default = "")
-    director = models.JSONField()
-    actor = models.JSONField()
-    genre = models.JSONField(default='{}')
-    movie_highlight = models.JSONField(default='{}')
+    director = ArrayField(models.CharField(max_length=255), blank=True)
+    actor = ArrayField(models.CharField(max_length=255), blank=True)
+    movie_highlight = ArrayField(models.CharField(max_length=255), blank=True)
+    clowd_true = models.BooleanField(default=False)
+
+    # Other
+    movie_idx = models.AutoField(primary_key=True, null=False)
+    genre = models.JSONField(default='{}', null=True)
 
 class Actor(models.Model):
     profile_url = models.URLField()
@@ -20,11 +25,7 @@ class Director(models.Model):
     name = models.CharField(max_length=24)
 
 class MovieHistory(models.Model):
-    account_index = models.ForeignKey("Account", on_delete=models.CASCADE)
-    movie_idx = models.ForeignKey("Movie", on_delete=models.CASCADE)
+    # movie_idx = models.ForeignKey("Movie", on_delete=models.CASCADE)
     title = models.CharField(max_length=255, blank=True)
     thumbnail_url = models.URLField(default = "", blank=True)
     history_time = models.DecimalField(max_digits = 5, decimal_places = 3, null=True)
-
-class Account(models.Model):
-    account_idx = models.IntegerField()
