@@ -25,7 +25,7 @@ class Director(models.Model):
     name = models.CharField(max_length=24)
 
 class MovieHistory(models.Model):
-    # movie_idx = models.ForeignKey("Movie", on_delete=models.CASCADE)
+    movie_idx = models.ForeignKey("Movie", on_delete=models.CASCADE)
     title = models.CharField(max_length=255, blank=True)
     thumbnail_url = models.URLField(default = "", blank=True)
     history_time = models.DecimalField(max_digits = 5, decimal_places = 3, null=True)
