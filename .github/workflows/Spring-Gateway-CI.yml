@@ -1,10 +1,10 @@
-name: Spring-Account CI
+name: Spring-Gateway CI
 
 on:
   push:
     branches: [ "main", "Spring" ]
   pull_request:
-    branches: [ "Spring", "Spring-Account" ]
+    branches: [ "Spring", "Spring-Gateway" ]
     
 permissions:
   contents: read
@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      working-directory: ./account
+      working-directory: ./gateway
     steps:
     - name : Checkout code
       uses: actions/checkout@v3
@@ -37,19 +37,18 @@ jobs:
       run: ./gradlew clean build
       working-directory: ${{ env.working-directory }}
       
-    - name: Spring-Account CI Success Discord Notification
+    - name: Spring-Gateway CI Success Discord Notification
       uses: sarisia/actions-status-discord@v1
       if: ${{ success() }}
       with:
-        title: ✅ Spring-Account CI success ✅
+        title: ✅ Spring-Gateway CI success ✅
         webhook: ${{ secrets.DISCORD_WEBHOOK }}
         color: 00FF00
     
-    - name: Spring-Account CI Failed Discord Notification
+    - name: Spring-Gateway CI Failed Discord Notification
       uses: sarisia/actions-status-discord@v1
       if: ${{ failure() }}
       with:
-        title: ❗️ Spring-Account CI failed ❗️
+        title: ❗️ Spring-Gateway CI failed ❗️
         webhook: ${{ secrets.DISCORD_WEBHOOK }}
         color: FF0000
-      
