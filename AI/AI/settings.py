@@ -87,10 +87,21 @@ WSGI_APPLICATION = 'AI.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.environ.get('ENGINE'),
+#         'NAME': BASE_DIR/ os.environ.get('NAME'),
+#     }
+#
+# }
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('ENGINE'),
-        'NAME': BASE_DIR/ os.environ.get('NAME'),
+        'ENGINE': env('ENGINE'),
+        'NAME': env('NAME'),
+        'USER': 'root',
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('HOST'),
+        'PORT': env('PORT'),
     }
 }
 
