@@ -4,25 +4,23 @@ from .models import ViewRecord, GenreData, DefaultRecommandation, Recommandation
 from rest_framework import viewsets
 from .serializers import ViewSerializer
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 import json
 
 
-class ViewSet(viewsets.ModelViewSet):
-    queryset = ViewRecord.objects.all()
-    serializer_class = ViewSerializer
+@api_view(['GET'])
+def get_queryset(req):
+    view = ViewRecord.objects.all()
+    genre = GenreData.objects.all()
+    d = {}
+    result = []
 
-    def get_queryset(self):
-        view = ViewRecord.objects.all()
-        genre = GenreData.objects.all()
-        d = {}
-        result = []
-        for i in range(genre.count()):
-            d[i] = view.filter(record__contains=i).count()
+    #dong = json.loads(view.only('record'))
+    #for i in range(genre.count()):
+        #d[i] = view.filter(record__contains=i).count()
         #hihi = dict(sorted(d.items(), key=lambda x: x[1], reverse=True))
-        for i in range(3):
-            result.append(max(d,key=d.get))
-
-
-        return list(view)
+    # for i in range(3):
+    #     result.append(max(d,key=d.get))
+    return Response(view.only('record'))
 
 # Create your views here.

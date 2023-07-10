@@ -1,8 +1,18 @@
+import os
+import json
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'AI.settings')
+
+import django
+
+django.setup()
 from models import ViewRecord, GenreData, DefaultRecommandation, Recommandation
-view = ViewRecord.objects.all()
-genre = GenreData.objects.all()
-dict = {}
-for i in range(genre.count()):
-    view = view.filter(record__contains='3')
-    dict.i = view.count()
-print(dict)
+import random
+
+numbers = list(range(100, 151))
+
+for i in range(300):
+    random_numbers = random.sample((numbers, 8))
+    view = ViewRecord(account_id=i, record=random_numbers)
+    view.save()
+print('suc')
