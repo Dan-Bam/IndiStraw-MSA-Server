@@ -5,5 +5,5 @@ from .views import FileUploadAPIView
 
 # Wire up our API using automatic URL routing.
 urlpatterns = [
-    path('file/', FileUploadAPIView.as_view()),
+    path('file/', FileUploadAPIView.as_view(), name="file_upload"),
 ]
