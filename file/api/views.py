@@ -4,6 +4,7 @@ from rest_framework.generics import ListCreateAPIView
 from .serializers import UploadSerializer
 from file.settings import AWS_S3_CUSTOM_DOMAIN
 from .models import File
+
 class FileUploadAPIView(ListCreateAPIView):
     serializer_class = UploadSerializer
     queryset = File.objects.all()
