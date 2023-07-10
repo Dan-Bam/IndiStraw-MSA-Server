@@ -24,13 +24,6 @@ spring:
           predicates:
             - Path=/api/v1/qr-code/**
 
-        - id: indistraw-qr-code-route
-          uri: ${AUTH_ROUTE_URI}
-          predicates:
-            - Path=/api/v1/qr-code/signin
-          filters:
-            - JwtAuthenticationGatewayFilter
-
         - id: indistraw-crowdfunding-route
           uri: ${CROWDFUNDING_ROUTE_URI}
           predicates:
@@ -42,6 +35,13 @@ spring:
           uri: ${SEARCH_ROUTE_URI}
           predicates:
             - Path=/api/v1/search/**
+          filters:
+            - JwtAuthenticationGatewayFilter
+
+        - id: indistraw-movie-route
+          uri: ${MOVIE_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/movie/**
           filters:
             - JwtAuthenticationGatewayFilter
 
