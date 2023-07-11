@@ -9,7 +9,7 @@ import json
 
 
 @api_view(['GET'])
-def get_popular(req, pk):
+def get_popular(req):
     global hihi
     view = ViewRecord.objects.all()
     genre = GenreData.objects.all()
