@@ -57,9 +57,9 @@ jobs:
        IMAGE_TAG: latest
       run: |
        cd file
-       docker build -t ${{ secrets.FILE_ECR_REPOSITORY }} .
-       docker tag ${{ secrets.FILE_ECR_REPOSITORY }}:$IMAGE_TAG ${{ secrets.FILE_REPO_URL }}:$IMAGE_TAG
-       docker push ${{ secrets.FILE_REPO_URL }}:$IMAGE_TAG
+       docker build -t ${{ secrets.ACCOUNT_ECR_REPOSITORY }} .
+       docker tag ${{ secrets.ACCOUNT_ECR_REPOSITORY }}:$IMAGE_TAG ${{ secrets.ACCOUNT_REPO_URL }}:$IMAGE_TAG
+       docker push ${{ secrets.ACCOUNT_REPO_URL }}:$IMAGE_TAG
       
     - name: Spring-Account CD Success Discord Notification
       uses: sarisia/actions-status-discord@v1
