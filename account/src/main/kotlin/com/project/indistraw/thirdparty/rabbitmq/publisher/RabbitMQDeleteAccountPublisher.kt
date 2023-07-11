@@ -1,8 +1,11 @@
 package com.project.indistraw.thirdparty.rabbitmq.publisher
 
+import mu.KotlinLogging
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.stereotype.Component
-import java.util.UUID
+import java.util.*
+
+private val log = KotlinLogging.logger {  }
 
 @Component
 class RabbitMQDeleteAccountPublisher(
@@ -10,7 +13,8 @@ class RabbitMQDeleteAccountPublisher(
 ) {
 
     fun publish(accountIdx: UUID) {
-        rabbitTemplate.convertAndSend(mapOf("accountIdx" to accountIdx))
+        log.info("accountIdx is $accountIdx")
+        rabbitTemplate.convertAndSend("topic", "delete_account", mapOf("accountIdx" to accountIdx))
     }
 
 }
