@@ -19,3 +19,7 @@ spring:
 
 jwt:
   accessSecret: ${JWT_ACCESS_SECRET}
+
+bootpay:
+  restApplicationId: ${REST_APPLICATION_ID}
+  privateKey: ${PRIVATE_KEY}
