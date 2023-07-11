@@ -7,7 +7,7 @@ data class CrowdfundingDetailDto(
     val title: String,
     val description: String,
     val writer: Writer,
-    val amount: Amount,
+    val amount: AmountDto,
     val remainingDay: Long,
     val fundingCount: Long,
     val reward: List<RewardDto>,
@@ -20,12 +20,6 @@ data class CrowdfundingDetailDto(
     data class Writer(
         val idx: UUID,
         val name: String
-    )
-
-    data class Amount(
-        val targetAmount: Long,
-        val totalAmount: Long,
-        val percentage: Double
     )
 
 }
