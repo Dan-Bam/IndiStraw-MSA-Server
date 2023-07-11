@@ -20,7 +20,7 @@ class CreateCrowdfundingService(
 
     override fun execute(dto: CreateCrowdfundingDto) {
         // dto값을 토대로 crowdfunding 객체를 생성하여 저장합니다.
-        val crowdfunding = Crowdfunding(
+        var crowdfunding = Crowdfunding(
             idx = 0L,
             writerIdx = accountSecurityPort.getCurrentAccountIdx(),
             title = dto.title,
@@ -41,13 +41,13 @@ class CreateCrowdfundingService(
             imageList = dto.imageList,
             fileList = dto.fileList
         )
-        val crowdfundingIdx = commandCrowdfundingPort.saveCrowdfunding(crowdfunding)
+        crowdfunding = commandCrowdfundingPort.saveCrowdfunding(crowdfunding)
 
         // dto값을 토대로 reword 객체를 생성하여 저장합니다.
         val rewordList = dto.reward.map {
             Reward(
                 idx = 0L,
-                crowdfundingIdx = crowdfundingIdx,
+                crowdfundingIdx = crowdfunding.idx,
                 title = it.title,
                 description = it.description,
                 price = it.price,

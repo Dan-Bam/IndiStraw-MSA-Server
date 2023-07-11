@@ -4,6 +4,6 @@ import com.project.indistraw.crowdfunding.domain.Crowdfunding
 
 interface CommandCrowdfundingPort {
 
-    fun saveCrowdfunding(crowdfunding: Crowdfunding): Long
+    fun saveCrowdfunding(crowdfunding: Crowdfunding): Crowdfunding
 
 }

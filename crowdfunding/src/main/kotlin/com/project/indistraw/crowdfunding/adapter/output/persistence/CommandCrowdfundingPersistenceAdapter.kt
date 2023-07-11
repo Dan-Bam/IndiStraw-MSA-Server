@@ -12,9 +12,9 @@ class CommandCrowdfundingPersistenceAdapter(
     private val crowdfundingConverter: CrowdfundingConverter
 ): CommandCrowdfundingPort {
 
-    override fun saveCrowdfunding(crowdfunding: Crowdfunding): Long {
+    override fun saveCrowdfunding(crowdfunding: Crowdfunding): Crowdfunding {
         val crowdfundingEntity = crowdfundingConverter toEntity crowdfunding
-        return crowdfundingRepository.save(crowdfundingEntity).idx
+        return (crowdfundingConverter toDomain crowdfundingRepository.save(crowdfundingEntity))!!
     }
 
 }
