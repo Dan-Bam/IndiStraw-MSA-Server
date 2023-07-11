@@ -24,7 +24,7 @@ class RabbitMQCreateAccountPublisher(
         val accountIdxToByte = ObjectMapper().writeValueAsString(mapOf("accountIdx" to accountIdx)).toByteArray()
         val message = Message(accountIdxToByte, properties)
 
-        rabbitTemplate.convertAndSend("topic", "create_account", message)
+        rabbitTemplate.convertAndSend("direct", "create_account", message)
     }
 
 }
