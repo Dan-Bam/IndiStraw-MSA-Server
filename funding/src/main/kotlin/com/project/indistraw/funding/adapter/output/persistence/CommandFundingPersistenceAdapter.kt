@@ -13,8 +13,13 @@ class CommandFundingPersistenceAdapter(
 ): CommandFundingPort {
 
     override fun saveFunding(funding: Funding) {
-        val entity = fundingConverter.toEntity(funding)
+        val entity = fundingConverter toEntity funding
         fundingRepository.save(entity)
+    }
+
+    override fun deleteFunding(funding: Funding) {
+        val entity = fundingConverter toEntity funding
+        fundingRepository.delete(entity)
     }
 
 }
