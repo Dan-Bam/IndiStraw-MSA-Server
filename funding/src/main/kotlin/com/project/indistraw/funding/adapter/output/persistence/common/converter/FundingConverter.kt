@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 @Component
 class FundingConverter: GenericConverter<Funding, FundingEntity> {
 
-    override fun toEntity(domain: Funding): FundingEntity =
+    override infix fun toEntity(domain: Funding): FundingEntity =
         domain.let {
             FundingEntity(
                 idx = it.idx,
@@ -21,7 +21,7 @@ class FundingConverter: GenericConverter<Funding, FundingEntity> {
             )
         }
 
-    override fun toDomain(entity: FundingEntity?): Funding? =
+    override infix fun toDomain(entity: FundingEntity?): Funding? =
         entity?.let {
             Funding(
                 idx = it.idx,
