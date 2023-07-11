@@ -26,7 +26,7 @@ class CrowdfundingDataConverter {
                     title = it.title,
                     description = it.description,
                     price = it.price,
-                    imageUrl = it.imageUrl,
+                    imageList = it.imageList,
                     totalCount = it.totalCount
                 )
             },
@@ -57,7 +57,7 @@ class CrowdfundingDataConverter {
                     title = it.title,
                     description = it.description,
                     price = it.price,
-                    imageUrl = it.imageUrl,
+                    imageList = it.imageList,
                     totalCount = it.totalCount
                 )
             },

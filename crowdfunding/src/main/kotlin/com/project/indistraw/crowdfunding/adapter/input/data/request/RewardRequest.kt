@@ -13,7 +13,7 @@ data class RewardRequest(
     val price: Long,
 
     @field:NotNull
-    val imageUrl: String,
+    val imageList: List<String>,
 
     val totalCount: Long
 )

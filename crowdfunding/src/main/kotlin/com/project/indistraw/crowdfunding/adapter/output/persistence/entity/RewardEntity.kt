@@ -20,8 +20,10 @@ class RewardEntity(
     @Column(nullable = false)
     val price: Long,
 
-    @Column(columnDefinition = "TEXT", nullable = false)
-    val imageUrl: String,
+    @ElementCollection
+    @CollectionTable(name = "reword_image", joinColumns = [JoinColumn(name = "reword_idx")])
+    @Column(name = "image_url", columnDefinition = "TEXT", nullable = false)
+    val imageList: List<String>,
 
     @Column(nullable = true)
     val totalCount: Long?,

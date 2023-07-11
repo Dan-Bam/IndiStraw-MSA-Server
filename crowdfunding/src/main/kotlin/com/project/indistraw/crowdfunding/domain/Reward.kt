@@ -9,6 +9,6 @@ data class Reward(
     val title: String,
     val description: String,
     val price: Long,
-    val imageUrl: String,
-    val totalCount: Long?
+    val totalCount: Long?,
+    val imageList: List<String>
 )
