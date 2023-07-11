@@ -28,10 +28,10 @@ def callback(ch, method, properties, body):
         try:
             db_data = models.ViewRecord.query.get(account_id=data[0]['account_idx'])
         except:
-            view = models.ViewRecord(account_id=data[0]['account_idx'], record=history)
+            view = models.ViewRecord(account_id=data[0]['account_idx'], record=json.dumps(history))
             view.save()
         else:
-            db_data.record = history
+            db_data.record = json.dumps(history)
             db_data.save()
 
 
@@ -41,13 +41,13 @@ def callback(ch, method, properties, body):
 
     elif properties.content_type == 'create_movie':
         genre = list(map(lambda x: x["movie_idx"], data))
-        movie = models.GenreData(movie_id=data[0]['movie_idx'], genre=genre)
+        movie = models.GenreData(movie_id=data[0]['movie_idx'], genre=json.dumps(genre))
         movie.save()
 
     elif properties.content_type == 'update_movie':
         genre = list(map(lambda x: x["movie_idx"], data))
         movie = models.GenreData.query.get(movie_id=data[0]['movie_idx'])
-        movie.genre = genre
+        movie.genre = json.dumps(genre)
         movie.save()
 
     elif properties.content_type == 'delete_movie':
