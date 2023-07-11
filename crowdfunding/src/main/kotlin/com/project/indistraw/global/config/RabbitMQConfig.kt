@@ -1,4 +1,4 @@
-package com.project.indistraw.thirdparty.rabbitmq.config
+package com.project.indistraw.global.config
 
 import org.springframework.amqp.rabbit.connection.ConnectionFactory
 import org.springframework.amqp.rabbit.core.RabbitTemplate

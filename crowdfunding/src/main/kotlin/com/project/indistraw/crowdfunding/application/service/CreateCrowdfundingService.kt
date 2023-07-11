@@ -6,6 +6,7 @@ import com.project.indistraw.crowdfunding.application.port.input.dto.CreateCrowd
 import com.project.indistraw.crowdfunding.application.port.output.AccountSecurityPort
 import com.project.indistraw.crowdfunding.application.port.output.CommandCrowdfundingPort
 import com.project.indistraw.crowdfunding.application.port.output.CommandRewordPort
+import com.project.indistraw.crowdfunding.application.port.output.CrowdfundingPublishPort
 import com.project.indistraw.crowdfunding.domain.*
 import java.time.LocalDateTime
 
@@ -13,7 +14,8 @@ import java.time.LocalDateTime
 class CreateCrowdfundingService(
     private val accountSecurityPort: AccountSecurityPort,
     private val commandCrowdfundingPort: CommandCrowdfundingPort,
-    private val commandRewordPort: CommandRewordPort
+    private val commandRewordPort: CommandRewordPort,
+    private val crowdfundingPublishPort: CrowdfundingPublishPort
 ): CreateCrowdfundingUseCase {
 
     override fun execute(dto: CreateCrowdfundingDto) {
@@ -54,6 +56,9 @@ class CreateCrowdfundingService(
             )
         }
         commandRewordPort.saveAllReword(rewordList)
+
+        // 정상적으로 생성이 되면 crowdfunding을 각 서비스에 publish 해준다.
+        crowdfundingPublishPort.create(crowdfunding)
     }
 
 }
