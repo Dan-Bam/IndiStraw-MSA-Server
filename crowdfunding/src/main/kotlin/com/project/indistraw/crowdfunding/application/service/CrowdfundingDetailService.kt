@@ -54,8 +54,8 @@ class CrowdfundingDetailService(
                     title = it.title,
                     description = it.description,
                     price = it.price,
-                    imageUrl = it.imageUrl,
-                    totalCount = it.totalCount
+                    totalCount = it.totalCount,
+                    imageList = it.imageList
                 )
             },
             statusType = crowdfunding.statusType,
