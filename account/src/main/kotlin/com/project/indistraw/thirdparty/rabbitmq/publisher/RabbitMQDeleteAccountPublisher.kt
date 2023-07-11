@@ -1,6 +1,9 @@
 package com.project.indistraw.thirdparty.rabbitmq.publisher
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import mu.KotlinLogging
+import org.springframework.amqp.core.Message
+import org.springframework.amqp.core.MessageProperties
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.stereotype.Component
 import java.util.*
@@ -14,7 +17,13 @@ class RabbitMQDeleteAccountPublisher(
 
     fun publish(accountIdx: UUID) {
         log.info("accountIdx is $accountIdx")
-        rabbitTemplate.convertAndSend("topic", "delete_account", mapOf("accountIdx" to accountIdx))
+        val properties = MessageProperties()
+        properties.contentType = "delete_account"
+
+        val accountIdxToByte = ObjectMapper().writeValueAsString(mapOf("accountIdx" to accountIdx)).toByteArray()
+        val message = Message(accountIdxToByte, properties)
+
+        rabbitTemplate.convertAndSend("topic", "create_account", message)
     }
 
 }
