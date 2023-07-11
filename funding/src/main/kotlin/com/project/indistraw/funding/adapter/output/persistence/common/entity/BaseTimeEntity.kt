@@ -12,5 +12,8 @@ abstract class BaseTimeEntity(
 
     @LastModifiedDate
     @Column(nullable = false, columnDefinition = "DATETIME(6)")
-    val modifiedAt: LocalDateTime = LocalDateTime.now()
+    val modifiedAt: LocalDateTime = LocalDateTime.now(),
+
+    @Column(nullable = true, updatable = false, columnDefinition = "DATETIME(6)")
+    val deletedAt: LocalDateTime? = null
 )
