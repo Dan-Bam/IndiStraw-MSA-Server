@@ -9,18 +9,18 @@ import json
 
 
 @api_view(['GET'])
-def get_queryset(req):
+def get_popular(req, pk):
+    global hihi
     view = ViewRecord.objects.all()
     genre = GenreData.objects.all()
     d = {}
-    result = []
-
-    #dong = json.loads(view.only('record'))
-    #for i in range(genre.count()):
-        #d[i] = view.filter(record__contains=i).count()
-        #hihi = dict(sorted(d.items(), key=lambda x: x[1], reverse=True))
-    # for i in range(3):
-    #     result.append(max(d,key=d.get))
-    return Response(view.only('record'))
+    result = {}
+    recommend_list = []
+    for i in range(100,genre.count()+100):
+        d[i] = view.filter(record__contains=[i]).count()
+        result = dict(sorted(d.items(), key=lambda x: x[1], reverse=True)[:5])
+    for i in result.keys():
+        recommend_list.append( genre.filter(movie_idx=i).values('movie_idx', 'imageUrl' ))
+    return Response(recommend_list)
 
 # Create your views here.
