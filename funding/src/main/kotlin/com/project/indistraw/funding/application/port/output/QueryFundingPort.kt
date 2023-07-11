@@ -2,9 +2,8 @@ package com.project.indistraw.funding.application.port.output
 
 import com.project.indistraw.funding.domain.Funding
 
-interface CommandFundingPort {
+interface QueryFundingPort {
 
-    fun saveFunding(funding: Funding)
-    fun deleteFunding(funding: Funding)
+    fun findByIdx(idx: Long): Funding?
 
 }

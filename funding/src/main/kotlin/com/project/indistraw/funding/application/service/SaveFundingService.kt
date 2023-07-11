@@ -17,7 +17,7 @@ class SaveFundingService(
 ): SaveFundingUseCase {
 
     override fun execute(dto: SaveFundingDto) {
-        // receiptId를 가지고 bootpay 결제 정보 검증을 합니다.
+        // receiptId를 가지고 bootpay 결제 정보 검증 요청을 합니다.
         payPort.confirm(dto.receiptId)
 
         val ordererIdx = accountSecurityPort.getCurrentAccountIdx()
