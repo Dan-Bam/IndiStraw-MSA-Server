@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-
+from rest_framework.filters import SearchFilter
 from django.shortcuts import render, get_object_or_404
 
 from .serializers import *
@@ -14,10 +14,14 @@ from .models import *
 from .producer import publish
 import json
 
-class MovieView(APIView):
+class MovieView(ModelViewSet):
+    queryset = Movie.objects.all()
+    serializer_class = MovieResponseSerializer
 
+    filter_backends = [SearchFilter]
+    search_fields = ['title']
 
-    def post(self, request):
+    def create(self, request):
         queryset = Movie.objects.all()
         serializer = MovieSerializer(data=request.data)
 
@@ -25,11 +29,12 @@ class MovieView(APIView):
             serializer.save()
             return JsonResponse({'message' : 'Success'})
     
-    def get(self, request):
-        queryset = Movie.objects.all()
-        serializer = MovieResponseSerializer(queryset, many=True)
+    # def list(self, request):
+    #     queryset = Movie.objects.all()
+    #     serializer = MovieResponseSerializer(queryset, many=True)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
+    
     
 
 class MovieDefailView(APIView):
@@ -59,11 +64,10 @@ class MovieDefailView(APIView):
         #     return Response(status=status.HTTP_401_UNAUTHORIZED)
         
         queryset = Movie.objects.get(pk=pk)
-        serializer = MovieSerializer(queryset, data=request, partial=True)
-
+        serializer = MovieSerializer(queryset, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_205_RESET_CONTENT)
+            return Response(status=status.HTTP_205_RESET_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MovieHistoryViewSet(ModelViewSet):
