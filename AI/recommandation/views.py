@@ -6,7 +6,7 @@ from .serializers import ViewSerializer, DefaultSerializer
 from django.core import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-import json, random
+import json, random, jwt
 
 genres = [
     '액션', '로맨스', '코미디', '스릴러', '드라마',
@@ -65,3 +65,10 @@ def get_personal_recommend(req, pk):
         recommend_list.append(genre.filter(movie_idx=i).values('movie_idx', 'imageUrl'))
     return Response(recommend_list)
 # Create your views here.
+@api_view(['GET'])
+def test(req):
+    access_token=req.headers.get('Authorization')
+    secret_key = "YXNkZnNhZmtuY2l3a253ZWtua2N3ZQ=="
+    payload = jwt.decode(access_token, secret_key, algorithms='HS256')
+    print(payload)
+    return Response(payload)
