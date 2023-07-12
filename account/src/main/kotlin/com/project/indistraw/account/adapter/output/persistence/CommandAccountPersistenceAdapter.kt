@@ -5,7 +5,6 @@ import com.project.indistraw.account.adapter.output.persistence.repository.Accou
 import com.project.indistraw.account.application.port.output.CommandAccountPort
 import com.project.indistraw.account.domain.Account
 import org.springframework.stereotype.Component
-import java.util.*
 
 @Component
 class CommandAccountPersistenceAdapter(
@@ -13,9 +12,9 @@ class CommandAccountPersistenceAdapter(
     private val accountConverter: AccountConverter
 ): CommandAccountPort {
 
-    override fun saveAccount(account: Account): UUID {
+    override fun saveAccount(account: Account): Account {
         val accountEntity = accountConverter toEntity account
-        return accountRepository.save(accountEntity).accountIdx
+        return (accountConverter toDomain accountRepository.save(accountEntity))!!
     }
 
     override fun deleteAccount(account: Account) {
