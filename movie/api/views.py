@@ -17,6 +17,7 @@ import json
 class MovieView(ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieResponseSerializer
+    pagination_class = PageNumberPagination
     
     filter_backends = [SearchFilter]
     search_fields = ['title']
