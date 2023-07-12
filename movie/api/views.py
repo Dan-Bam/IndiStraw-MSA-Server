@@ -11,7 +11,7 @@ from django.shortcuts import render, get_object_or_404
 
 from .serializers import *
 from .models import *
-from .producer import publish
+from .producer import publish, search_publish
 import json
 
 class MovieView(ModelViewSet):
@@ -40,13 +40,15 @@ class MovieView(ModelViewSet):
             serializer.save()
             last_qs = Movie.objects.last()
 
-            json_data = {
+            create_movie_json_data = {
                 "movie_idx" : last_qs.movie_idx,
                 "thumbnail_url" : last_qs.thumbnail_url,
                 "genre" : ["판타지", "액션"]
             }
+            
+            publish('create_movie', create_movie_json_data)
+            search_publish('create_movie', create_movie_json_data)
 
-            publish('create_movie', json_data)
 
             return JsonResponse({'message' : 'Success'})
     
