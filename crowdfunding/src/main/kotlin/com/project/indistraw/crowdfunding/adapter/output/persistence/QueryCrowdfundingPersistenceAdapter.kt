@@ -4,7 +4,6 @@ import com.project.indistraw.crowdfunding.adapter.output.persistence.common.conv
 import com.project.indistraw.crowdfunding.adapter.output.persistence.repository.CrowdfundingRepository
 import com.project.indistraw.crowdfunding.application.port.output.QueryCrowdfundingPort
 import com.project.indistraw.crowdfunding.domain.Crowdfunding
-import com.project.indistraw.crowdfunding.domain.StatusType
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
@@ -23,12 +22,12 @@ class QueryCrowdfundingPersistenceAdapter(
     }
 
     override fun findAll(pageRequest: PageRequest): Page<Crowdfunding> {
-        val crowdfundingList = crowdfundingRepository.findAllByStatusTypeNot(StatusType.UNDER_REVIEW, pageRequest)
+        val crowdfundingList = crowdfundingRepository.findAllByStatusTypeNot(Crowdfunding.StatusType.UNDER_REVIEW, pageRequest)
         return crowdfundingList.map { crowdfundingConverter toDomain it }
     }
 
     override fun findTop5ByOrderByViewCount(): List<Crowdfunding> {
-        val crowdfundingList = crowdfundingRepository.findTop5ByStatusTypeNotOrderByViewCountDesc(StatusType.UNDER_REVIEW)
+        val crowdfundingList = crowdfundingRepository.findTop5ByStatusTypeNotOrderByViewCountDesc(Crowdfunding.StatusType.UNDER_REVIEW)
         return crowdfundingList.map { (crowdfundingConverter toDomain it)!! }
     }
 

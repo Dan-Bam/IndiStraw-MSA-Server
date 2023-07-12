@@ -25,18 +25,18 @@ class CreateCrowdfundingService(
             writerIdx = accountSecurityPort.getCurrentAccountIdx(),
             title = dto.title,
             description = dto.description,
-            amount = Amount(
+            amount = Crowdfunding.Amount(
                 targetAmount = dto.targetAmount,
                 totalAmount = 0L
             ),
-            directorAccount = DirectorAccount(
+            directorAccount = Crowdfunding.DirectorAccount(
                 bank = dto.directorAccount.bank,
                 account = dto.directorAccount.account
             ),
             createdAt = LocalDateTime.now(),
             endDate = dto.endDate,
             viewCount = 0,
-            statusType = StatusType.UNDER_REVIEW,
+            statusType = Crowdfunding.StatusType.UNDER_REVIEW,
             thumbnailUrl = dto.thumbnailUrl,
             imageList = dto.imageList,
             fileList = dto.fileList

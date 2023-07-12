@@ -1,5 +1,6 @@
 package com.project.indistraw.crowdfunding.domain
 
+import com.project.indistraw.crowdfunding.application.common.annotation.Aggregate
 import com.project.indistraw.crowdfunding.application.common.annotation.AggregateRoot
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -21,6 +22,25 @@ data class Crowdfunding(
     val imageList: List<String>,
     val fileList: List<String>
 ) {
+
+    @Aggregate
+    data class Amount(
+        val totalAmount: Long,
+        val targetAmount: Long
+    )
+
+    @Aggregate
+    data class DirectorAccount(
+        val bank: String,
+        val account: String
+    )
+
+    @Aggregate
+    enum class StatusType {
+
+        UNDER_REVIEW, RECRUITING, FINISHED
+
+    }
 
     fun increaseViewCount(): Crowdfunding {
         this.viewCount = viewCount.inc()
