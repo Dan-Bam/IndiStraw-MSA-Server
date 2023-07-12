@@ -6,15 +6,15 @@ import java.util.*
 data class CrowdfundingDetailResponse(
     val title: String,
     val description: String,
-    val thumbnailUrl: String,
     val writer: Writer,
     val amount: Amount,
     val remainingDay: Long,
     val fundingCount: Long,
-    val imageList: List<String>,
-    val fileList: List<String>,
     val reward: List<RewardResponse>,
-    val status: StatusType
+    val status: StatusType,
+    val thumbnailUrl: String,
+    val imageList: List<String>,
+    val fileList: List<String>
 ) {
 
     data class Writer(

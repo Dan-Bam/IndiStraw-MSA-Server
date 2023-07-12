@@ -40,7 +40,6 @@ class CrowdfundingDataConverter {
         CrowdfundingDetailResponse(
             title = dto.title,
             description = dto.description,
-            thumbnailUrl = dto.thumbnailUrl,
             writer = CrowdfundingDetailResponse.Writer(
                 idx = dto.writer.idx,
                 name = dto.writer.name
@@ -52,8 +51,6 @@ class CrowdfundingDataConverter {
             ),
             remainingDay = dto.remainingDay,
             fundingCount = dto.fundingCount,
-            imageList = dto.imageList,
-            fileList = dto.fileList,
             reward = dto.reward.map {
                 RewardResponse(
                     idx = it.idx,
@@ -64,7 +61,10 @@ class CrowdfundingDataConverter {
                     totalCount = it.totalCount
                 )
             },
-            status = dto.statusType
+            status = dto.statusType,
+            thumbnailUrl = dto.thumbnailUrl,
+            imageList = dto.imageList,
+            fileList = dto.fileList
         )
 
     fun toResponse(dto: CrowdfundingPagingDto): CrowdfundingPagingResponse =
