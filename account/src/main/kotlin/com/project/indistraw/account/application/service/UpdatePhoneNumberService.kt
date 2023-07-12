@@ -7,7 +7,7 @@ import com.project.indistraw.account.application.port.output.AccountSecurityPort
 import com.project.indistraw.account.application.port.output.CommandAccountPort
 import com.project.indistraw.account.application.port.output.QueryAccountPort
 import com.project.indistraw.account.application.port.output.UpdatePhoneNumberUseCase
-import com.project.indistraw.global.event.authentication.DeleteAuthenticationEvent
+import com.project.indistraw.global.event.DeleteAuthenticationEvent
 import org.springframework.context.ApplicationEventPublisher
 
 @ServiceWithTransaction
