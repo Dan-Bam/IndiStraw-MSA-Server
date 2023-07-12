@@ -7,7 +7,7 @@ import django
 
 django.setup()
 
-from api.models import * 
+from api.models import Crowd
 
 params = pika.URLParameters('amqp://danbam0907:danbam1234!@svc.sel4.cloudtype.app:31704/')
 
@@ -25,9 +25,10 @@ def callback(ch, method, properties, body):
 
 
     if properties.content_type == 'create_crowdfunding':
-        # clowd = Clowd(clowd_idx = data['idx'], title = data['title'], description = data['description'], percentage = data['percentage'],
-        #         thumbnailUrl = data['thumbnailUrl'], status = data['status'])
-        # clowd.save()
+        print(type(data))
+        create_crowdfunding_data = data.get('title')
+        crowd_add_data = Crowd(title = create_crowdfunding_data)
+        crowd_add_data.save()
         print('suc')
 
 print('Account idx has been saved.')
