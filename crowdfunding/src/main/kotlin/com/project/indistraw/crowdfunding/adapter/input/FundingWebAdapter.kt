@@ -13,7 +13,7 @@ class FundingWebAdapter(
     private val createPayInfoUseCase: CreatePayInfoUseCase
 ) {
 
-    @PostMapping
+    @PostMapping("receipt")
     fun createPayInfo(): ResponseEntity<Map<String, String>> =
         createPayInfoUseCase.execute()
             .let { ResponseEntity.ok(mapOf("receiptId" to it)) }
