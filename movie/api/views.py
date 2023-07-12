@@ -17,15 +17,20 @@ import json
 class MovieView(ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieResponseSerializer
+
     pagination_class = PageNumberPagination
     
-    filter_backends = [SearchFilter]
-    search_fields = ['title']
+    def get_queryset(self):
+        qs= Movie.objects.all()
+        
+        search_field = self.request.query_params.get('title')
+        
+        if search_field is not None:
+            qs = qs.filter(title__icontains=search_field)
 
-    def get_object(self, pk):
-        movie = get_object_or_404(Movie, pk = pk)
-        return movie
-
+        return qs
+    
+    
     def create(self, request):
         queryset = Movie.objects.all()
         serializer = MovieSerializer(data=request.data)
