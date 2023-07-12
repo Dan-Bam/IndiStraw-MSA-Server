@@ -1,13 +1,13 @@
 package com.project.indistraw.crowdfunding.adapter.output.persistence.entity
 
-import org.springframework.data.annotation.Id
-import org.springframework.data.redis.core.RedisHash
+import com.project.indistraw.crowdfunding.adapter.output.persistence.common.entity.BaseTimeEntity
 import java.util.*
+import javax.persistence.Entity
 
-@RedisHash("pay_info")
-data class PayInfoEntity(
-    @Id
+@Entity(name = "pay_info")
+class PayInfoEntity(
+    @javax.persistence.Id
     val id: String,
 
     val accountIdx: UUID
-)
+): BaseTimeEntity()
