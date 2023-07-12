@@ -5,6 +5,6 @@ data class RewardDto(
     val title: String,
     val description: String,
     val price: Long,
-    val imageList: List<String>,
-    val totalCount: Long?
+    val totalCount: Long?,
+    val imageList: List<String>
 )

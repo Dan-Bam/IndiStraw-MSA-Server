@@ -1,5 +1,6 @@
 server:
   shutdown: graceful
+  port: 8081
 
 spring:
   datasource:
@@ -24,6 +25,8 @@ spring:
   rabbitmq:
     host: ${RABBITMQ_HOST}
     port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
 
 jwt:
   accessSecret: ${JWT_ACCESS_SECRET}

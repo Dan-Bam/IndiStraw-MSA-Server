@@ -4,6 +4,7 @@ import com.project.indistraw.crowdfunding.application.common.annotation.ServiceW
 import com.project.indistraw.crowdfunding.application.common.util.CalculateAmountUtil
 import com.project.indistraw.crowdfunding.application.exception.CrowdfundingNotFoundException
 import com.project.indistraw.crowdfunding.application.port.input.CrowdfundingDetailUseCase
+import com.project.indistraw.crowdfunding.application.port.input.dto.AmountDto
 import com.project.indistraw.crowdfunding.application.port.input.dto.CrowdfundingDetailDto
 import com.project.indistraw.crowdfunding.application.port.input.dto.RewardDto
 import com.project.indistraw.crowdfunding.application.port.output.QueryAccountPort
@@ -37,17 +38,20 @@ class CrowdfundingDetailService(
         return CrowdfundingDetailDto(
             title = crowdfunding.title,
             description = crowdfunding.description,
+            thumbnailUrl = crowdfunding.thumbnailUrl,
             writer = CrowdfundingDetailDto.Writer(
                 idx = writer.accountIdx,
                 name = writer.name
             ),
-            amount = CrowdfundingDetailDto.Amount(
+            amount = AmountDto(
                 targetAmount = crowdfunding.amount.targetAmount,
                 totalAmount = crowdfunding.amount.totalAmount,
                 percentage = calculateAmountUtil.calculateAmountPercentage(crowdfunding.amount)
             ),
             remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), crowdfunding.endDate),
             fundingCount = 0,
+            imageList = crowdfunding.imageList,
+            fileList = crowdfunding.fileList,
             reward = reward.map {
                 RewardDto(
                     idx = it.idx,
@@ -58,10 +62,7 @@ class CrowdfundingDetailService(
                     imageList = it.imageList
                 )
             },
-            statusType = crowdfunding.statusType,
-            thumbnailUrl = crowdfunding.thumbnailUrl,
-            imageList = crowdfunding.imageList,
-            fileList = crowdfunding.fileList
+            statusType = crowdfunding.statusType
         )
     }
 
