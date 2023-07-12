@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from django.http import JsonResponse
-from rest_framework.pagination import PageNumberPagination
+from .pagination import PageNumberPagination
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter
@@ -17,23 +17,32 @@ import json
 class MovieView(ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieResponseSerializer
-
+    
     filter_backends = [SearchFilter]
     search_fields = ['title']
+
+    def get_object(self, pk):
+        movie = get_object_or_404(Movie, pk = pk)
+        return movie
 
     def create(self, request):
         queryset = Movie.objects.all()
         serializer = MovieSerializer(data=request.data)
+        print(request.data)
 
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse({'message' : 'Success'})
-    
-    # def list(self, request):
-    #     queryset = Movie.objects.all()
-    #     serializer = MovieResponseSerializer(queryset, many=True)
+            last_qs = Movie.objects.last()
 
-    #     return Response(serializer.data, status=status.HTTP_200_OK)
+            json_data = {
+                "movie_idx" : last_qs.movie_idx,
+                "thumbnail_url" : last_qs.thumbnail_url,
+                "genre" : ["판타지", "액션"]
+            }
+
+            publish('create_movie', json_data)
+
+            return JsonResponse({'message' : 'Success'})
     
     
 
