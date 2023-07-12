@@ -21,7 +21,7 @@ class FundingEntity(
     val reward: RewardEntity,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_idx")
+    @JoinColumn(name = "orderer_idx")
     val orderer: AccountEntity,
 
     @Column(nullable = false)
