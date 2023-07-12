@@ -10,7 +10,7 @@ import com.project.indistraw.account.application.service.ReissueTokenService
 import com.project.indistraw.account.domain.Account
 import com.project.indistraw.account.domain.RefreshToken
 import com.project.indistraw.common.AnyValueObjectGenerator
-import com.project.indistraw.global.event.authentication.SaveRefreshTokenEvent
+import com.project.indistraw.global.event.SaveRefreshTokenEvent
 import com.project.indistraw.global.security.token.common.exception.ExpiredRefreshTokenException
 import com.project.indistraw.global.security.token.common.exception.InvalidTokenException
 import io.kotest.assertions.throwables.shouldThrow

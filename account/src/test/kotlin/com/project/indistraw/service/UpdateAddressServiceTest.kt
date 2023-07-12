@@ -31,7 +31,7 @@ class UpdateAddressServiceTest : BehaviorSpec({
         every { queryAccountPort.findByIdxOrNull(accountIdx) } returns account
         every {
             commandAccountPort.saveAccount(
-                account.copy(
+                account.updateAddress(
                     address = Address(
                         zipcode = updateAddressDto.zipcode,
                         streetAddress = updateAddressDto.streetAddress,
@@ -39,21 +39,23 @@ class UpdateAddressServiceTest : BehaviorSpec({
                     )
                 )
             )
-        } returns account.accountIdx
+        } returns account
 
         When("주소 수정 요청을 하면") {
             updateAddressService.execute(updateAddressDto)
 
             Then("주소가 수정이 되어야 한다.") {
-                verify { commandAccountPort.saveAccount(
-                    account.copy(
-                        address = Address(
-                            zipcode = updateAddressDto.zipcode,
-                            streetAddress = updateAddressDto.streetAddress,
-                            detailAddress = updateAddressDto.detailAddress
+                verify {
+                    commandAccountPort.saveAccount(
+                        account.copy(
+                            address = Address(
+                                zipcode = updateAddressDto.zipcode,
+                                streetAddress = updateAddressDto.streetAddress,
+                                detailAddress = updateAddressDto.detailAddress
+                            )
                         )
                     )
-                ) }
+                }
             }
         }
 

@@ -5,14 +5,14 @@ import com.project.indistraw.account.application.common.util.AuthenticationValid
 import com.project.indistraw.account.application.exception.DuplicatedAccountIdException
 import com.project.indistraw.account.application.port.input.SignUpUseCase
 import com.project.indistraw.account.application.port.input.dto.SignUpDto
+import com.project.indistraw.account.application.port.output.AccountPublishPort
 import com.project.indistraw.account.application.port.output.CommandAccountPort
 import com.project.indistraw.account.application.port.output.PasswordEncodePort
 import com.project.indistraw.account.application.port.output.QueryAccountPort
 import com.project.indistraw.account.domain.Account
 import com.project.indistraw.account.domain.Address
 import com.project.indistraw.account.domain.Authority
-import com.project.indistraw.global.event.account.CreateAccountPublishEvent
-import com.project.indistraw.global.event.authentication.DeleteAuthenticationEvent
+import com.project.indistraw.global.event.DeleteAuthenticationEvent
 import org.springframework.context.ApplicationEventPublisher
 import java.util.*
 
@@ -22,7 +22,8 @@ class SignUpService(
     private val queryAccountPort: QueryAccountPort,
     private val passwordEncodePort: PasswordEncodePort,
     private val authenticationValidator: AuthenticationValidator,
-    private val publisher: ApplicationEventPublisher
+    private val publisher: ApplicationEventPublisher,
+    private val accountPublishPort: AccountPublishPort
 ): SignUpUseCase {
 
     override fun execute(dto: SignUpDto) {
@@ -33,7 +34,7 @@ class SignUpService(
         val deleteAuthenticationEvent = DeleteAuthenticationEvent(authentication)
         publisher.publishEvent(deleteAuthenticationEvent)
 
-        val account = dto.let {
+        var account = dto.let {
             Account(
                 accountIdx = UUID.randomUUID(),
                 id = it.id,
@@ -45,11 +46,10 @@ class SignUpService(
                 authority = Authority.ROLE_ACCOUNT
             )
         }
-        val accountIdx = commandAccountPort.saveAccount(account)
+        account = commandAccountPort.saveAccount(account)
 
         // 계정을 생성 할때 각 서비스로 message를 publish 한다.
-        val createAccountPublishEvent = CreateAccountPublishEvent(accountIdx)
-        publisher.publishEvent(createAccountPublishEvent)
+        accountPublishPort.create(account)
     }
 
 }

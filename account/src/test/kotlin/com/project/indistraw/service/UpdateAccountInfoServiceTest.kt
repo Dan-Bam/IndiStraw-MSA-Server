@@ -29,7 +29,7 @@ class UpdateAccountInfoServiceTest: BehaviorSpec({
 
         every { accountSecurityPort.getCurrentAccountIdx() } returns accountIdx
         every { queryAccountPort.findByIdxOrNull(accountIdx) } returns account
-        every { commandAccountPort.saveAccount(any()) } returns account.accountIdx
+        every { commandAccountPort.saveAccount(any()) } returns account
 
         When("프로필 수정 요청을 하면") {
             updateAccountInfoService.execute(updateAccountProfileDto)

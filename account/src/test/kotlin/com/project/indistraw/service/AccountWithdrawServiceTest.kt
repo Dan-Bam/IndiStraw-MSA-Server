@@ -1,37 +1,35 @@
 package com.project.indistraw.service
 
 import com.project.indistraw.account.application.exception.AccountNotFoundException
+import com.project.indistraw.account.application.port.output.AccountPublishPort
 import com.project.indistraw.account.application.port.output.AccountSecurityPort
 import com.project.indistraw.account.application.port.output.CommandAccountPort
 import com.project.indistraw.account.application.port.output.QueryAccountPort
 import com.project.indistraw.account.application.service.AccountWithdrawService
 import com.project.indistraw.account.domain.Account
 import com.project.indistraw.common.AnyValueObjectGenerator
-import com.project.indistraw.global.event.account.DeleteAccountPublishEvent
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.springframework.context.ApplicationEventPublisher
 import java.util.*
 
 class AccountWithdrawServiceTest : BehaviorSpec({
     val queryAccountPort = mockk<QueryAccountPort>()
     val commandAccountPort = mockk<CommandAccountPort>()
     val accountSecurityPort = mockk<AccountSecurityPort>()
-    val publisher = mockk<ApplicationEventPublisher>()
-    val accountWithdrawService = AccountWithdrawService(queryAccountPort, commandAccountPort, accountSecurityPort, publisher)
+    val accountPublishPort = mockk<AccountPublishPort>()
+    val accountWithdrawService = AccountWithdrawService(queryAccountPort, commandAccountPort, accountSecurityPort, accountPublishPort)
 
     Given("계정이 주어질때") {
         val accountIdx = UUID.randomUUID()
         val account = AnyValueObjectGenerator.anyValueObject<Account>()
-        val deleteAccountPublishEvent = DeleteAccountPublishEvent(account.accountIdx)
 
         every { accountSecurityPort.getCurrentAccountIdx() } returns accountIdx
         every { queryAccountPort.findByIdxOrNull(accountIdx) } returns account
+        every { accountPublishPort.delete(account.accountIdx) } returns Unit
         every { commandAccountPort.deleteAccount(account) } returns Unit
-        every { publisher.publishEvent(deleteAccountPublishEvent) } returns Unit
 
         When("계정 삭제 요청을 하면") {
             accountWithdrawService.execute()
@@ -40,8 +38,8 @@ class AccountWithdrawServiceTest : BehaviorSpec({
                 verify { commandAccountPort.deleteAccount(account) }
             }
 
-            Then("계정 삭제 publisher event가 발행되어야 한다.") {
-                verify { publisher.publishEvent(deleteAccountPublishEvent) }
+            Then("계정 삭제 publisher가 발행되어야 한다.") {
+                verify { accountPublishPort.delete(account.accountIdx) }
             }
         }
 

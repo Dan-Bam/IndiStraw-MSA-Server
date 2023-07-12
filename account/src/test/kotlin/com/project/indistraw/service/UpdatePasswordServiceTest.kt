@@ -11,7 +11,7 @@ import com.project.indistraw.account.application.service.UpdatePasswordService
 import com.project.indistraw.account.domain.Account
 import com.project.indistraw.account.domain.Authentication
 import com.project.indistraw.common.AnyValueObjectGenerator
-import com.project.indistraw.global.event.authentication.DeleteAuthenticationEvent
+import com.project.indistraw.global.event.DeleteAuthenticationEvent
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every
@@ -36,9 +36,9 @@ class UpdatePasswordServiceTest: BehaviorSpec({
         val authentication = AnyValueObjectGenerator.anyValueObject<Authentication>("phoneNumber" to phoneNumber)
 
         every { queryAccountPort.findByPhoneNumberOrNull(updatePasswordDto.phoneNumber) } returns account
-        every { passwordEncodePort.isPasswordMatch(newPassword, account.encodedPassword) } returns false
+        every { passwordEncodePort.isPasswordMatch(newPassword, encodedNewPassword) } returns false
         every { passwordEncodePort.passwordEncode(updatePasswordDto.newPassword) } returns encodedNewPassword
-        every { commandAccountPort.saveAccount(account.copy(encodedPassword = encodedNewPassword)) } returns account.accountIdx
+        every { commandAccountPort.saveAccount(account.updateEncodedPassword(encodedNewPassword)) } returns account
         every { authenticationValidator.verifyAuthenticationByPhoneNumber(phoneNumber) } returns authentication
         every { publisher.publishEvent(DeleteAuthenticationEvent(authentication)) } returns Unit
 
@@ -46,7 +46,7 @@ class UpdatePasswordServiceTest: BehaviorSpec({
             updatePasswordService.execute(updatePasswordDto)
 
             Then("비밀번호 변경이 되어야 한다.") {
-                verify { commandAccountPort.saveAccount(account.copy(encodedPassword = encodedNewPassword)) }
+                verify { commandAccountPort.saveAccount(account.updateEncodedPassword(encodedNewPassword)) }
             }
         }
 

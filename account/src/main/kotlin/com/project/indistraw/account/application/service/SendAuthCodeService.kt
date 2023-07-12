@@ -8,7 +8,7 @@ import com.project.indistraw.account.application.port.output.QueryAuthentication
 import com.project.indistraw.account.application.port.output.SendMessagePort
 import com.project.indistraw.account.domain.AuthCode
 import com.project.indistraw.account.domain.Authentication
-import com.project.indistraw.global.event.authentication.CreateAuthenticationEvent
+import com.project.indistraw.global.event.CreateAuthenticationEvent
 import org.springframework.context.ApplicationEventPublisher
 import java.util.*
 

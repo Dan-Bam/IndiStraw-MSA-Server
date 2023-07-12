@@ -9,7 +9,7 @@ import com.project.indistraw.account.application.port.input.dto.UpdatePasswordDt
 import com.project.indistraw.account.application.port.output.CommandAccountPort
 import com.project.indistraw.account.application.port.output.PasswordEncodePort
 import com.project.indistraw.account.application.port.output.QueryAccountPort
-import com.project.indistraw.global.event.authentication.DeleteAuthenticationEvent
+import com.project.indistraw.global.event.DeleteAuthenticationEvent
 import org.springframework.context.ApplicationEventPublisher
 
 @ServiceWithTransaction

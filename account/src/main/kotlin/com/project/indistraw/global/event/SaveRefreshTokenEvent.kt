@@ -1,4 +1,4 @@
-package com.project.indistraw.global.event.authentication
+package com.project.indistraw.global.event
 
 import java.util.*
 

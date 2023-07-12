@@ -1,10 +1,11 @@
 package com.project.indistraw.account.application.port.output
 
 import com.project.indistraw.account.domain.Account
+import java.util.*
 
-interface CommandAccountPort {
+interface AccountPublishPort {
 
-    fun saveAccount(account: Account): Account
-    fun deleteAccount(account: Account)
+    fun create(account: Account)
+    fun delete(accountIdx: UUID)
 
 }
