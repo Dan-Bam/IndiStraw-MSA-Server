@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 
-
+class Account(models.Model):
+    account_idx = models.UUIDField()
+    
 class Movie(models.Model):
     # Request
     title = models.CharField(max_length=255)
