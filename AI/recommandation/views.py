@@ -68,7 +68,7 @@ def get_personal_recommend(req, pk):
 @api_view(['GET'])
 def test(req):
     access_token=req.headers.get('Authorization')
-    secret_key = "YXNkZnNhZmtuY2l3a253ZWtua2N3ZQ=="
+    secret_key = "dong"
     payload = jwt.decode(access_token, secret_key, algorithms='HS256')
     print(payload)
     return Response(payload)
