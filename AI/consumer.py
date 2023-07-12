@@ -20,15 +20,15 @@ channel.queue_declare(queue='ai')
 
 def callback(ch, method, properties, body):
     print('Received')
-    temp = json.loads(body)
-    data = json.loads(temp)
+    data = json.loads(body)
     print(data)
     if properties.content_type == 'create_record':
-        history = list(map(lambda x: x["movie_idx"], data))
+        datas = json.loads(data)
+        history = list(map(lambda x: x["movie_idx"], datas))
         try:
-            db_data = models.ViewRecord.query.get(account_id=data[0]['account_idx'])
+            db_data = models.ViewRecord.query.get(account_id=datas[0]['account_idx'])
         except:
-            view = models.ViewRecord(account_id=data[0]['account_idx'], record=json.dumps(history))
+            view = models.ViewRecord(account_id=datas[0]['account_idx'], record=json.dumps(history))
             view.save()
         else:
             db_data.record = json.dumps(history)
@@ -40,18 +40,18 @@ def callback(ch, method, properties, body):
         view.delete()
 
     elif properties.content_type == 'create_movie':
-        genre = list(map(lambda x: x["movie_idx"], data))
-        movie = models.GenreData(movie_id=data[0]['movie_idx'], genre=json.dumps(genre))
+        movie = models.GenreData(movie_idx=data['movie_idx'], genre=data['genre'], imageUrl=data['thumbnail_url'])
         movie.save()
+        print('suc')
 
     elif properties.content_type == 'update_movie':
-        genre = list(map(lambda x: x["movie_idx"], data))
-        movie = models.GenreData.query.get(movie_id=data[0]['movie_idx'])
-        movie.genre = json.dumps(genre)
+        movie = models.GenreData.query.get(movie_idx=data['movie_idx'])
+        movie.genre = data['genre']
+        movie.imageUrl = data['thumbnail_url']
         movie.save()
 
     elif properties.content_type == 'delete_movie':
-        movie = models.GenreData.query.get(movie_id=data[0]['movie_idx'])
+        movie = models.GenreData.query.get(movie_idx=data['movie_idx'])
         movie.delete()
 
 

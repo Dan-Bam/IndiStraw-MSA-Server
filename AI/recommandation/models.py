@@ -12,7 +12,7 @@ class ViewRecord(models.Model):
     account_idx = models.CharField(max_length=9999, primary_key=True)
 
 class DefaultRecommandation(models.Model):
-    record = models.CharField(max_length=100)
+    record = ArrayField(models.IntegerField())
 class Recommandation(models.Model):
     account_idx = models.ForeignKey(ViewRecord, on_delete=models.CASCADE, primary_key=True)
     record = ArrayField(models.IntegerField(default=0))
