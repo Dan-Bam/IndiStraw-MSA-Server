@@ -2,12 +2,12 @@ from rest_framework import viewsets
 from .serializers import SearchSeriaizer, SearchTagSerializer
 from .models import Search, Genre
 import itertools 
+import json
 from .pagination import PageNumberPagination
 
 class SearchViewSet(viewsets.ModelViewSet):
     queryset = Search.objects.all()
-    serializer_class = SearchSeriaizer        
-    pagination_class = PageNumberPagination
+    serializer_class = SearchSeriaizer
 
     def get_queryset(self):
         qs= Search.objects.all()
