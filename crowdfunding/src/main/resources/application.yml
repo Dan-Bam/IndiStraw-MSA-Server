@@ -33,3 +33,7 @@ jwt:
 
 account:
   serviceUrl: ${ACCOUNT_SERVICE_URL}
+
+bootpay:
+  restApplicationId: ${REST_APPLICATION_ID}
+  privateKey: ${PRIVATE_KEYee}
