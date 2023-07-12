@@ -1,6 +1,6 @@
 package com.project.indistraw.crowdfunding.adapter.output.persistence
 
-import com.project.indistraw.crowdfunding.adapter.output.persistence.common.converter.RewordConverter
+import com.project.indistraw.crowdfunding.adapter.output.persistence.common.converter.RewardConverter
 import com.project.indistraw.crowdfunding.adapter.output.persistence.repository.CrowdfundingRepository
 import com.project.indistraw.crowdfunding.adapter.output.persistence.repository.RewardRepository
 import com.project.indistraw.crowdfunding.application.exception.CrowdfundingNotFoundException
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class QueryRewardPersistenceAdapter(
-    private val rewordConverter: RewordConverter,
+    private val rewordConverter: RewardConverter,
     private val crowdfundingRepository: CrowdfundingRepository,
     private val rewardRepository: RewardRepository
 ): QueryRewardPort {

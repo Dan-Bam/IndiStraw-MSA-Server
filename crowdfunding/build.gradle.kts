@@ -76,6 +76,9 @@ dependencies {
 	/* RabbitMQ */
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
 	testImplementation("org.springframework.amqp:spring-rabbit-test")
+
+	/* boot pay */
+	implementation("io.github.bootpay:backend:2.1.4")
 }
 
 tasks.withType<KotlinCompile> {
