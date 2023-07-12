@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 
+
 class Movie(models.Model):
     # Request
     title = models.CharField(max_length=255)
