@@ -1,6 +1,20 @@
+server:
+  ssl:
+    enabled: false
+
 spring:
   cloud:
     gateway:
+      httpclient:
+         ssl:
+           useInsecureTrustManager: true
+      x-forwarded:
+        enabled: true
+        for-enabled: true
+        proto-enabled: true
+        host-append: false
+        port-append: false
+        proto-append: false
       routes:
         - id: indistraw-account-route
           uri: ${ACCOUNT_ROUTE_URI}
