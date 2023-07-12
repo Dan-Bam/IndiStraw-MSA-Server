@@ -29,11 +29,6 @@ def callback(ch, method, properties, body):
         movie.save()
         print('suc')
 
-    elif properties.content_type == 'create_crowd':
-        clowd = Clowd(clowd_idx = data['idx'], title = data['title'], description = data['description'], percentage = data['percentage'],
-                thumbnailUrl = data['thumbnailUrl'], status = data['status'])
-        clowd.save()
-        print('suc')
 
 channel.basic_consume(queue='search', on_message_callback=callback, auto_ack=True)
 
