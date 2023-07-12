@@ -9,7 +9,7 @@ import com.project.indistraw.account.application.service.UpdatePhoneNumberServic
 import com.project.indistraw.account.domain.Account
 import com.project.indistraw.account.domain.Authentication
 import com.project.indistraw.common.AnyValueObjectGenerator
-import com.project.indistraw.global.event.authentication.DeleteAuthenticationEvent
+import com.project.indistraw.global.event.DeleteAuthenticationEvent
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.mockk.every
@@ -36,7 +36,7 @@ class UpdatePhoneNumberServiceTest: BehaviorSpec({
         every { queryAccountPort.findByIdxOrNull(accountIdx) } returns account
         every { authenticationValidator.verifyAuthenticationByPhoneNumber(account.phoneNumber) } returns authentication
         every { publisher.publishEvent(deleteAuthenticationEvent) } returns Unit
-        every { commandAccountPort.saveAccount(account.copy(phoneNumber = phoneNumber)) } returns account.accountIdx
+        every { commandAccountPort.saveAccount(account.copy(phoneNumber = phoneNumber)) } returns account
         every { accountSecurityPort.getCurrentAccountIdx() } returns accountIdx
 
         When("전화번호 수정 요청을 하면") {

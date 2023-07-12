@@ -1,4 +1,4 @@
-package com.project.indistraw.global.event.authentication
+package com.project.indistraw.global.event
 
 import com.project.indistraw.account.application.port.output.CommandRefreshTokenPort
 import com.project.indistraw.account.domain.RefreshToken
