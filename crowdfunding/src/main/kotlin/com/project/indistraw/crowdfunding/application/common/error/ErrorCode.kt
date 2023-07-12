@@ -8,6 +8,9 @@ enum class ErrorCode(
     // CROWDFUNDING
     CROWDFUNDING_NOT_FOUND("크라우드 펀딩을 찾을 수 없습니다.", 404),
 
+    // FUNDING
+    FUNDING_NOT_FOUND("펀딩을 찾을 수 없습니다.", 404),
+
     // REWARD
     REWARD_NOT_FOUND("리워드를 찾을 수 없습니다.", 404),
 
