@@ -1,9 +1,9 @@
 package com.project.indistraw.crowdfunding.application.port.input
 
-import com.project.indistraw.crowdfunding.domain.StatusType
+import com.project.indistraw.crowdfunding.domain.Crowdfunding
 
 interface UpdateCrowdfundingStatusUseCase {
 
-    fun execute(idx: Long, statusType: StatusType)
+    fun execute(idx: Long, statusType: Crowdfunding.StatusType)
 
 }

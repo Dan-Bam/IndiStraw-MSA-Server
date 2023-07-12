@@ -1,6 +1,6 @@
 package com.project.indistraw.crowdfunding.application.port.input.dto
 
-import com.project.indistraw.crowdfunding.domain.StatusType
+import com.project.indistraw.crowdfunding.domain.Crowdfunding
 
 data class CrowdfundingListDto(
     val idx: Long,
@@ -8,5 +8,5 @@ data class CrowdfundingListDto(
     val description: String,
     val percentage: Double,
     val thumbnailUrl: String,
-    val statusType: StatusType
+    val statusType: Crowdfunding.StatusType
 )

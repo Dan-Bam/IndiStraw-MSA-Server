@@ -1,7 +1,7 @@
 package com.project.indistraw.crowdfunding.adapter.output.persistence.entity
 
 import com.project.indistraw.crowdfunding.adapter.output.persistence.common.entity.BaseIdxEntity
-import com.project.indistraw.crowdfunding.domain.StatusType
+import com.project.indistraw.crowdfunding.domain.Crowdfunding
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
@@ -36,7 +36,7 @@ class CrowdfundingEntity(
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    val statusType: StatusType,
+    val statusType: Crowdfunding.StatusType,
 
     @Column(nullable = false)
     val viewCount: Long,

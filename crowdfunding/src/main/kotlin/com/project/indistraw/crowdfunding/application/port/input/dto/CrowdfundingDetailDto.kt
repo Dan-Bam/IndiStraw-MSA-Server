@@ -1,6 +1,6 @@
 package com.project.indistraw.crowdfunding.application.port.input.dto
 
-import com.project.indistraw.crowdfunding.domain.StatusType
+import com.project.indistraw.crowdfunding.domain.Crowdfunding
 import java.util.*
 
 data class CrowdfundingDetailDto(
@@ -14,7 +14,7 @@ data class CrowdfundingDetailDto(
     val imageList: List<String>,
     val fileList: List<String>,
     val reward: List<RewardDto>,
-    val statusType: StatusType
+    val statusType: Crowdfunding.StatusType
 ) {
 
     data class Writer(

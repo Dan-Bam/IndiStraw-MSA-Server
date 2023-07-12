@@ -1,6 +1,6 @@
 package com.project.indistraw.crowdfunding.adapter.input.data.response
 
-import com.project.indistraw.crowdfunding.domain.StatusType
+import com.project.indistraw.crowdfunding.domain.Crowdfunding
 
 data class CrowdfundingListResponse(
     val idx: Long,
@@ -8,5 +8,5 @@ data class CrowdfundingListResponse(
     val description: String,
     val percentage: Double,
     val thumbnailUrl: String,
-    val status: StatusType
+    val status: Crowdfunding.StatusType
 )

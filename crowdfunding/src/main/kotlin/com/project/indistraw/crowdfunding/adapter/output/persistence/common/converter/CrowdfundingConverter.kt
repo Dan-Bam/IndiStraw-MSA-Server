@@ -3,9 +3,7 @@ package com.project.indistraw.crowdfunding.adapter.output.persistence.common.con
 import com.project.indistraw.crowdfunding.adapter.output.persistence.entity.AmountEntity
 import com.project.indistraw.crowdfunding.adapter.output.persistence.entity.CrowdfundingEntity
 import com.project.indistraw.crowdfunding.adapter.output.persistence.entity.DirectorAccountEntity
-import com.project.indistraw.crowdfunding.domain.Amount
 import com.project.indistraw.crowdfunding.domain.Crowdfunding
-import com.project.indistraw.crowdfunding.domain.DirectorAccount
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
@@ -44,11 +42,11 @@ class CrowdfundingConverter {
                 writerIdx = it.writerIdx,
                 title = it.title,
                 description = it.description,
-                amount = Amount(
+                amount = Crowdfunding.Amount(
                     totalAmount = it.amount.totalAmount,
                     targetAmount = it.amount.targetAmount
                 ),
-                directorAccount = DirectorAccount(
+                directorAccount = Crowdfunding.DirectorAccount(
                     bank = it.directorAccount.bank,
                     account = it.directorAccount.account
                 ),

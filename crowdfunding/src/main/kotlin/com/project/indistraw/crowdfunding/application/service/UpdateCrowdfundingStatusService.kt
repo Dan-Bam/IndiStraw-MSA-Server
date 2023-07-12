@@ -5,7 +5,7 @@ import com.project.indistraw.crowdfunding.application.exception.CrowdfundingNotF
 import com.project.indistraw.crowdfunding.application.port.input.UpdateCrowdfundingStatusUseCase
 import com.project.indistraw.crowdfunding.application.port.output.CommandCrowdfundingPort
 import com.project.indistraw.crowdfunding.application.port.output.QueryCrowdfundingPort
-import com.project.indistraw.crowdfunding.domain.StatusType
+import com.project.indistraw.crowdfunding.domain.Crowdfunding
 
 @ServiceWithTransaction
 class UpdateCrowdfundingStatusService(
@@ -13,7 +13,7 @@ class UpdateCrowdfundingStatusService(
     private val queryCrowdfundingPort: QueryCrowdfundingPort
 ): UpdateCrowdfundingStatusUseCase {
 
-    override fun execute(idx: Long, statusType: StatusType) {
+    override fun execute(idx: Long, statusType: Crowdfunding.StatusType) {
         val crowdfunding = queryCrowdfundingPort.findByIdxOrNull(idx)
             ?: throw CrowdfundingNotFoundException()
 
