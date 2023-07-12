@@ -17,6 +17,7 @@ enum class ErrorCode(
     // PAY
     FAILED_PAY_CONFIRM("결제 정보 검증에 실패하였습니다.", 400),
     FAILED_PAY_CANCEL("결제 취소에 실패하였습니다.", 400),
+    INVALID_RECEIPT_ID("유효하지 않은 receiptId 입니다.", 400),
 
     // FEIGN
     FEIGN_BAD_REQUEST("Feign Bad Request", 400),
