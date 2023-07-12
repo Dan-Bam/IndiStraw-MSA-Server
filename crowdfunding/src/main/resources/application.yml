@@ -36,4 +36,4 @@ account:
 
 bootpay:
   restApplicationId: ${REST_APPLICATION_ID}
-  privateKey: ${PRIVATE_KEYee}
+  privateKey: ${PRIVATE_KEY}
