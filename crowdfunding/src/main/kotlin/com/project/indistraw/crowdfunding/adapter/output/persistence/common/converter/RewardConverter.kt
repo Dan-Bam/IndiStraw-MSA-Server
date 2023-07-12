@@ -8,7 +8,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 
 @Component
-class RewordConverter(
+class RewardConverter(
     private val crowdfundingRepository: CrowdfundingRepository
 ) {
 
