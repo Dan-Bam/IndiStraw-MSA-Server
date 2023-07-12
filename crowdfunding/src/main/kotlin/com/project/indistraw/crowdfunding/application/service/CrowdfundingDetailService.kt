@@ -38,6 +38,7 @@ class CrowdfundingDetailService(
         return CrowdfundingDetailDto(
             title = crowdfunding.title,
             description = crowdfunding.description,
+            thumbnailUrl = crowdfunding.thumbnailUrl,
             writer = CrowdfundingDetailDto.Writer(
                 idx = writer.accountIdx,
                 name = writer.name
@@ -49,6 +50,8 @@ class CrowdfundingDetailService(
             ),
             remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), crowdfunding.endDate),
             fundingCount = 0,
+            imageList = crowdfunding.imageList,
+            fileList = crowdfunding.fileList,
             reward = reward.map {
                 RewardDto(
                     idx = it.idx,
@@ -59,10 +62,7 @@ class CrowdfundingDetailService(
                     imageList = it.imageList
                 )
             },
-            statusType = crowdfunding.statusType,
-            thumbnailUrl = crowdfunding.thumbnailUrl,
-            imageList = crowdfunding.imageList,
-            fileList = crowdfunding.fileList
+            statusType = crowdfunding.statusType
         )
     }
 
