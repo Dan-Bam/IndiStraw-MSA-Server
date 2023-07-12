@@ -34,15 +34,16 @@ class SseEmitterAdapter(
         return emitter
     }
 
-    override fun sendTokenToSse(uuid: UUID, account: Account) {
-        val tokenDto = createToken(account).toString()
+    override fun sendTokenToSse(uuid: UUID, account: Account): TokenDto {
+        val tokenDto = createToken(account)
         log.info("tokenDto {}", tokenDto)
         clients.forEach{ (uuid, emitter) ->
             log.info("sseEmitter {}", emitter)
-            sendToClient(emitter, "$uuid", "TOKEN", tokenDto)
+            sendToClient(emitter, "$uuid", "TOKEN", tokenDto.toString())
         }
         clients[uuid]?.complete()
         clients.remove(uuid)
+        return tokenDto
     }
 
     private fun createToken(account: Account): TokenDto {
