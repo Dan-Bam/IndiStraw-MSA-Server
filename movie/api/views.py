@@ -16,6 +16,7 @@ import json, os, jwt
 from django.conf import settings
 from uuid import UUID
 import uuid
+import itertools
 
 class MovieView(ModelViewSet):
     queryset = Movie.objects.all()
@@ -168,32 +169,16 @@ class MovieHistoryViewSet(ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 class HistoryDetailView(APIView):
-    def get_object(self, pk):
-        history = get_object_or_404(MovieHistory, pk = pk)
-        return history
-
     def get(self, request, pk):
-        history = self.get_object(pk)
-        serializer = MovieHistorySerializer(history)
-
         key = request.headers.get('Authorization')
         payload = jwt.decode(key, settings.JWT_SECRET_KEY, algorithms='HS256')
-        account_idx = MovieHistory.objects.filter(account_idx=payload['sub'])
-
+        account_idx = MovieHistory.objects.filter(account_idx=payload['sub'], movie_idx=pk)
+        
         data = {
-            'accountIdx' : account_idx,
-            'history_time' : MovieHistory.objects.get(movie_idx=pk).history_time,
+            'account_idx' : payload['sub'],
+            'history_time' : account_idx[0].history_time
         }
-
-        print(data)
-        
-        
-        movie_objects = Movie.objects.all().filter(actor__contains = [idx_data])
-        movie_qs_values = movie_objects.values('movie_idx', 'thumbnail_url')
-
-        for i, val in enumerate(movie_qs_values):   
-            serialized_data['movie_list'].append(val)
-        return Response(serialized_data, status=status.HTTP_200_OK)
+        return JsonResponse(data)
 
 class ActorViewSet(ModelViewSet):
     queryset = Actor.objects.all()
