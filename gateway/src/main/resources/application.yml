@@ -5,6 +5,9 @@ server:
 spring:
   cloud:
     gateway:
+      httpclient:
+         ssl:
+           useInsecureTrustManager: true
       x-forwarded:
         enabled: true
         for-enabled: true
