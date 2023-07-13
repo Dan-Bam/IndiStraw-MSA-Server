@@ -7,6 +7,7 @@ import java.util.*
 @AggregateRoot
 data class Account(
     val accountIdx: UUID,
+    val id: String,
     var name: String,
     var phoneNumber: String,
     var address: Address?,
