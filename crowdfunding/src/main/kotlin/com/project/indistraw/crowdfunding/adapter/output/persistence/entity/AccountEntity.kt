@@ -1,19 +1,17 @@
 package com.project.indistraw.crowdfunding.adapter.output.persistence.entity
 
-import com.project.indistraw.crowdfunding.adapter.output.persistence.common.entity.BaseUUIDEntity
+import com.project.indistraw.crowdfunding.adapter.output.persistence.common.entity.BaseTimeEntity
 import org.hibernate.annotations.SQLDelete
 import java.util.*
-import javax.persistence.Column
-import javax.persistence.Embedded
-import javax.persistence.Entity
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "account")
 @SQLDelete(sql = "update account set deleted_at = CURRENT_TIMESTAMP where crowdfunding.account.account_idx = ?")
 class AccountEntity(
+    @Id
     @Column(name = "account_idx", columnDefinition = "BINARY(16)", nullable = false)
-    override val accountIdx: UUID,
+    val accountIdx: UUID,
 
     @Column(nullable = false)
     val id: String,
@@ -29,4 +27,4 @@ class AccountEntity(
 
     @Column(nullable = true, columnDefinition = "TEXT")
     val profileUrl: String?
-): BaseUUIDEntity(accountIdx)
+): BaseTimeEntity()
