@@ -12,5 +12,6 @@ interface QueryCrowdfundingPort {
     fun findTop5ByOrderByViewCount(): List<Crowdfunding>
     fun findByWriterIdx(writerIdx: UUID): List<Crowdfunding>
     fun findByOrdererIdx(ordererIdx: UUID): List<Crowdfunding>
+    fun findByTitleOrDescriptionContaining(keyword: String?): List<Crowdfunding>
 
 }
