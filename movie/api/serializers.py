@@ -11,6 +11,11 @@ class MovieSerializer(serializers.ModelSerializer):
         model = Movie
         fields = ('title','description', 'movie_url', 'thumbnail_url', 'director', 'actor', 'movie_highlight', 'clowd_true', )
 
+class MovieResponseSerializera(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = ('title', 'description','movie_url', 'thumbnail_url', 'movie_highlight', 'clowd_true' )
+        
 class TestMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
