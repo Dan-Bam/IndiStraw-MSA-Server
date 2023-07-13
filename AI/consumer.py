@@ -20,15 +20,16 @@ channel.queue_declare(queue='ai')
 
 def callback(ch, method, properties, body):
     print('Received')
-    data = json.loads(body)
+    temp = json.loads(body)
+    data = json.loads(temp)
     print(data)
     if properties.content_type == 'create_record':
-        datas = json.loads(data)
-        history = list(map(lambda x: x["movie_idx"], datas))
+
+        history = list(map(lambda x: x["movie_idx"], data))
         try:
-            db_data = models.ViewRecord.query.get(account_id=datas[0]['account_idx'])
+            db_data = models.ViewRecord.query.get(account_id=data[0]['account_idx'])
         except:
-            view = models.ViewRecord(account_id=datas[0]['account_idx'], record=json.dumps(history))
+            view = models.ViewRecord(account_id=data[0]['account_idx'], record=json.dumps(history))
             view.save()
         else:
             db_data.record = json.dumps(history)
