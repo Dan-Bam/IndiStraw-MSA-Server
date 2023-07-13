@@ -8,3 +8,16 @@ class Search(models.Model):
 class Genre(models.Model):
     keyword = models.CharField(max_length=255)
     view_count = models.IntegerField(default=0)
+
+class Movie(models.Model):
+    # request
+    movie_idx = models.AutoField(primary_key=True, null = False)
+    thumbnail_url = models.URLField(default="")
+
+    # response
+    title = models.CharField(max_length=255)
+    genre = models.JSONField()
+
+class Crowd(models.Model):
+    crowd_idx = models.AutoField(primary_key=True, null=False)
+    title = models.CharField(max_length=255)

@@ -4,9 +4,14 @@ from .models import *
 class SearchSeriaizer(serializers.ModelSerializer):
     class Meta:
         model = Search
-        fields = ('id', 'title', 'genre')
+        fields = ('title',)
 
 class SearchTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
         fields = ('keyword', 'view_count')
+
+class MovieSearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = ('movie_idx', 'thumbnail_url')
