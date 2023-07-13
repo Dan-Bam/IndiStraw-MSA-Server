@@ -1,4 +1,4 @@
-import os, jwt
+import os, jwt, requests
 from django.shortcuts import render
 from google.cloud import videointelligence, storage, storage_transfer
 import boto3, environ, json
@@ -107,9 +107,10 @@ def check_porno(req):
         # print("\tpornography: {}".format(likelihood.name))
         a[likelihood.name] += 1
     if frame_time / 3 < (a['VERY_LIKELY'] + a['LIKELY']):
+        requests.get(f'http://52.79.249.14:8001/movie/delete_porno/{req.data["Url"]}/')
         return Response(payload['sub']+"This is porno")
     else:
-        return Response(payload['sub']+"This is not porno")
+        return Response(    "This is not porno")
 
 
 from django.shortcuts import render

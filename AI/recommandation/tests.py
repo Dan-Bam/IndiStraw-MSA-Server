@@ -6,7 +6,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'AI.settings')
 import django
 
 django.setup()
-from models import ViewRecord, GenreData, DefaultRecommandation, Recommandation
+from models import ViewRecord, GenreData, Recommandation
 import random
 
 numbers = list(range(100, 151))

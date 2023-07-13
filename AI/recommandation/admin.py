@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import DefaultRecommandation, ViewRecord, GenreData, Recommandation
+from .models import ViewRecord, GenreData, Recommandation
 
-admin.site.register(DefaultRecommandation)
 admin.site.register(ViewRecord)
 admin.site.register(GenreData)
 admin.site.register(Recommandation)

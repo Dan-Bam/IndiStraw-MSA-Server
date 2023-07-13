@@ -7,8 +7,3 @@ class ViewSerializer(serializers.ModelSerializer):
         model = ViewRecord
         fields = "__all__"
 
-
-class DefaultSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DefaultRecommandation
-        fields =['record']
