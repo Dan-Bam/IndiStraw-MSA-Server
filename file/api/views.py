@@ -10,7 +10,7 @@ class FileUploadAPIView(ListCreateAPIView):
     queryset = File.objects.all()
 
     def post(self, request):
-        request.data.__setitem__("video_url", f"https://{AWS_S3_CUSTOM_DOMAIN}/{request.data['file']}")
+        request.data.__setitem__("video_url", f"https://{AWS_S3_CUSTOM_DOMAIN}/{request.data('file')}")
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
