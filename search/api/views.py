@@ -35,12 +35,11 @@ class SearchViewSet(viewsets.ModelViewSet):
 class SearchTagViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = SearchTagSerializer
-    pagination_class = PageNumberPagination
 
     def get_queryset(self):
         qs = Genre.objects.all().order_by('-view_count')
 
-        return qs
+        return qs[:8]
     
 
 class MovieSearchViewSet(viewsets.ModelViewSet):
