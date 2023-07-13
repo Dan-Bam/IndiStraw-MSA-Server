@@ -10,7 +10,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "account")
-@SQLDelete(sql = "update account set deleted_at = CURRENT_TIMESTAMP where idx = ?")
+@SQLDelete(sql = "update account set deleted_at = CURRENT_TIMESTAMP where crowdfunding.account.account_idx = ?")
 class AccountEntity(
     @Column(name = "account_idx", columnDefinition = "BINARY(16)", nullable = false)
     override val accountIdx: UUID,
