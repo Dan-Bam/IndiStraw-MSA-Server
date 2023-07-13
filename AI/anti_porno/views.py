@@ -16,7 +16,7 @@ from rest_framework.response import Response
 @api_view(['POST'])
 def check_porno(req):
     key = req.headers.get('Authorization')
-    payload = jwt.decode(key, os.environ.get('JWT_SECRET_KEY'), algorithms='HS256')
+    payload = jwt.decode(jwt=key[7:], key=os.environ.get('JWT_SECRET_KEY'), algorithms='HS256')
     s3 = boto3.client('s3')
     storagetransfer = googleapiclient.discovery.build('storagetransfer', 'v1')
     transfer_job = {

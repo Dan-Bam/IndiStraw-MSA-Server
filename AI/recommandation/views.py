@@ -30,7 +30,10 @@ def popular():
         d[i] = view.filter(record__contains=[i]).count()
         result = dict(sorted(d.items(), key=lambda x: x[1], reverse=True)[:10])
     return result
-
+@api_view(['GET'])
+def get_banner(req):
+    genre = GenreData.objects.filter(movie_idx=100)
+    return Response(genre.values('thumbnail_url'))
 
 @api_view(['GET'])
 def get_popular(req):
@@ -44,12 +47,12 @@ def get_popular(req):
         recommend_list.append(genre.filter(movie_idx=i).values('movie_idx', 'thumbnail_url'))
     return Response(recommend_list)
 
-
-
 @api_view(['GET'])
 def get_personal_recommend(req):
     key = req.headers.get('Authorization')
-    payload = jwt.decode(key, os.environ.get('JWT_SECRET_KEY'), algorithms='HS256')
+    print(key[7:])
+    payload = jwt.decode(jwt=key[7:], key=os.environ.get('JWT_SECRET_KEY'), algorithms='HS256')
+    print(payload['sub'])
     view = ViewRecord.objects.all()
     genre = GenreData.objects.all()
     history = view.filter(account_idx=payload['sub']).values("record")[0]['record']
