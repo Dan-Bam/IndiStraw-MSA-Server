@@ -1,3 +1,5 @@
+import os
+
 from django.db.models import Count
 from django.shortcuts import render
 from .models import ViewRecord, GenreData, DefaultRecommandation, Recommandation
@@ -6,8 +8,13 @@ from .serializers import ViewSerializer, DefaultSerializer
 from django.core import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-import json, random, jwt
-
+import json, random, jwt, environ
+from datetime import datetime
+today = datetime.now()
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 genres = [
     '액션', '로맨스', '코미디', '스릴러', '드라마',
     'SF', '애니메이션', '공포', '모험', '판타지'
@@ -40,10 +47,12 @@ def get_popular(req):
 
 
 @api_view(['GET'])
-def get_personal_recommend(req, pk):
+def get_personal_recommend(req):
+    key = req.headers.get('Authorization')
+    payload = jwt.decode(key, os.environ.get('JWT_SECRET_KEY'), algorithms='HS256')
     view = ViewRecord.objects.all()
     genre = GenreData.objects.all()
-    history = view.filter(account_idx=pk).values("record")[0]['record']
+    history = view.filter(account_idx=payload['sub']).values("record")[0]['record']
     result = [genre.filter(movie_idx=i).values('genre')[0]['genre'] for i in history]
     dong = {}
     results = {}
@@ -65,10 +74,3 @@ def get_personal_recommend(req, pk):
         recommend_list.append(genre.filter(movie_idx=i).values('movie_idx', 'imageUrl'))
     return Response(recommend_list)
 # Create your views here.
-@api_view(['GET'])
-def test(req):
-    access_token=req.headers.get('Authorization')
-    secret_key = "dong"
-    payload = jwt.decode(access_token, secret_key, algorithms='HS256')
-    print(payload)
-    return Response(payload)
