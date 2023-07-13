@@ -22,4 +22,6 @@ for i in range(100,151):
     selected_genres = random.sample(genres, 3)
     view = GenreData(movie_id=i, genre=selected_genres)
     view.save()
+    #view = ViewRecord.objects.all()
+    #view.delete()
 print('suc')

@@ -16,10 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from anti_porno import views as a_view
+from recommandation import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('porno/', include('anti_porno.urls')),
-    path('recommend/', include('recommandation.urls'))
+    path('movie/popular/', views.get_popular),
+    path('movie/recommend/', views.get_personal_recommend),
+    path('movie/porno/', a_view.check_porno)
 ]
