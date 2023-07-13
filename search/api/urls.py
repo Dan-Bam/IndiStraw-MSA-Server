@@ -8,5 +8,5 @@ router.register(r'', SearchViewSet)
 urlpatterns = [
     path('search/tag', SearchTagViewSet.as_view({'get':'list'})),
     path('search/movie', MovieSearchViewSet.as_view({'get':'list'})),
-    path('search/', include(router.urls)),
+    path('search/', include(router.urls))
 ]
