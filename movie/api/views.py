@@ -12,7 +12,11 @@ from django.shortcuts import render, get_object_or_404
 from .serializers import *
 from .models import *
 from .producer import publish, search_publish
-import json
+import json, os, jwt
+from django.conf import settings
+from uuid import UUID
+import uuid
+import itertools
 
 class MovieView(ModelViewSet):
     queryset = Movie.objects.all()
@@ -38,16 +42,16 @@ class MovieView(ModelViewSet):
 
         if serializer.is_valid():
             serializer.save()
-            # last_qs = Movie.objects.last()
+            last_qs = Movie.objects.last()
 
-            # create_movie_json_data = {
-            #     "movie_idx" : last_qs.movie_idx,
-            #     "thumbnail_url" : last_qs.thumbnail_url,
-            #     "genre" : ["판타지", "액션"]
-            # }
+            create_movie_json_data = {
+                "movie_idx" : last_qs.movie_idx,
+                "thumbnail_url" : last_qs.thumbnail_url,
+                "genre" : None
+            }
 
-            #publish('create_movie', create_movie_json_data)
-            #search_publish('create_movie', create_movie_json_data)
+            publish('create_movie', create_movie_json_data)
+            search_publish('create_movie', create_movie_json_data)
 
 
             return JsonResponse({'message' : 'Success'})
@@ -61,6 +65,7 @@ class MovieDefailView(APIView):
         return movie
 
     def get(self, request, pk):
+        
         # if IsAuthenticated:
         #     return Response(status=status.HTTP_401_UNAUTHORIZED)
         
@@ -110,10 +115,11 @@ class MovieDefailView(APIView):
 class MovieHistoryViewSet(ModelViewSet):
     queryset = MovieHistory.objects.all()
     serializer_class = MovieHistorySerializer
-    pagination_class = PageNumberPagination
 
-    def get_object(self, account_idx):
-        account_idx = MovieHistory.objects.filter(account_idx=account_idx)
+    def get_object(self, request):
+        key = request.headers.get('Authorization')
+        payload = jwt.decode(key, settings.JWT_SECRET_KEY, algorithms='HS256')
+        account_idx = MovieHistory.objects.filter(account_idx=payload['sub'])
         return account_idx
     
     def create(self, request):
@@ -121,15 +127,22 @@ class MovieHistoryViewSet(ModelViewSet):
         serializers = self.serializer_class(data=request.data)
 
         if serializers.is_valid():
+            key = request.headers.get('Authorization')
+            payload = jwt.decode(key, settings.JWT_SECRET_KEY, algorithms='HS256')
+            account = payload['sub']
+
+            account_data = Account.objects.get(account_idx=account)  
+
             movie_idx = request.data.get('movie_idx')
             movie_qs_filter = queryset.get(movie_idx=movie_idx)
+
             movie_title = movie_qs_filter.title
             movie_image = movie_qs_filter.thumbnail_url
-            serializers.save(title=movie_title, thumbnail_url = movie_image) 
-            
-            publish_queryset = MovieHistory.objects.filter(account_idx=1).values('account_idx', 'movie_idx')
-            json_object = json.dumps(list(publish_queryset), indent = 4) 
-            print(json_object)
+
+            serializers.save(title=movie_title, thumbnail_url = movie_image, account_idx = account_data)
+            # 여기서 account_idx = header jwt에 있는 account_idx 로 바꿔야함.
+            publish_queryset = MovieHistory.objects.filter(account_idx=str(account)).values('account_idx', 'movie_idx')
+            json_object = json.dumps(list(str(publish_queryset)), indent = 4)
             publish('create_record', json_object)
             
             return Response(data=serializers.data, status=status.HTTP_201_CREATED)
@@ -155,6 +168,17 @@ class MovieHistoryViewSet(ModelViewSet):
         publish('delete_record', pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+class HistoryDetailView(APIView):
+    def get(self, request, pk):
+        key = request.headers.get('Authorization')
+        payload = jwt.decode(key, settings.JWT_SECRET_KEY, algorithms='HS256')
+        account_idx = MovieHistory.objects.filter(account_idx=payload['sub'], movie_idx=pk)
+        
+        data = {
+            'account_idx' : payload['sub'],
+            'history_time' : account_idx[0].history_time
+        }
+        return JsonResponse(data)
 
 class ActorViewSet(ModelViewSet):
     queryset = Actor.objects.all()
@@ -212,20 +236,19 @@ class DirectorDefailView(APIView):
         return director
 
     def get(self, request, pk):
-        director = self.get_object(pk)
-        serializer = DirectorSerializer(director)
+            director = self.get_object(pk)
+            serializer = DirectorSerializer(director)
 
-        serialized_data = serializer.data
-        idx_data = serializer.data.get('idx')
+            serialized_data = serializer.data
+            idx_data = serializer.data.get('idx')
 
-        movie_objects = Movie.objects.all().filter(actor__contains = [idx_data])
-        movie_qs_values = movie_objects.values('movie_idx', 'thumbnail_url')
+            movie_objects = Movie.objects.all().filter(actor__contains = [idx_data])
+            movie_qs_values = movie_objects.values('movie_idx', 'thumbnail_url')
 
-        for i, val in enumerate(movie_qs_values):   
-            serialized_data['movie_list'].append(val)
+            for i, val in enumerate(movie_qs_values):   
+                serialized_data['movie_list'].append(val)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
 class PornoDeleteView(APIView):
     def post(self, request, pk):

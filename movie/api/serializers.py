@@ -20,6 +20,7 @@ class TestMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = '__all__'
+        
 class MovieHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = MovieHistory

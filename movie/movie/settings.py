@@ -107,6 +107,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+JWT_SECRET_KEY = env('JWT_SECRET_KEY')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/

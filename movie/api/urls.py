@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import MovieView, MovieDefailView, MovieHistoryViewSet, ActorViewSet, ActorDefailView, DirectorViewSet, DirectorDefailView, PornoDeleteView
+from .views import MovieView, MovieDefailView, MovieHistoryViewSet, ActorViewSet, ActorDefailView, DirectorViewSet, DirectorDefailView, PornoDeleteView, HistoryDetailView
 
 
 urlpatterns = [
@@ -7,6 +7,7 @@ urlpatterns = [
                                                         'post' : 'create',
                                                         'put' : 'update',
                                                         'delete' : 'destroy'}), name = "movie_history"),
+    path('movie/history/<int:pk>/', HistoryDetailView.as_view()),
     path('movie/delete_porno/', PornoDeleteView.as_view(), name = "porno_delete"),
     path('movie/actor/', ActorViewSet.as_view({'get':'list',
                                                 'post': 'create'}), name = "actor"),
