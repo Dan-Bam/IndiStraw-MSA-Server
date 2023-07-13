@@ -2,9 +2,9 @@ import os
 
 from django.db.models import Count
 from django.shortcuts import render
-from .models import ViewRecord, GenreData, DefaultRecommandation, Recommandation
+from .models import ViewRecord, GenreData, Recommandation
 from rest_framework import viewsets
-from .serializers import ViewSerializer, DefaultSerializer
+from .serializers import ViewSerializer
 from django.core import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -41,7 +41,7 @@ def get_popular(req):
     result = popular()
     print(list(result.keys()))
     for i in list(result.keys()):
-        recommend_list.append(genre.filter(movie_idx=i).values('movie_idx', 'imageUrl'))
+        recommend_list.append(genre.filter(movie_idx=i).values('movie_idx', 'thumbnail_url'))
     return Response(recommend_list)
 
 
@@ -71,6 +71,6 @@ def get_personal_recommend(req):
         keys.append(int(i))
     random.shuffle(keys)
     for i in keys[:10]:
-        recommend_list.append(genre.filter(movie_idx=i).values('movie_idx', 'imageUrl'))
+        recommend_list.append(genre.filter(movie_idx=i).values('movie_idx', 'thumbnail_url'))
     return Response(recommend_list)
 # Create your views here.
