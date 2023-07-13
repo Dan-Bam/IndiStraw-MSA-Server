@@ -21,7 +21,7 @@ class MovieView(ModelViewSet):
     pagination_class = PageNumberPagination
     
     def get_queryset(self):
-        qs= Movie.objects.all()
+        qs= Movie.objects.all().order_by('-created_at')
         
         search_field = self.request.query_params.get('title')
         
@@ -38,16 +38,16 @@ class MovieView(ModelViewSet):
 
         if serializer.is_valid():
             serializer.save()
-            last_qs = Movie.objects.last()
+            # last_qs = Movie.objects.last()
 
-            create_movie_json_data = {
-                "movie_idx" : last_qs.movie_idx,
-                "thumbnail_url" : last_qs.thumbnail_url,
-                "genre" : ["판타지", "액션"]
-            }
+            # create_movie_json_data = {
+            #     "movie_idx" : last_qs.movie_idx,
+            #     "thumbnail_url" : last_qs.thumbnail_url,
+            #     "genre" : ["판타지", "액션"]
+            # }
 
-            publish('create_movie', create_movie_json_data)
-            search_publish('create_movie', create_movie_json_data)
+            #publish('create_movie', create_movie_json_data)
+            #search_publish('create_movie', create_movie_json_data)
 
 
             return JsonResponse({'message' : 'Success'})
@@ -66,7 +66,27 @@ class MovieDefailView(APIView):
         
         movie = self.get_object(pk)
         serializer = MovieSerializer(movie)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        serialized_data = serializer.data
+        actror_data = serializer.data.get('actor')
+        director_data = serializer.data.get('director')
+
+        for i, val in enumerate(actror_data):
+            actor_data = {
+                'idx' : val,
+                'profile_url' :  Actor.objects.get(pk=val).profile_url,
+                'name' : Actor.objects.get(pk=val).name
+                }
+            serialized_data['actor'][i] = actor_data
+
+        for j, val in enumerate(director_data):
+            director_data = {
+                'idx': val,
+                'profile_url': Director.objects.get(pk=val).profile_url,
+                'name' : Director.objects.get(pk=val).name
+            }
+            serialized_data['director'][j] = director_data
+
+        return Response(serialized_data, status=status.HTTP_200_OK)
 
     def delete(self, request, pk):
         # if IsAuthenticated:
@@ -139,7 +159,6 @@ class MovieHistoryViewSet(ModelViewSet):
 class ActorViewSet(ModelViewSet):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
-    pagination_class = PageNumberPagination
 
     def get_object(self, pk):
         actor = get_object_or_404(Actor, pk = pk)
@@ -163,12 +182,19 @@ class ActorDefailView(APIView):
     def get(self, request, pk):
         actor = self.get_object(pk)
         serializer = ActorSerializer(actor)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        serialized_data = serializer.data
+        idx_data = serializer.data.get('idx')
+
+        movie_objects = Movie.objects.all().filter(actor__contains = [idx_data])
+        movie_qs_values = movie_objects.values('movie_idx', 'thumbnail_url')
+
+        for i, val in enumerate(movie_qs_values):   
+            serialized_data['movie_list'].append(val)
+        return Response(serialized_data, status=status.HTTP_200_OK)
     
 class DirectorViewSet(ModelViewSet):
     queryset = Director.objects.all()
     serializer_class = DirectorSerializer
-    pagination_class = PageNumberPagination
 
     def get_queryset(self):
         qs= Director.objects.all()
@@ -189,14 +215,21 @@ class DirectorDefailView(APIView):
         director = self.get_object(pk)
         serializer = DirectorSerializer(director)
 
-        Movie.objects.filter(actor__contains=pk)
-    
+        serialized_data = serializer.data
+        idx_data = serializer.data.get('idx')
 
+        movie_objects = Movie.objects.all().filter(actor__contains = [idx_data])
+        movie_qs_values = movie_objects.values('movie_idx', 'thumbnail_url')
+
+        for i, val in enumerate(movie_qs_values):   
+            serialized_data['movie_list'].append(val)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 
-    
 class PornoDeleteView(APIView):
     def post(self, request, pk):
-        video = self.get_object(pk)
+        porno = Movie.objects.get(id=pk)
+        porno.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
