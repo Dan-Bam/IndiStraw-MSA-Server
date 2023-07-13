@@ -2,15 +2,13 @@ package com.project.indistraw.crowdfunding.application.service
 
 import com.project.indistraw.crowdfunding.application.common.annotation.ServiceWithTransaction
 import com.project.indistraw.crowdfunding.application.common.util.CalculateAmountUtil
+import com.project.indistraw.crowdfunding.application.exception.AccountNotFoundException
 import com.project.indistraw.crowdfunding.application.exception.CrowdfundingNotFoundException
 import com.project.indistraw.crowdfunding.application.port.input.CrowdfundingDetailUseCase
 import com.project.indistraw.crowdfunding.application.port.input.dto.AmountDto
 import com.project.indistraw.crowdfunding.application.port.input.dto.CrowdfundingDetailDto
 import com.project.indistraw.crowdfunding.application.port.input.dto.RewardDto
-import com.project.indistraw.crowdfunding.application.port.output.QueryAccountPort
-import com.project.indistraw.crowdfunding.application.port.output.QueryCrowdfundingPort
-import com.project.indistraw.crowdfunding.application.port.output.QueryRequestIpPort
-import com.project.indistraw.crowdfunding.application.port.output.QueryRewardPort
+import com.project.indistraw.crowdfunding.application.port.output.*
 import com.project.indistraw.crowdfunding.domain.Crowdfunding
 import com.project.indistraw.global.event.QueryCrowdfundingEvent
 import org.springframework.context.ApplicationEventPublisher
@@ -20,9 +18,11 @@ import java.time.temporal.ChronoUnit
 @ServiceWithTransaction
 class CrowdfundingDetailService(
     private val queryCrowdfundingPort: QueryCrowdfundingPort,
+    private val queryFundingPort: QueryFundingPort,
     private val queryRewardPort: QueryRewardPort,
     private val queryRequestIpPort: QueryRequestIpPort,
     private val queryAccountPort: QueryAccountPort,
+    private val accountSecurityPort: AccountSecurityPort,
     private val calculateAmountUtil: CalculateAmountUtil,
     private val publisher: ApplicationEventPublisher
 ): CrowdfundingDetailUseCase {
@@ -31,7 +31,9 @@ class CrowdfundingDetailService(
         val crowdfunding = queryCrowdfundingPort.findByIdxOrNull(idx)
             ?: throw CrowdfundingNotFoundException()
         val reward = queryRewardPort.findByCrowdfundingIdx(crowdfunding.idx)
-        val writer = queryAccountPort.getAccountInfo()
+        val currentAccountIdx = accountSecurityPort.getCurrentAccountIdx()
+        val writer = queryAccountPort.findByAccountIdx(crowdfunding.writerIdx)
+            ?: throw AccountNotFoundException()
 
         publishEvent(crowdfunding)
 
@@ -49,7 +51,7 @@ class CrowdfundingDetailService(
                 percentage = calculateAmountUtil.calculateAmountPercentage(crowdfunding.amount)
             ),
             remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), crowdfunding.endDate),
-            fundingCount = 0,
+            fundingCount = queryFundingPort.countByCrowdfundingIdx(crowdfunding.idx),
             imageList = crowdfunding.imageList,
             fileList = crowdfunding.fileList,
             reward = reward.map {
@@ -62,6 +64,7 @@ class CrowdfundingDetailService(
                     imageList = it.imageList
                 )
             },
+            isFunding = queryFundingPort.existByOrdererIdx(currentAccountIdx),
             statusType = crowdfunding.statusType
         )
     }
