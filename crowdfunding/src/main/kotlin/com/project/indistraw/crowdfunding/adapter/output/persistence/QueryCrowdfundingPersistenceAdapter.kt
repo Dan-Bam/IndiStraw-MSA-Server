@@ -6,6 +6,7 @@ import com.project.indistraw.crowdfunding.adapter.output.persistence.repository.
 import com.project.indistraw.crowdfunding.application.port.output.QueryCrowdfundingPort
 import com.project.indistraw.crowdfunding.domain.Crowdfunding
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
@@ -43,9 +44,10 @@ class QueryCrowdfundingPersistenceAdapter(
         return crowdfundingList.map { (crowdfundingConverter toDomain it)!! }
     }
 
-    override fun findByTitleOrDescriptionContaining(keyword: String?): List<Crowdfunding> {
-        val crowdfundingList = customCrowdfundingRepository.findByTitleOrDescriptionContaining(keyword)
-        return crowdfundingList.map { (crowdfundingConverter toDomain it)!! }
+    override fun findByTitleOrDescriptionContaining(pageRequest: PageRequest, keyword: String?): Page<Crowdfunding> {
+        val crowdfundingEntityList = customCrowdfundingRepository.findByTitleOrDescriptionContaining(pageRequest, keyword)
+        val crowdfundingList = crowdfundingEntityList.map { (crowdfundingConverter toDomain it)!! }
+        return PageImpl(crowdfundingList.toList(), crowdfundingEntityList.pageable, crowdfundingEntityList.size.toLong())
     }
 
 }

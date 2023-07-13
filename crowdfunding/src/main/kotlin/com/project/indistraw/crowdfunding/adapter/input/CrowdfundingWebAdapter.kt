@@ -63,8 +63,8 @@ class CrowdfundingWebAdapter(
             .let { ResponseEntity.ok(it) }
 
     @GetMapping("/search/crowdfunding")
-    fun findMyCrowdfunding(@RequestParam keyword: String?): ResponseEntity<List<CrowdfundingListResponse>> =
-        searchCrowdfundingUseCase.execute(keyword)
+    fun findMyCrowdfunding(@PageableDefault(size = 5, page = 0) pageable: Pageable, @RequestParam keyword: String?): ResponseEntity<CrowdfundingPagingResponse> =
+        searchCrowdfundingUseCase.execute(pageable, keyword)
             .let { crowdfundingDataConverter.toResponse(it) }
             .let { ResponseEntity.ok(it) }
 

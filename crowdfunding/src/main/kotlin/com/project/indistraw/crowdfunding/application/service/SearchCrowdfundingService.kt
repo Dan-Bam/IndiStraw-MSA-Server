@@ -3,8 +3,12 @@ package com.project.indistraw.crowdfunding.application.service
 import com.project.indistraw.crowdfunding.application.common.annotation.ServiceWithReadOnlyTransaction
 import com.project.indistraw.crowdfunding.application.common.util.CalculateAmountUtil
 import com.project.indistraw.crowdfunding.application.port.input.dto.CrowdfundingListDto
+import com.project.indistraw.crowdfunding.application.port.input.dto.CrowdfundingPagingDto
 import com.project.indistraw.crowdfunding.application.port.output.QueryCrowdfundingPort
 import com.project.indistraw.crowdfunding.application.port.output.SearchCrowdfundingUseCase
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 
 @ServiceWithReadOnlyTransaction
 class SearchCrowdfundingService(
@@ -12,10 +16,11 @@ class SearchCrowdfundingService(
     private val calculateAmountUtil: CalculateAmountUtil
 ): SearchCrowdfundingUseCase {
 
-    override fun execute(keyword: String?): List<CrowdfundingListDto> {
-        val crowdfundingList = queryCrowdfundingPort.findByTitleOrDescriptionContaining(keyword)
+    override fun execute(pageable: Pageable, keyword: String?): CrowdfundingPagingDto {
+        val pageRequest = PageRequest.of(pageable.pageNumber, pageable.pageSize, Sort.by(Sort.Order.desc("createdAt")))
+        val crowdfundingList = queryCrowdfundingPort.findByTitleOrDescriptionContaining(pageRequest, keyword)
 
-        return crowdfundingList.map {
+        val crowdfundingListDto = crowdfundingList.map {
             CrowdfundingListDto(
                 idx = it.idx,
                 title = it.title,
@@ -24,7 +29,12 @@ class SearchCrowdfundingService(
                 thumbnailUrl = it.thumbnailUrl,
                 statusType = it.statusType
             )
-        }
+        }.toList()
+
+        return CrowdfundingPagingDto(
+            isLast = crowdfundingList.isLast,
+            list = crowdfundingListDto
+        )
     }
 
 }

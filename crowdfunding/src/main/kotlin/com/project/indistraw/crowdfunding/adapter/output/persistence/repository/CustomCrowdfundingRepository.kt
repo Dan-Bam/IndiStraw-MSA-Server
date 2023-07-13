@@ -7,6 +7,9 @@ import com.project.indistraw.crowdfunding.adapter.output.persistence.entity.QCro
 import com.project.indistraw.crowdfunding.adapter.output.persistence.entity.QFundingEntity.fundingEntity
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Repository
 import java.util.*
 
@@ -29,11 +32,14 @@ class CustomCrowdfundingRepository(
             .fetch()
     }
 
-    fun findByTitleOrDescriptionContaining(keyword: String?): List<CrowdfundingEntity> {
-        return queryFactory.selectFrom(crowdfundingEntity)
+    fun findByTitleOrDescriptionContaining(pageRequest: PageRequest, keyword: String?): Page<CrowdfundingEntity> {
+        val result = queryFactory.selectFrom(crowdfundingEntity)
             .where(eqKeyword(keyword))
             .orderBy(crowdfundingEntity.createdAt.desc())
+            .offset(pageRequest.offset)
+            .limit(pageRequest.pageSize.toLong())
             .fetch()
+        return PageImpl(result, pageRequest, result.size.toLong())
     }
 
     private fun eqKeyword(keyword: String?): BooleanExpression? {
