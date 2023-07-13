@@ -7,6 +7,7 @@ enum class ErrorCode(
 
     // CROWDFUNDING
     CROWDFUNDING_NOT_FOUND("크라우드 펀딩을 찾을 수 없습니다.", 404),
+    NOT_MY_CROWDFUNDING("현재 사용자가 작성한 크라우드 펀딩이 아닙니다.", 400),
 
     // FUNDING
     FUNDING_NOT_FOUND("펀딩을 찾을 수 없습니다.", 404),
@@ -21,11 +22,5 @@ enum class ErrorCode(
     FAILED_PAY_CONFIRM("결제 정보 검증에 실패하였습니다.", 400),
     FAILED_PAY_CANCEL("결제 취소에 실패하였습니다.", 400),
     RECEIPT_ID_NOT_FOUND("존재하지 않은 receiptId 입니다.", 404),
-
-    // FEIGN
-    FEIGN_BAD_REQUEST("Feign Bad Request", 400),
-    FEIGN_UNAUTHORIZED("Feign Unauthorized", 401),
-    FEIGN_FORBIDDEN("Feign Forbidden", 403),
-    FEIGN_NOT_FOUND("Feign Not Found", 404)
 
 }
