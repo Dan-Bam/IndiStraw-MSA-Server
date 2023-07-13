@@ -21,7 +21,8 @@ class CustomCrowdfundingRepository(
     fun findByOrdererIdx(ordererIdx: UUID): List<CrowdfundingEntity> {
         return queryFactory.selectFrom(crowdfundingEntity)
             .join(fundingEntity.crowdfunding, crowdfundingEntity)
-            .where(fundingEntity.orderer.accountIdx.eq(ordererIdx))
+            .join(fundingEntity.orderer, accountEntity)
+            .where(accountEntity.accountIdx.eq(ordererIdx))
             .fetch()
     }
 
