@@ -35,7 +35,7 @@ spring:
           filters:
           - name: RequestSize
             args:
-              maxSize: 2048000000 # 2GB
+              maxSize: 5000000 # 5MB
 
         - id: indistraw-qr-code-route
           uri: ${AUTH_ROUTE_URI}
