@@ -33,7 +33,6 @@ def callback(ch, method, properties, body):
         account_delete_data.delete()
 
 print('Account idx has been saved.')
-
 channel.exchange_declare(exchange='direct')
 channel.queue_bind(exchange='direct', queue='movie', routing_key='create_account')
 channel.basic_consume(queue='movie', on_message_callback=callback, auto_ack=True)
