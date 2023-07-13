@@ -3,33 +3,55 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from django.http import JsonResponse
-from rest_framework.pagination import PageNumberPagination
+from .pagination import PageNumberPagination
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-
+from rest_framework.filters import SearchFilter
 from django.shortcuts import render, get_object_or_404
 
 from .serializers import *
 from .models import *
-from .producer import publish
+from .producer import publish, search_publish
 import json
 
-class MovieView(APIView):
+class MovieView(ModelViewSet):
+    queryset = Movie.objects.all()
+    serializer_class = MovieResponseSerializer
 
+    pagination_class = PageNumberPagination
+    
+    def get_queryset(self):
+        qs= Movie.objects.all()
+        
+        search_field = self.request.query_params.get('title')
+        
+        if search_field is not None:
+            qs = qs.filter(title__icontains=search_field)
 
-    def post(self, request):
+        return qs
+    
+    
+    def create(self, request):
         queryset = Movie.objects.all()
         serializer = MovieSerializer(data=request.data)
+        print(request.data)
 
         if serializer.is_valid():
             serializer.save()
+            last_qs = Movie.objects.last()
+
+            create_movie_json_data = {
+                "movie_idx" : last_qs.movie_idx,
+                "thumbnail_url" : last_qs.thumbnail_url,
+                "genre" : ["판타지", "액션"]
+            }
+
+            publish('create_movie', create_movie_json_data)
+            search_publish('create_movie', create_movie_json_data)
+
+
             return JsonResponse({'message' : 'Success'})
     
-    def get(self, request):
-        queryset = Movie.objects.all()
-        serializer = MovieResponseSerializer(queryset, many=True)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
     
 
 class MovieDefailView(APIView):
@@ -59,11 +81,10 @@ class MovieDefailView(APIView):
         #     return Response(status=status.HTTP_401_UNAUTHORIZED)
         
         queryset = Movie.objects.get(pk=pk)
-        serializer = MovieSerializer(queryset, data=request, partial=True)
-
+        serializer = MovieSerializer(queryset, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_205_RESET_CONTENT)
+            return Response(status=status.HTTP_205_RESET_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MovieHistoryViewSet(ModelViewSet):
@@ -167,4 +188,15 @@ class DirectorDefailView(APIView):
     def get(self, request, pk):
         director = self.get_object(pk)
         serializer = DirectorSerializer(director)
+
+        Movie.objects.filter(actor__contains=pk)
+    
+
+
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+    
+class PornoDeleteView(APIView):
+    def post(self, request, pk):
+        video = self.get_object(pk)

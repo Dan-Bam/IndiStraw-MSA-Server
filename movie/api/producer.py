@@ -10,3 +10,7 @@ channel = connection.channel()
 def publish(method, body):
     properties = pika.BasicProperties(method)
     channel.basic_publish(exchange='', routing_key='ai', body = json.dumps(body), properties=properties)
+
+def search_publish(method, body):
+    properties = pika.BasicProperties(method)
+    channel.basic_publish(exchange='', routing_key='search', body = json.dumps(body), properties=properties)

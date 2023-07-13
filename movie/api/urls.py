@@ -14,5 +14,5 @@ urlpatterns = [
                                                 'post': 'create'}), name = "director"),
     path('movie/director/<int:pk>/', DirectorDefailView.as_view(), name = "director_detail"),
     path('movie/<int:pk>/', MovieDefailView.as_view(), name = "movie_api_detail"),
-    path('movie/', MovieView.as_view(),),
+    path('movie/', MovieView.as_view({'get':'list', 'post':'create'}),),
 ]
