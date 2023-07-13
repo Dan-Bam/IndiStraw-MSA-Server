@@ -43,4 +43,9 @@ class QueryCrowdfundingPersistenceAdapter(
         return crowdfundingList.map { (crowdfundingConverter toDomain it)!! }
     }
 
+    override fun findByTitleOrDescriptionContaining(keyword: String?): List<Crowdfunding> {
+        val crowdfundingList = customCrowdfundingRepository.findByTitleOrDescriptionContaining(keyword)
+        return crowdfundingList.map { (crowdfundingConverter toDomain it)!! }
+    }
+
 }

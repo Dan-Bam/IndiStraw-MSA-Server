@@ -7,12 +7,13 @@ import com.project.indistraw.crowdfunding.domain.Account
 import org.springframework.stereotype.Component
 
 @Component
-class AccountConverter: GenericConverter<Account, AccountEntity> {
+class AccountConverter : GenericConverter<Account, AccountEntity> {
 
     override fun toEntity(domain: Account): AccountEntity =
         domain.let {
             AccountEntity(
                 accountIdx = it.accountIdx,
+                id = it.id,
                 name = it.name,
                 phoneNumber = it.phoneNumber,
                 address = AddressEntity(
@@ -24,8 +25,19 @@ class AccountConverter: GenericConverter<Account, AccountEntity> {
             )
         }
 
-    override fun toDomain(entity: AccountEntity?): Account? {
-        TODO("Not yet implemented")
-    }
-
+    override fun toDomain(entity: AccountEntity?): Account? =
+        entity?.let {
+            Account(
+                accountIdx = it.accountIdx,
+                id = it.id,
+                name = it.name,
+                phoneNumber = it.phoneNumber,
+                address = Account.Address(
+                    zipcode = it.address?.zipcode,
+                    streetAddress = it.address?.streetAddress,
+                    detailAddress = it.address?.detailAddress
+                ),
+                profileUrl = it.profileUrl
+            )
+        }
 }
