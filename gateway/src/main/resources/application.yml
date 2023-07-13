@@ -63,15 +63,29 @@ spring:
           filters:
             - JwtAuthenticationGatewayFilter
 
-        - id: indistraw-movie-route
-          uri: ${MOVIE_ROUTE_URI}
+        - id: indistraw-movie-popular-route
+          uri: ${AI_ROUTE_URI}
           predicates:
-            - Path=/api/v1/movie/**
+            - Path=/api/v1/movie/popular/
+          filters:
+            - JwtAuthenticationGatewayFilter
+            
+        - id: indistraw-movie-recommend-route
+          uri: ${AI_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/movie/recommend/
           filters:
             - JwtAuthenticationGatewayFilter
 
-        - id: indistraw-ai-route
+        - id: indistraw-movie-porno-route
           uri: ${AI_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/movie/porno/
+          filters:
+            - JwtAuthenticationGatewayFilter
+
+        - id: indistraw-movie-route
+          uri: ${MOVIE_ROUTE_URI}
           predicates:
             - Path=/api/v1/movie/**
           filters:
