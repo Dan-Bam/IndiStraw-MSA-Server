@@ -31,6 +31,7 @@ class CustomCrowdfundingRepository(
         return queryFactory.selectDistinct(accountEntity)
             .from(fundingEntity)
             .join(fundingEntity.crowdfunding, crowdfundingEntity)
+            .join(fundingEntity.orderer, accountEntity)
             .where(fundingEntity.crowdfunding.idx.eq(crowdfundingIdx))
             .fetch()
     }
