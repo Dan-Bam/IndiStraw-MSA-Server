@@ -1,6 +1,6 @@
 package com.project.indistraw.crowdfunding.adapter.output.persistence.common.converter
 
-import com.project.indistraw.crowdfunding.adapter.output.persistence.entity.*
+import com.project.indistraw.crowdfunding.adapter.output.persistence.entity.RewardEntity
 import com.project.indistraw.crowdfunding.adapter.output.persistence.repository.CrowdfundingRepository
 import com.project.indistraw.crowdfunding.application.exception.CrowdfundingNotFoundException
 import com.project.indistraw.crowdfunding.domain.Reward
@@ -41,5 +41,34 @@ class RewardConverter(
             )
         }
     }
+
+    infix fun toEntity(domain: Reward): RewardEntity {
+        val crowdfundingEntity = crowdfundingRepository.findByIdOrNull(domain.crowdfundingIdx)
+            ?: throw CrowdfundingNotFoundException()
+        return domain.let {
+            RewardEntity(
+                idx = it.idx,
+                title = it.title,
+                description = it.description,
+                price = it.price,
+                imageList = it.imageList,
+                crowdfundingEntity = crowdfundingEntity,
+                totalCount = it.totalCount
+            )
+        }
+    }
+
+    infix fun toDomain(entity: RewardEntity?): Reward? =
+        entity?.let {
+            Reward(
+                idx = it.idx,
+                crowdfundingIdx = it.crowdfundingEntity.idx,
+                title = it.title,
+                description = it.description,
+                price = it.price,
+                totalCount = it.totalCount,
+                imageList = it.imageList
+            )
+        }
 
 }
