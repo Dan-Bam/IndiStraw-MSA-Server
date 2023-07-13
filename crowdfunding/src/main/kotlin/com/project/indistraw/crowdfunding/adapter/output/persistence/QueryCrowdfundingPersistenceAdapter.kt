@@ -2,6 +2,7 @@ package com.project.indistraw.crowdfunding.adapter.output.persistence
 
 import com.project.indistraw.crowdfunding.adapter.output.persistence.common.converter.CrowdfundingConverter
 import com.project.indistraw.crowdfunding.adapter.output.persistence.repository.CrowdfundingRepository
+import com.project.indistraw.crowdfunding.adapter.output.persistence.repository.CustomCrowdfundingRepository
 import com.project.indistraw.crowdfunding.application.port.output.QueryCrowdfundingPort
 import com.project.indistraw.crowdfunding.domain.Crowdfunding
 import org.springframework.data.domain.Page
@@ -13,7 +14,8 @@ import java.util.*
 @Component
 class QueryCrowdfundingPersistenceAdapter(
     private val crowdfundingConverter: CrowdfundingConverter,
-    private val crowdfundingRepository: CrowdfundingRepository
+    private val crowdfundingRepository: CrowdfundingRepository,
+    private val customCrowdfundingRepository: CustomCrowdfundingRepository
 ): QueryCrowdfundingPort {
 
     override fun findByIdxOrNull(idx: Long): Crowdfunding? {
@@ -33,6 +35,11 @@ class QueryCrowdfundingPersistenceAdapter(
 
     override fun findByWriterIdx(writerIdx: UUID): List<Crowdfunding> {
         val crowdfundingList = crowdfundingRepository.findByWriterIdx(writerIdx)
+        return crowdfundingList.map { (crowdfundingConverter toDomain it)!! }
+    }
+
+    override fun findByOrdererIdx(ordererIdx: UUID): List<Crowdfunding> {
+        val crowdfundingList = customCrowdfundingRepository.findByOrdererIdx(ordererIdx)
         return crowdfundingList.map { (crowdfundingConverter toDomain it)!! }
     }
 
