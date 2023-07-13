@@ -14,6 +14,7 @@ data class CrowdfundingDetailDto(
     val imageList: List<String>,
     val fileList: List<String>,
     val reward: List<RewardDto>,
+    val isFunding: Boolean,
     val statusType: Crowdfunding.StatusType
 ) {
 
