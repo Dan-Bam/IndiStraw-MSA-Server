@@ -9,13 +9,13 @@ class MovieResponseSerializer(serializers.ModelSerializer):
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = ('title','description', 'movie_url', 'thumbnail_url', 'director', 'actor', 'movie_highlight', 'clowd_true', )
+        fields = ('title','description', 'movie_url', 'thumbnail_url', 'director', 'actor', 'movie_highlight', 'clowd_true', 'genre', )
 
 class MovieResponseSerializera(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = ('title', 'description','movie_url', 'thumbnail_url', 'movie_highlight', 'clowd_true' )
-        
+
 class TestMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
@@ -26,6 +26,11 @@ class MovieHistorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ActorResponseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Actor
+        fields = ('idx', 'profile_url', 'name', )
+
 class ActorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Actor
@@ -34,4 +39,4 @@ class ActorSerializer(serializers.ModelSerializer):
 class DirectorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Director
-        fields = '__all__'
+        fields = ('idx', 'profile_url', 'name', )
