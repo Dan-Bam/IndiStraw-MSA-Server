@@ -182,7 +182,18 @@ class ActorDefailView(APIView):
     def get(self, request, pk):
         actor = self.get_object(pk)
         serializer = ActorSerializer(actor)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+        serialized_data = serializer.data
+        idx_data = serializer.data.get('idx')
+        movie_objects = Movie.objects.all().filter(actor__contains = [idx_data])
+        movie_qs_values = movie_objects.values('movie_idx', 'thumbnail_url')
+
+        for i, val in enumerate(movie_qs_values):   
+
+            serialized_data['movie_list'][i] = val
+
+        return Response(serialized_data, status=status.HTTP_200_OK)
+    
     
 class DirectorViewSet(ModelViewSet):
     queryset = Director.objects.all()
