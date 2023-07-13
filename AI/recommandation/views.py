@@ -32,8 +32,10 @@ def popular():
     return result
 @api_view(['GET'])
 def get_banner(req):
-    genre = GenreData.objects.filter(movie_idx=100)
-    return Response(genre.values('thumbnail_url')[0])
+    genre = []
+    for i in range(5):
+        genre.append(GenreData.objects.filter(movie_idx=100+i).values('thumbnail_url')[0])
+    return Response(genre)
 
 @api_view(['GET'])
 def get_popular(req):
