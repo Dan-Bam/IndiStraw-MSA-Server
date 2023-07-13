@@ -45,7 +45,7 @@ class MovieView(ModelViewSet):
                 "thumbnail_url" : last_qs.thumbnail_url,
                 "genre" : ["판타지", "액션"]
             }
-            
+
             publish('create_movie', create_movie_json_data)
             search_publish('create_movie', create_movie_json_data)
 
@@ -188,4 +188,15 @@ class DirectorDefailView(APIView):
     def get(self, request, pk):
         director = self.get_object(pk)
         serializer = DirectorSerializer(director)
+
+        Movie.objects.filter(actor__contains=pk)
+    
+
+
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+    
+class PornoDeleteView(APIView):
+    def post(self, request, pk):
+        video = self.get_object(pk)
