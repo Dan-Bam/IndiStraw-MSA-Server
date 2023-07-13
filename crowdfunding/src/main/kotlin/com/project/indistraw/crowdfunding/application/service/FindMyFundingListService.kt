@@ -16,7 +16,7 @@ class FindMyFundingListService(
 
     override fun execute(): List<CrowdfundingListDto> {
         val ordererIdx = accountSecurityPort.getCurrentAccountIdx()
-        val crowdfundingList = queryCrowdfundingPort.findByWriterIdx(ordererIdx)
+        val crowdfundingList = queryCrowdfundingPort.findByOrdererIdx(ordererIdx)
         return crowdfundingList.map {
             CrowdfundingListDto(
                 idx = it.idx,
