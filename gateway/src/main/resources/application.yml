@@ -42,6 +42,13 @@ spring:
           filters:
             - JwtAuthenticationGatewayFilter
 
+        - id: indistraw-funding-route
+          uri: ${CROWDFUNDING_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/funding/**
+          filters:
+          - JwtAuthenticationGatewayFilter
+
         - id: indistraw-search-route
           uri: ${SEARCH_ROUTE_URI}
           predicates:
@@ -56,8 +63,20 @@ spring:
           filters:
             - JwtAuthenticationGatewayFilter
 
+        - id: indistraw-ai-route
+          uri: ${AI_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/recommend/**
+          filters:
+            - JwtAuthenticationGatewayFilter
+
   security:
     enable-csrf: false
+
+  servlet:
+    multipart:
+      max-file-size: 2GB
+      max-request-size: 2GB
 
 jwt:
   accessSecret: ${JWT_ACCESS_SECRET}
