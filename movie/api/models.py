@@ -27,11 +27,13 @@ class Actor(models.Model):
     idx = models.AutoField(primary_key=True, null=False)
     profile_url = models.URLField()
     name = models.CharField(max_length=24)
+    movie_list = ArrayField(models.CharField(max_length=255), blank=True, null = True, default=list)
 
 class Director(models.Model):
     idx = models.AutoField(primary_key=True, null=False)
     profile_url = models.URLField()
     name = models.CharField(max_length=24)
+    movie_list = ArrayField(models.CharField(max_length=255), blank=True, null = True, default=list)
 
 class MovieHistory(models.Model):
     movie_idx = models.ForeignKey("Movie", on_delete=models.CASCADE)
