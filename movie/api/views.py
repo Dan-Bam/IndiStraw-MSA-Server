@@ -66,29 +66,25 @@ class MovieDefailView(APIView):
         
         movie = self.get_object(pk)
         serializer = MovieSerializer(movie)
-        actor_data = serializer.data.get('actor')
-        director_data = serializer.data.get('director')
-        print(actor_data)
-        print(director_data)
-        
-        for i in actor_data:
-            print(i)
-            actor_data = {
-                'actor_idx' : i,
-                'profile_url' : Actor.objects.get(pk=i).profile_url,
-                'name' : Actor.objects.get(pk=i).name
-            }
-
-        for j in director_data:
-            director_data = {
-                'director_idx' : j,
-                'profile_url' : Director.objects.get(pk=j).profile_url,
-                'name' : Director.objects.get(pk=j).name
-            }
-
         serialized_data = serializer.data
-        serialized_data['actor_idx'] = actor_data
-        serialized_data['director_idx'] = director_data
+        actror_data = serializer.data.get('actor')
+        director_data = serializer.data.get('director')
+
+        for i, val in enumerate(actror_data):
+            actor_data = {
+                'idx' : val,
+                'profile_url' :  Actor.objects.get(pk=val).profile_url,
+                'name' : Actor.objects.get(pk=val).name
+                }
+            serialized_data['actor'][i] = actor_data
+
+        for j, val in enumerate(director_data):
+            director_data = {
+                'idx': val,
+                'profile_url': Director.objects.get(pk=val).profile_url,
+                'name' : Director.objects.get(pk=val).name
+            }
+            serialized_data['director'][j] = director_data
 
         return Response(serialized_data, status=status.HTTP_200_OK)
 
