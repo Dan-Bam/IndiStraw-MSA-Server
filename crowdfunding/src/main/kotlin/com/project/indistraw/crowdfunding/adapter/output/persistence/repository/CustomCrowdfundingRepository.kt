@@ -1,11 +1,13 @@
 package com.project.indistraw.crowdfunding.adapter.output.persistence.repository
 
+import com.project.indistraw.crowdfunding.adapter.output.persistence.entity.AccountEntity
 import com.project.indistraw.crowdfunding.adapter.output.persistence.entity.CrowdfundingEntity
-import com.querydsl.jpa.impl.JPAQueryFactory
-import com.project.indistraw.crowdfunding.adapter.output.persistence.entity.QFundingEntity.fundingEntity
+import com.project.indistraw.crowdfunding.adapter.output.persistence.entity.QAccountEntity.accountEntity
 import com.project.indistraw.crowdfunding.adapter.output.persistence.entity.QCrowdfundingEntity.crowdfundingEntity
+import com.project.indistraw.crowdfunding.adapter.output.persistence.entity.QFundingEntity.fundingEntity
+import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
-import java.util.UUID
+import java.util.*
 
 @Repository
 class CustomCrowdfundingRepository(
@@ -16,6 +18,13 @@ class CustomCrowdfundingRepository(
         return queryFactory.selectFrom(crowdfundingEntity)
             .join(fundingEntity.crowdfunding, crowdfundingEntity)
             .where(fundingEntity.orderer.accountIdx.eq(ordererIdx))
+            .fetch()
+    }
+
+    fun findOrdererByCrowdfundingIdx(crowdfundingIdx: Long): List<AccountEntity> {
+        return queryFactory.selectFrom(accountEntity)
+            .join(fundingEntity.crowdfunding, crowdfundingEntity)
+            .where(fundingEntity.crowdfunding.idx.eq(crowdfundingIdx))
             .fetch()
     }
 

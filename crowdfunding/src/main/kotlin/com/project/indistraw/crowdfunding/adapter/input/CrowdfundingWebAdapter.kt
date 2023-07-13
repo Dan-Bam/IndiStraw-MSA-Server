@@ -5,6 +5,7 @@ import com.project.indistraw.crowdfunding.adapter.input.data.request.CreateCrowd
 import com.project.indistraw.crowdfunding.adapter.input.data.response.CrowdfundingDetailResponse
 import com.project.indistraw.crowdfunding.adapter.input.data.response.CrowdfundingListResponse
 import com.project.indistraw.crowdfunding.adapter.input.data.response.CrowdfundingPagingResponse
+import com.project.indistraw.crowdfunding.adapter.input.data.response.MyCrowdfundingDetailResponse
 import com.project.indistraw.crowdfunding.application.port.input.*
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
@@ -21,6 +22,7 @@ class CrowdfundingWebAdapter(
     private val crowdfundingListUseCase: CrowdfundingListUseCase,
     private val popularCrowdfundingListUseCase: PopularCrowdfundingListUseCase,
     private val findMyCrowdfundingListUseCase: FindMyCrowdfundingListUseCase,
+    private val myCrowdfundingDetailUseCase: MyCrowdfundingDetailUseCase
 ) {
 
     @PostMapping
@@ -47,8 +49,14 @@ class CrowdfundingWebAdapter(
             .let { ResponseEntity.ok(it) }
 
     @GetMapping("/my")
-    fun findMyCrowdfunding(): ResponseEntity<List<CrowdfundingListResponse>> =
+    fun findMyCrowdfundingList(): ResponseEntity<List<CrowdfundingListResponse>> =
         findMyCrowdfundingListUseCase.execute()
+            .let { crowdfundingDataConverter.toResponse(it) }
+            .let { ResponseEntity.ok(it) }
+
+    @GetMapping("/my/{idx}")
+    fun findMyCrowdfunding(@PathVariable idx: Long): ResponseEntity<MyCrowdfundingDetailResponse> =
+        myCrowdfundingDetailUseCase.execute(idx)
             .let { crowdfundingDataConverter.toResponse(it) }
             .let { ResponseEntity.ok(it) }
 
