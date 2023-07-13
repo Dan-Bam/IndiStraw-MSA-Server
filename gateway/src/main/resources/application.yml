@@ -23,15 +23,19 @@ spring:
           filters:
             - JwtAuthenticationGatewayFilter
 
-        - id: indistraw-file-route
-          uri: ${FILE_ROUTE_URI}
-          predicates:
-            - Path=/api/v1/file/**
-
         - id: indistraw-auth-route
           uri: ${AUTH_ROUTE_URI}
           predicates:
             - Path=/api/v1/auth/**
+
+        - id: indistraw-file-route
+          uri: ${FILE_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/file/**
+          filters:
+          - name: RequestSize
+            args:
+              maxSize: 2048000000 # 2GB
 
         - id: indistraw-qr-code-route
           uri: ${AUTH_ROUTE_URI}
@@ -75,11 +79,6 @@ spring:
 
   security:
     enable-csrf: false
-
-  servlet:
-    multipart:
-      max-file-size: 2GB
-      max-request-size: 2GB
 
 jwt:
   accessSecret: ${JWT_ACCESS_SECRET}
