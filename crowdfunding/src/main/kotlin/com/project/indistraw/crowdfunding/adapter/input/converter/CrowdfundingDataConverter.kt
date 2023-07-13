@@ -1,10 +1,7 @@
 package com.project.indistraw.crowdfunding.adapter.input.converter
 
 import com.project.indistraw.crowdfunding.adapter.input.data.request.CreateCrowdfundingRequest
-import com.project.indistraw.crowdfunding.adapter.input.data.response.CrowdfundingDetailResponse
-import com.project.indistraw.crowdfunding.adapter.input.data.response.CrowdfundingListResponse
-import com.project.indistraw.crowdfunding.adapter.input.data.response.CrowdfundingPagingResponse
-import com.project.indistraw.crowdfunding.adapter.input.data.response.RewardResponse
+import com.project.indistraw.crowdfunding.adapter.input.data.response.*
 import com.project.indistraw.crowdfunding.application.port.input.dto.*
 import org.springframework.stereotype.Component
 
@@ -78,6 +75,39 @@ class CrowdfundingDataConverter {
                     percentage = it.percentage,
                     thumbnailUrl = it.thumbnailUrl,
                     status = it.statusType
+                )
+            }
+        )
+
+    fun toResponse(dto: MyCrowdfundingDetailDto): MyCrowdfundingDetailResponse =
+        MyCrowdfundingDetailResponse(
+            title = dto.title,
+            thumbnailUrl = dto.thumbnailUrl,
+            amount = MyCrowdfundingDetailResponse.Amount(
+                targetAmount = dto.amount.targetAmount,
+                totalAmount = dto.amount.totalAmount,
+                percentage = dto.amount.percentage
+            ),
+            remainingDay = dto.remainingDay,
+            fundingCount = dto.fundingCount,
+            reward = dto.reward.map {
+                RewardResponse(
+                    idx = it.idx,
+                    title = it.title,
+                    description = it.description,
+                    price = it.price,
+                    imageList = it.imageList,
+                    totalCount = it.totalCount
+                )
+            },
+            ordererList = dto.orderer.map {
+                MyCrowdfundingDetailResponse.Orderer(
+                    accountIdx = it.accountIdx,
+                    name = it.name,
+                    phoneNumber = it.phoneNumber,
+                    zipcode = it.zipcode,
+                    address = it.address,
+                    profileUrl = it.profileUrl
                 )
             }
         )
