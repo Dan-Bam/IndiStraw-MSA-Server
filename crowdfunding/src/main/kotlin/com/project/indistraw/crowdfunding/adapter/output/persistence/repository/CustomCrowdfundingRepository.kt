@@ -38,7 +38,7 @@ class CustomCrowdfundingRepository(
 
     private fun eqKeyword(keyword: String?): BooleanExpression? {
         if (keyword == null) return null
-        return crowdfundingEntity.title.like("%$keyword$").or(crowdfundingEntity.title.like("%$keyword$"))
+        return crowdfundingEntity.title.like("%$keyword$").or(crowdfundingEntity.description.like("%$keyword$"))
     }
 
 }
