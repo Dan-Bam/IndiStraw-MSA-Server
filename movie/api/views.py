@@ -215,9 +215,14 @@ class DirectorDefailView(APIView):
         director = self.get_object(pk)
         serializer = DirectorSerializer(director)
 
-        Movie.objects.filter(actor__contains=pk)
-    
+        serialized_data = serializer.data
+        idx_data = serializer.data.get('idx')
 
+        movie_objects = Movie.objects.all().filter(actor__contains = [idx_data])
+        movie_qs_values = movie_objects.values('movie_idx', 'thumbnail_url')
+
+        for i, val in enumerate(movie_qs_values):   
+            serialized_data['movie_list'].append(val)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
     
