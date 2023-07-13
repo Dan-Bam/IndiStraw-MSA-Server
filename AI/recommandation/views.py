@@ -33,7 +33,7 @@ def popular():
 @api_view(['GET'])
 def get_banner(req):
     genre = GenreData.objects.filter(movie_idx=100)
-    return Response(genre.values('thumbnail_url'))
+    return Response(genre.values('thumbnail_url')[0])
 
 @api_view(['GET'])
 def get_popular(req):
