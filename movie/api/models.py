@@ -10,22 +10,26 @@ class Movie(models.Model):
     # Request
     title = models.CharField(max_length=255)
     description = models.TextField()
-    movie_url = models.URLField(default = "")
-    thumbnail_url = models.URLField(default = "")
-    director = ArrayField(models.IntegerField(max_length=255), blank=True)
-    actor = ArrayField(models.IntegerField(max_length=255), blank=True)
+    movie_url = models.URLField(default = "", max_length=2000)
+    thumbnail_url = models.URLField(default = "", max_length=2000)
+    director = ArrayField(models.IntegerField())
+    actor = ArrayField(models.IntegerField())
     movie_highlight = ArrayField(models.CharField(max_length=255), blank=True)
     clowd_true = models.BooleanField(default=False)
 
     # Other
     movie_idx = models.AutoField(primary_key=True, null=False)
-    # genre = ArrayField(models.CharField(max_length=255), blank=True)
+    created_at=models.DateTimeField(auto_now_add=True, null = True)
+    genre = ArrayField(models.CharField(max_length=255), blank=True, null=True)
+
 
 class Actor(models.Model):
+    actor_idx = models.AutoField(primary_key=True, null=False)
     profile_url = models.URLField()
     name = models.CharField(max_length=24)
 
 class Director(models.Model):
+    director_idx = models.AutoField(primary_key=True, null=False)
     profile_url = models.URLField()
     name = models.CharField(max_length=24)
 
