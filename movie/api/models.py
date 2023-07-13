@@ -24,12 +24,12 @@ class Movie(models.Model):
 
 
 class Actor(models.Model):
-    actor_idx = models.AutoField(primary_key=True, null=False)
+    idx = models.AutoField(primary_key=True, null=False)
     profile_url = models.URLField()
     name = models.CharField(max_length=24)
 
 class Director(models.Model):
-    director_idx = models.AutoField(primary_key=True, null=False)
+    idx = models.AutoField(primary_key=True, null=False)
     profile_url = models.URLField()
     name = models.CharField(max_length=24)
 
