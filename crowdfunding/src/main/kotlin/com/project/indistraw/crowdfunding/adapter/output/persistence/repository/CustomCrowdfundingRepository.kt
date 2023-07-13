@@ -19,7 +19,8 @@ class CustomCrowdfundingRepository(
 ) {
 
     fun findByOrdererIdx(ordererIdx: UUID): List<CrowdfundingEntity> {
-        return queryFactory.selectFrom(crowdfundingEntity)
+        return queryFactory.selectDistinct(crowdfundingEntity)
+            .from(fundingEntity)
             .join(fundingEntity.crowdfunding, crowdfundingEntity)
             .join(fundingEntity.orderer, accountEntity)
             .where(accountEntity.accountIdx.eq(ordererIdx))
