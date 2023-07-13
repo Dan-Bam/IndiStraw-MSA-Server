@@ -84,10 +84,10 @@ spring:
           filters:
             - JwtAuthenticationGatewayFilter
 
-        - id: indistraw-movie-banner-route
+        - id: indistraw-banner-route
           uri: ${AI_ROUTE_URI}
           predicates:
-            - Path=/api/v1/movie/banner/
+            - Path=/api/v1/banner/
           filters:
             - JwtAuthenticationGatewayFilter
 
