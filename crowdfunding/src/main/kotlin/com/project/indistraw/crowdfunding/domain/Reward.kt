@@ -13,9 +13,7 @@ data class Reward(
     val imageList: List<String>
 ) {
 
-    fun deductionTotalCount(): Reward {
-        totalCount?.dec()
-        return this
-    }
+    fun deductionTotalCount(): Reward =
+        this.copy(totalCount = this.totalCount?.dec())
 
 }

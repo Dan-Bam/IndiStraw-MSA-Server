@@ -5,7 +5,6 @@ import com.project.indistraw.crowdfunding.domain.Reward
 interface CommandRewardPort {
 
     fun saveReward(reward: Reward)
-
     fun saveAllReword(rewordList: List<Reward>)
 
 }
