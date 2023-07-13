@@ -21,7 +21,7 @@ from recommandation import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('movie/popular/', views.get_popular),
-    path('movie/recommend/', views.get_personal_recommend),
-    path('movie/porno/', a_view.check_porno)
+    path('api/v1/movie/popular/', views.get_popular),
+    path('api/v1/movie/recommend/', views.get_personal_recommend),
+    path('api/v1/movie/porno/', a_view.check_porno)
 ]
