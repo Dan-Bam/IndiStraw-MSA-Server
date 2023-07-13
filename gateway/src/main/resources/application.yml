@@ -73,7 +73,7 @@ spring:
         - id: indistraw-ai-route
           uri: ${AI_ROUTE_URI}
           predicates:
-            - Path=/api/v1/recommend/**
+            - Path=/api/v1/movie/**
           filters:
             - JwtAuthenticationGatewayFilter
 
