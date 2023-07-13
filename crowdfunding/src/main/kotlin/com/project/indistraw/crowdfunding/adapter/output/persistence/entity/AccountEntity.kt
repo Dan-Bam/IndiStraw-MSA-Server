@@ -15,6 +15,9 @@ class AccountEntity(
     @Column(name = "account_idx", columnDefinition = "BINARY(16)", nullable = false)
     override val accountIdx: UUID,
 
+    @Column(nullable = false)
+    val id: String,
+
     @Column(nullable = false, length = 10)
     val name: String,
 
