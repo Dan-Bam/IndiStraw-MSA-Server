@@ -33,8 +33,8 @@ def popular():
 @api_view(['GET'])
 def get_banner(req):
     genre = []
-    for i in range(5):
-        genre.append(GenreData.objects.filter(movie_idx=100+i).values('thumbnail_url')[0])
+    for i in range(3):
+        genre.append(GenreData.objects.filter(movie_idx=10+i).values('thumbnail_url')[0])
     return Response(genre)
 
 @api_view(['GET'])
@@ -79,3 +79,7 @@ def get_personal_recommend(req):
         recommend_list.append(genre.filter(movie_idx=i).values('movie_idx', 'thumbnail_url'))
     return Response(recommend_list)
 # Create your views here.
+@api_view(['GET'])
+def get_delete(req):
+    dong = ViewRecord.objects.all()
+    dong.delete()
