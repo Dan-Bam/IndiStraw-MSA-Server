@@ -47,7 +47,7 @@ class MovieView(ModelViewSet):
 
             publish('create_movie', create_movie_json_data)
             search_publish('create_movie', create_movie_json_data)
-
+            return JsonResponse({'message' : 'created'})
 
         return JsonResponse({'message' : 'Success'})
     

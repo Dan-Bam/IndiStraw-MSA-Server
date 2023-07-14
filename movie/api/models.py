@@ -14,7 +14,7 @@ class Movie(models.Model):
     thumbnail_url = models.URLField(default = "", max_length=2000)
     director = ArrayField(models.IntegerField())
     actor = ArrayField(models.IntegerField())
-    movie_highlight = ArrayField(models.CharField(max_length=255), blank=True)
+    movie_highlight = ArrayField(models.URLField(max_length=2000), blank=True)
     clowd_true = models.BooleanField(default=False)
 
     # Other
