@@ -9,6 +9,11 @@ data class Reward(
     val title: String,
     val description: String,
     val price: Long,
-    val totalCount: Long?,
+    var totalCount: Long?,
     val imageList: List<String>
-)
+) {
+
+    fun deductionTotalCount(): Reward =
+        this.copy(totalCount = this.totalCount?.dec())
+
+}

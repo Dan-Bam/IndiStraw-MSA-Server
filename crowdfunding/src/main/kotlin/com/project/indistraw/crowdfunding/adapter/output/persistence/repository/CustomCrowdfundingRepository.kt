@@ -28,8 +28,10 @@ class CustomCrowdfundingRepository(
     }
 
     fun findOrdererByCrowdfundingIdx(crowdfundingIdx: Long): List<AccountEntity> {
-        return queryFactory.selectFrom(accountEntity)
+        return queryFactory.selectDistinct(accountEntity)
+            .from(fundingEntity)
             .join(fundingEntity.crowdfunding, crowdfundingEntity)
+            .join(fundingEntity.orderer, accountEntity)
             .where(fundingEntity.crowdfunding.idx.eq(crowdfundingIdx))
             .fetch()
     }

@@ -7,7 +7,7 @@ import java.util.UUID
 interface QueryFundingPort {
 
     fun findByIdx(idx: Long): Funding?
-    fun existByOrdererIdx(ordererIdx: UUID): Boolean
+    fun existByOrdererIdxAndCrowdfundingIdx(ordererIdx: UUID, crowdfundingIdx: Long): Boolean
     fun countByCrowdfundingIdx(crowdfundingIdx: Long): Long
     fun findOrdererByCrowdfundingIdx(crowdfundingIdx: Long): List<Account>
 

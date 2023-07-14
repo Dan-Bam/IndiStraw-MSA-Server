@@ -27,8 +27,8 @@ class QueryFundingPersistenceAdapter(
         return fundingConverter toDomain fundingEntity
     }
 
-    override fun existByOrdererIdx(ordererIdx: UUID): Boolean {
-        return fundingRepository.existsByOrdererAccountIdx(ordererIdx)
+    override fun existByOrdererIdxAndCrowdfundingIdx(ordererIdx: UUID, crowdfundingIdx: Long): Boolean {
+        return fundingRepository.existsByOrdererAccountIdxAndCrowdfundingIdx(ordererIdx, crowdfundingIdx)
     }
 
     override fun countByCrowdfundingIdx(crowdfundingIdx: Long): Long {

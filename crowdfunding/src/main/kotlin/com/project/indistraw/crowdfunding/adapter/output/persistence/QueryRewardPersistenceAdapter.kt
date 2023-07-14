@@ -16,6 +16,11 @@ class QueryRewardPersistenceAdapter(
     private val rewardRepository: RewardRepository
 ): QueryRewardPort {
 
+    override fun findByIdx(idx: Long): Reward? {
+        val rewardEntity = rewardRepository.findByIdOrNull(idx)
+        return rewordConverter toDomain rewardEntity
+    }
+
     override fun findByCrowdfundingIdx(crowdfundingIdx: Long): List<Reward> {
         val crowdfundingEntity = crowdfundingRepository.findByIdOrNull(crowdfundingIdx)
             ?: throw CrowdfundingNotFoundException()

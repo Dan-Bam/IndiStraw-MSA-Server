@@ -5,7 +5,7 @@ import com.project.indistraw.crowdfunding.application.port.input.CreateCrowdfund
 import com.project.indistraw.crowdfunding.application.port.input.dto.CreateCrowdfundingDto
 import com.project.indistraw.crowdfunding.application.port.output.AccountSecurityPort
 import com.project.indistraw.crowdfunding.application.port.output.CommandCrowdfundingPort
-import com.project.indistraw.crowdfunding.application.port.output.CommandRewordPort
+import com.project.indistraw.crowdfunding.application.port.output.CommandRewardPort
 import com.project.indistraw.crowdfunding.application.port.output.CrowdfundingPublishPort
 import com.project.indistraw.crowdfunding.domain.*
 import java.time.LocalDateTime
@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 class CreateCrowdfundingService(
     private val accountSecurityPort: AccountSecurityPort,
     private val commandCrowdfundingPort: CommandCrowdfundingPort,
-    private val commandRewordPort: CommandRewordPort,
+    private val commandRewordPort: CommandRewardPort,
     private val crowdfundingPublishPort: CrowdfundingPublishPort
 ): CreateCrowdfundingUseCase {
 

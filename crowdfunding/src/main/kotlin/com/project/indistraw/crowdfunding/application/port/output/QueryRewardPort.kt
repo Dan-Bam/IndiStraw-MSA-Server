@@ -4,6 +4,7 @@ import com.project.indistraw.crowdfunding.domain.Reward
 
 interface QueryRewardPort {
 
+    fun findByIdx(idx: Long): Reward?
     fun findByCrowdfundingIdx(crowdfundingIdx: Long): List<Reward>
 
 }

@@ -25,7 +25,7 @@ data class Crowdfunding(
 
     @Aggregate
     data class Amount(
-        val totalAmount: Long,
+        var totalAmount: Long,
         val targetAmount: Long
     )
 
@@ -44,6 +44,11 @@ data class Crowdfunding(
 
     fun increaseViewCount(): Crowdfunding {
         this.viewCount = viewCount.inc()
+        return this
+    }
+
+    fun increaseTotalAmount(price: Long): Crowdfunding {
+        this.amount.totalAmount += price
         return this
     }
 
