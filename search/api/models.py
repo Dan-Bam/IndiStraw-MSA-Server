@@ -12,7 +12,7 @@ class Genre(models.Model):
 class Movie(models.Model):
     # request
     movie_idx = models.AutoField(primary_key=True, null = False)
-    thumbnail_url = models.URLField(default="")
+    thumbnail_url = models.URLField(default="",max_length=2000)
 
     # response
     title = models.CharField(max_length=255)
