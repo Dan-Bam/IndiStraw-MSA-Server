@@ -20,8 +20,8 @@ channel.queue_declare(queue='ai')
 
 def callback(ch, method, properties, body):
     print('Received')
-    temp = json.loads(body)
-    data = json.loads(temp)
+    #temp = json.loads(body)
+    data = json.loads(body)
 
     print(data)
     if properties.content_type == 'create_record':
@@ -42,7 +42,7 @@ def callback(ch, method, properties, body):
         view.delete()
 
     elif properties.content_type == 'create_movie':
-        movie = models.GenreData(movie_idx=data['movie_idx'], genre=data['genre'], imageUrl=data['thumbnail_url'])
+        movie = models.GenreData(movie_idx=data['movie_idx'], genre=data['genre'], thumbnail_url=data['thumbnail_url'])
         movie.save()
         print('suc')
 
