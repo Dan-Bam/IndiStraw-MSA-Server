@@ -22,14 +22,6 @@ class SearchViewSet(viewsets.ModelViewSet):
             qs2 = qs2.filter(genre__keyword__contains= [search_field])
             qs3 = qs3.filter(title__icontains=search_field)
 
-            if len(Genre.objects.all().filter(keyword__icontains=search_field)) > 0:
-                count_object = Genre.objects.get(keyword=search_field)
-                count_object.view_count += 1
-                count_object.save()
-            else:
-                create_genre_object = Genre(keyword=search_field, view_count=1)
-                create_genre_object.save()
-
         return list(itertools.chain(qs, qs2, qs3))
     
 class SearchTagViewSet(viewsets.ModelViewSet):
