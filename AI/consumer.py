@@ -21,8 +21,7 @@ channel.queue_declare(queue='ai')
 def callback(ch, method, properties, body):
     print('Received')
     temp = json.loads(body)
-    data2 = json.loads(temp)
-    data = json.loads(data2)
+    data = json.loads(temp)
 
     print(data)
     if properties.content_type == 'create_record':
