@@ -48,7 +48,7 @@ def get_popular(req):
     result = popular()
     print(list(result.keys()))
     for i in list(result.keys()):
-        recommend_list.append(genre.filter(movie_idx=i).values('movie_idx', 'thumbnail_url'))
+        recommend_list.append(genre.values('movie_idx', 'thumbnail_url'))#.filter(movie_idx=i).values('movie_idx', 'thumbnail_url'))
     return Response(recommend_list)
 
 @api_view(['GET'])
@@ -78,7 +78,7 @@ def get_personal_recommend(req):
         keys.append(int(i))
     random.shuffle(keys)
     for i in keys[:10]:
-        recommend_list.append(genre.filter(movie_idx=i).values('movie_idx', 'thumbnail_url'))
+        recommend_list.append(genre.values('movie_idx', 'thumbnail_url'))#.filter(movie_idx=i).values('movie_idx', 'thumbnail_url'))
     return Response(recommend_list)
 # Create your views here.
 @api_view(['GET'])
