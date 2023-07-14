@@ -7,7 +7,7 @@ import java.util.*
 
 interface FundingRepository: CrudRepository<FundingEntity, Long> {
 
-    fun existsByOrdererAccountIdx(accountIdx: UUID): Boolean
+    fun existsByOrdererAccountIdxAndCrowdfundingIdx(accountIdx: UUID, crowdfundingIdx: Long): Boolean
     fun countByCrowdfunding(crowdfunding: CrowdfundingEntity): Long
 
 }
