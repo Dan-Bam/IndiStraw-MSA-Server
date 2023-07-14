@@ -25,7 +25,7 @@ def callback(ch, method, properties, body):
     print(data)
 
     if properties.content_type == 'create_movie':
-        movie = Movie(movie_idx = data['movie_idx'], thumbnail_url=data['thumbnail_url'], genre=data['genre'])
+        movie = Movie(movie_idx = data['movie_idx'], thumbnail_url=data['thumbnail_url'])
         movie.save()
         print('suc')
 
