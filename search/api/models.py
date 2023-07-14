@@ -16,7 +16,6 @@ class Movie(models.Model):
 
     # response
     title = models.CharField(max_length=255)
-    genre = models.JSONField()
 
 class Crowd(models.Model):
     crowd_idx = models.AutoField(primary_key=True, null=False)
