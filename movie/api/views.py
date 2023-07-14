@@ -42,7 +42,6 @@ class MovieView(ModelViewSet):
             create_movie_json_data = {
                 "movie_idx" : last_qs.movie_idx,
                 "thumbnail_url" : last_qs.thumbnail_url,
-                "genre" : None
             }
 
             publish('create_movie', create_movie_json_data)
