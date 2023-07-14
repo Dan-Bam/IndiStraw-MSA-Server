@@ -61,6 +61,7 @@ class CrowdfundingDataConverter {
                     totalCount = it.totalCount
                 )
             },
+            isFunding = dto.isFunding,
             status = dto.statusType
         )
 
