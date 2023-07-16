@@ -14,6 +14,7 @@ data class CrowdfundingDetailResponse(
     val imageList: List<String>,
     val fileList: List<String>,
     val reward: List<RewardResponse>,
+    val isFunding: Boolean,
     val status: Crowdfunding.StatusType
 ) {
 

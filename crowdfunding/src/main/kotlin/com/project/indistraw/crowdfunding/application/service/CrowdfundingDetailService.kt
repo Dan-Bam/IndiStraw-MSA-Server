@@ -64,7 +64,7 @@ class CrowdfundingDetailService(
                     imageList = it.imageList
                 )
             },
-            isFunding = queryFundingPort.existByOrdererIdx(currentAccountIdx),
+            isFunding = queryFundingPort.existByOrdererIdxAndCrowdfundingIdx(currentAccountIdx, crowdfunding.idx),
             statusType = crowdfunding.statusType
         )
     }
