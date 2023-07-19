@@ -1,0 +1,84 @@
+server:
+  ssl:
+    enabled: false
+
+spring:
+  cloud:
+    gateway:
+      httpclient:
+         ssl:
+           useInsecureTrustManager: true
+      x-forwarded:
+        enabled: true
+        for-enabled: true
+        proto-enabled: true
+        host-append: false
+        port-append: false
+        proto-append: false
+      routes:
+        - id: indistraw-account-route
+          uri: ${ACCOUNT_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/account/**
+          filters:
+            - JwtAuthenticationGatewayFilter
+
+        - id: indistraw-auth-route
+          uri: ${AUTH_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/auth/**
+
+        - id: indistraw-file-route
+          uri: ${FILE_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/file/**
+          filters:
+          - name: RequestSize
+            args:
+              maxSize: 2048000000 # 2GB
+
+        - id: indistraw-qr-code-route
+          uri: ${AUTH_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/qr-code/**
+
+        - id: indistraw-crowdfunding-route
+          uri: ${CROWDFUNDING_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/crowdfunding/**
+          filters:
+            - JwtAuthenticationGatewayFilter
+
+        - id: indistraw-funding-route
+          uri: ${CROWDFUNDING_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/funding/**
+          filters:
+          - JwtAuthenticationGatewayFilter
+
+        - id: indistraw-search-route
+          uri: ${SEARCH_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/search/**
+          filters:
+            - JwtAuthenticationGatewayFilter
+
+        - id: indistraw-movie-route
+          uri: ${MOVIE_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/movie/**
+          filters:
+            - JwtAuthenticationGatewayFilter
+
+        - id: indistraw-ai-route
+          uri: ${AI_ROUTE_URI}
+          predicates:
+            - Path=/api/v1/recommend/**
+          filters:
+            - JwtAuthenticationGatewayFilter
+
+  security:
+    enable-csrf: false
+
+jwt:
+  accessSecret: ${JWT_ACCESS_SECRET}

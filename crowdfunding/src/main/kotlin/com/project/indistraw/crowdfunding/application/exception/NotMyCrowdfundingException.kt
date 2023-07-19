@@ -1,0 +1,6 @@
+package com.project.indistraw.crowdfunding.application.exception
+
+import com.project.indistraw.crowdfunding.application.common.error.ErrorCode
+import com.project.indistraw.crowdfunding.application.common.error.exception.IndiStrawCrowdfundingException
+
+class NotMyCrowdfundingException: IndiStrawCrowdfundingException(ErrorCode.NOT_MY_CROWDFUNDING)
